@@ -22,7 +22,7 @@ Printing the name and description
     printf("Skill Name: %s\n", mySkill.name);
     printf("Description: %s\n", mySkill.description);
 */
-
+//
 typedef struct{
     char name[N];
     int life_points, attack_points, defense_points;
