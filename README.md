@@ -34,9 +34,23 @@ A decision must be made, a choice that will shape the course of destiny. Will th
 [With a decisive maneuver, the protagonist steers their vehicle onto their chosen path]
 
 Left path:
+Enemy:
+Shadow Stalker
+Skill 1: Shadow Strike - Deals moderate damage to the player.
+Skill 2: Evasive Maneuver - Increases enemy evasion for a single turn.
+Skill 3: Cloak of Darkness - Grants the enemy temporary invisibility, making them immune to player attacks for one turn.
+
+Thorn Strangle
+Skill 1: Vine Bind - Traps the player with twisting vines, making them slower and easier to hit for one turn. (no defense)
+Skill 2: Thorny Veil - Shrouds the enemy in darkness, making them harder to hit and giving them a chance to avoid attacks for one turn.
+Skill 3: Life Drain - Drains the player's health, hurting them while healing the enemy a bit with the stolen life force.
 
 Right path:
-
+Enemy
+Inferno Fiend
+Skill 1: Flame Burst - Inflicts fire damage over time on the player. (reduces X life points every 3 turns)
+Skill 2: Infernal Barrier - Shields the enemy, reducing incoming damage for one turn.
+Skill 3: Heatwave - Inflicts damage to the player while reducing their defense for one turn.
 
 
 Scenario 2: The Crossroads of Destiny
