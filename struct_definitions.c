@@ -3,7 +3,7 @@
 #include <string.h>
 
 #define N 20 // max number of letters in the name
-#define M 200 //max number of letters for description
+#define M 500 //max number of letters for description
 #define S 4 //number of skills
 #define MAX_ENEMIES 3 //max number of enemies
 
@@ -33,17 +33,20 @@ typedef struct{
 
 typedef struct{
     char name[N], description[M];
-    int decision; //if decision = 0 --> left path; else (decision = 1) --> right path
+    struct Decision *decision;
 }Scenario;
 
 typedef struct{
     char name[N];
     int points[3]; //points[0] = life_points; points[1] = attack points; points[2] = defense points
+    Skill skills[S];
 }Enemy;
 
 typedef struct{
-    char question_text[M], option[M];
-    int number_options;
+    char question_text[M];
+    Option options_list[2]; // There are maximum two options to choose from: left path or right path
+                            // Except for the last scenario where there is only one
+    int num_options;
 }Decision;
 
 typedef struct{
