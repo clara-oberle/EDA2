@@ -5,7 +5,7 @@
 #include "struct_definitions.h"
 
 int main(){
-    // Character's skills to choose 4 from:
+    // Character skills (player will choose 4):
     // Shadowblade strike 
     Skill *shadow_blade = (Skill*)malloc(sizeof(Skill));
     strcpy(shadow_blade->name, "Shadowblade strike");
