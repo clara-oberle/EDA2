@@ -4,6 +4,104 @@
 #include "struct_definitions.c"
 
 int main(){
+    // Dynamic memory allocation for the scenario struct for 1 
+Scenario *race_of_shadows = (Scenario*)malloc(sizeof(Scenario));
+strcpy(race_of_shadows->name, "The Race of Shadows");
+strcpy(race_of_shadows->description, "[The screen fades from black to reveal the protagonist seated in a sleek, futuristic vehicle, the hum of its engine vibrating through their bones. The starting line looms ahead, illuminated by the glare of neon lights and the distant roar of an eager crowd.]\nThe Race of Shadows begins, and the fate of the seeker hangs in the balance. Four skills pulsate within their grasp, each a weapon to be wielded with precision or cast aside in the heat of battle.\n[As the countdown commences, the protagonist surveys the winding track ahead, split into two diverging paths, each cloaked in uncertainty.]");
+
+// The decision is whether to take the left or right path:
+Decision *choose_path_race = (Decision*)malloc(sizeof(Decision));
+race_of_shadows->decision = choose_path_race;
+choose_path_race->num_options = 2;
+strcpy(choose_path_race->question_text, "A decision must be made, a choice that will shape the course of destiny. Will they veer left, towards the path less traveled, or right, where the shadows writhe with hidden dangers?");
+
+// The left path takes the player to the Veil of Obscurity:
+Option *veil_of_obscurity = (Option*)malloc(sizeof(Option));
+choose_path_race->options_list[0] = veil_of_obscurity;
+strcpy(veil_of_obscurity->response_text, "To the left, the Veil of Obscurity looms like a shadowy abyss, its depths shrouded in mystery. The path winds through a dense forest of gnarled trees and twisting vines, their branches reaching out like grasping fingers to ensnare the unwary.");
+strcpy(veil_of_obscurity->narrative_text_before, "You steer your vehicle onto the left path, plunging into the dark and mysterious Veil of Obscurity. The shadows seem to close in around you as you navigate the winding track.");
+veil_of_obscurity->num_enemies = 2;
+
+// The enemies in the Veil of Obscurity:
+Enemy *shadow_stalker = (Enemy*)malloc(sizeof(Enemy));
+veil_of_obscurity->enemies[0] = *shadow_stalker;
+strcpy(shadow_stalker->name, "Shadow Stalker");
+shadow_stalker->points[0] = 250; // HP
+shadow_stalker->points[1] = 30; // ATK
+shadow_stalker->points[2] = 10; // DEF
+
+Enemy *thorn_strangle = (Enemy*)malloc(sizeof(Enemy));
+veil_of_obscurity->enemies[1] = *thorn_strangle;
+strcpy(thorn_strangle->name, "Thorn Strangle");
+thorn_strangle->points[0] = 200; // HP
+thorn_strangle->points[1] = 20; // ATK
+thorn_strangle->points[2] = 5; // DEF
+
+// The right path takes the player to the Gauntlet of Peril:
+Option *gauntlet_of_peril = (Option*)malloc(sizeof(Option));
+choose_path_race->options_list[1] = gauntlet_of_peril;
+strcpy(gauntlet_of_peril->response_text, "To the right, the Gauntlet of Peril stretches out like a harrowing gauntlet of fire and brimstone. The landscape is a desolate wasteland of jagged rocks and bubbling lava pits, their fiery glow casting flickering shadows across the treacherous terrain.");
+strcpy(gauntlet_of_peril->narrative_text_before, "You steer your vehicle onto the right path, facing the daunting challenges of the Gauntlet of Peril. The heat of the lava pits and the stench of sulfur assault your senses as you navigate the treacherous track.");
+gauntlet_of_peril->num_enemies = 1;
+
+// The enemy in the Gauntlet of Peril:
+Enemy *inferno_fiend = (Enemy*)malloc(sizeof(Enemy));
+gauntlet_of_peril->enemies[0] = *inferno_fiend;
+strcpy(inferno_fiend->name, "Inferno Fiend");
+inferno_fiend->points[0] = 300; // HP
+inferno_fiend->points[1] = 25; // ATK
+inferno_fiend->points[2] = 15; // DEF
+
+// Scenario 2 
+// Dynamic memory allocation for the scenario struct
+Scenario *crossroads_of_destiny = (Scenario*)malloc(sizeof(Scenario));
+strcpy(crossroads_of_destiny->name, "The Crossroads of Destiny");
+strcpy(crossroads_of_destiny->description, "As the protagonist's vehicle hurtles down the track, they approach a fork in the road, each path shrouded in its own mystery and peril. The decision they make now will shape the course of their journey, determining not only the challenges they face but also the fate of those who stand in their way.");
+
+// The decision is to choose between the Forgotten Ruins or the Stormy Seas:
+Decision *choose_path_crossroads = (Decision*)malloc(sizeof(Decision));
+crossroads_of_destiny->decision = choose_path_crossroads;
+choose_path_crossroads->num_options = 2;
+strcpy(choose_path_crossroads->question_text, "With the fate of their journey hanging in the balance, the protagonist must choose their path wisely.\nDo they venture into the depths of the Forgotten Ruins, where ancient mysteries await, or brave the tempestuous waters of the Stormy Seas, risking life and limb for the promise of untold rewards?");
+
+// Option A: The Forgotten Ruins
+Option *forgotten_ruins = (Option*)malloc(sizeof(Option));
+choose_path_crossroads->options_list[0] = forgotten_ruins;
+strcpy(forgotten_ruins->response_text, "To the left lies the path to the Forgotten Ruins, where ancient secrets lie buried beneath the crumbling stones. The air is heavy with the weight of history, and the ruins whisper tales of long-forgotten civilizations and untold treasures waiting to be discovered.");
+strcpy(forgotten_ruins->narrative_text_before, "You steer your vehicle towards the left, heading into the depths of the Forgotten Ruins. The crumbling structures and overgrown foliage create an eerie atmosphere as you navigate the winding path.");
+forgotten_ruins->num_enemies = 1;
+
+// Enemy in the Forgotten Ruins:
+Enemy *guardian_ruins = (Enemy*)malloc(sizeof(Enemy));
+forgotten_ruins->enemies[0] = *guardian_ruins;
+strcpy(guardian_ruins->name, "Guardian of the Forgotten Ruins");
+guardian_ruins->points[0] = 400; // HP
+guardian_ruins->points[1] = 35; // ATK
+guardian_ruins->points[2] = 25; // DEF
+
+// Option B: The Stormy Seas
+Option *stormy_seas = (Option*)malloc(sizeof(Option));
+choose_path_crossroads->options_list[1] = stormy_seas;
+strcpy(stormy_seas->response_text, "To the right stretches the path to the Stormy Seas, where towering waves crash against rocky cliffs, and the wind howls like a vengeful spirit. The sea churns with hidden dangers, promising both riches and ruin to those brave enough to brave its wrath.");
+strcpy(stormy_seas->narrative_text_before, "You veer towards the right, facing the treacherous waters of the Stormy Seas. The crashing waves and howling winds create a tumultuous environment as you navigate the rocky coastline.");
+stormy_seas->num_enemies = 2;
+
+// Enemies in the Stormy Seas:
+Enemy *sea_marauders = (Enemy*)malloc(sizeof(Enemy));
+stormy_seas->enemies[0] = *sea_marauders;
+strcpy(sea_marauders->name, "Captain Blackbeard");
+sea_marauders->points[0] = 300; // HP
+sea_marauders->points[1] = 30; // ATK
+sea_marauders->points[2] = 20; // DEF
+
+Enemy *siren_sorceress = (Enemy*)malloc(sizeof(Enemy));
+stormy_seas->enemies[1] = *siren_sorceress;
+strcpy(siren_sorceress->name, "Siren the Sorceress");
+siren_sorceress->points[0] = 250; // HP
+siren_sorceress->points[1] = 25; // ATK
+siren_sorceress->points[2] = 15; // DEF
+
+
     // The third scenario is The Abandoned Castle:
     Scenario *castle = (Scenario*)malloc(sizeof(Scenario)); // Dynamic memory allocation for the scenario struct
     strcpy(castle->name, "Abandoned Castle");
