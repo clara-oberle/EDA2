@@ -1,16 +1,16 @@
 **Storyline**
 
-Title of the game suggestions: Artifact Quest, Relic Retrieval, Trial of Ascension, Guardian Trials
+Title of the game: The Quest for the Sacred Gemstones
 
 **Introduction:**
 
-[The screen fades from black to reveal a dimly lit chamber, ancient runes etched into the walls flickering with an otherworldly glow. A haunting melody echoes in the background, sending shivers down the spine of those who dare to listen. The words "Trial of Ascension" materialize in ethereal script.]
+[The screen fades from black to reveal a dimly lit chamber, ancient runes etched into the walls flickering with an otherworldly glow. A haunting melody echoes in the background, sending shivers down the spine of those who dare to listen. The words "The Quest for the Sacred Gemstones" materialize in ethereal script.]
 
-Welcome, seeker of destiny, to the Trial of Ascension. In the realm of shadows and whispers, where the fabric of reality bends to the will of the unknown, only the worthy shall prevail.
+Welcome, seeker of destiny, to The Quest for the Sacred Gemstones. In the realm of shadows and whispers, where the fabric of reality bends to the will of the unknown, only the worthy shall prevail.
 
 The ultimate prize awaits the one who dares to embark on this journey: The Sacred Gemstones, three ancient relics, each bestowing power over a unique aspect of existence - time, space, and spirituality. Possession of these gems allows the bearer to navigate the flow of time, traverse the boundless expanse of space, and commune with the depths of the spiritual realm. But to claim them, you must prove your worth by conquering the four challenges that await within this ethereal realm. The first three challenges will reveal fragments of a riddle that you must solve to uncover the location of the gemstones, which you shall retrieve in the final trial. 
 
-Enter, brave soul, and heed the call of destiny. The Trial of Ascension awaits those who dare to seek enlightenment amidst the shadow.
+Enter, brave soul, and heed the call of destiny. The Quest for the Sacred Gemstones awaits those who dare to seek enlightenment amidst the shadow.
 
 **Scenario 1: The Race of Shadows**
 
