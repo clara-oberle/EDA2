@@ -5,7 +5,7 @@
 #include "struct_definitions.h"
 
 int main(){
-    // Scenario 1
+    // Scenario 1 - Race of Shadows
     // Dynamic memory allocation for the scenario struct for 1 
     Scenario *race_of_shadows = (Scenario*)malloc(sizeof(Scenario));
     strcpy(race_of_shadows->name, "The Race of Shadows");
@@ -78,7 +78,7 @@ int main(){
     inferno_fiend->points[1] = 25; // ATK
     inferno_fiend->points[2] = 15; // DEF
 
-    // Scenario 2 
+    // Scenario 2 - Crossroads of Destiny
     // Dynamic memory allocation for the scenario struct
     Scenario *crossroads_of_destiny = (Scenario*)malloc(sizeof(Scenario));
     strcpy(crossroads_of_destiny->name, "The Crossroads of Destiny");
@@ -151,7 +151,7 @@ int main(){
     siren_sorceress->points[1] = 25; // ATK
     siren_sorceress->points[2] = 15; // DEF
 
-    // The third scenario is The Abandoned Castle:
+    // Scenario 3 - The Abandoned Castle:
     Scenario *castle = (Scenario*)malloc(sizeof(Scenario)); // Dynamic memory allocation for the scenario struct
     strcpy(castle->name, "Abandoned Castle");
     strcpy(castle->description, "The screen shifts to reveal an ancient castle "
@@ -223,7 +223,7 @@ int main(){
     deadly_nightshade->points[1] = 10; // ATK (an attack reduces the player's HP by 10)
     deadly_nightshade->points[2] = 5; // DEF (blocks 5 ATK)
 
-    // The last scenario is The Battle for the Gemstones:
+    // Last Scenario - The Battle for the Gemstones:
     Scenario *final_battle = (Scenario*)malloc(sizeof(Scenario)); // Dynamic memory allocation for the scenario struct
     strcpy(final_battle->name, "The Battle for the Gemstones");
     strcpy(final_battle->description, "As you emerge victorious from the towering castle, clutching the "
