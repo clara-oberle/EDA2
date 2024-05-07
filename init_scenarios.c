@@ -5,22 +5,38 @@
 #include "struct_definitions.h"
 
 int main(){
+    // Scenario 1
     // Dynamic memory allocation for the scenario struct for 1 
     Scenario *race_of_shadows = (Scenario*)malloc(sizeof(Scenario));
     strcpy(race_of_shadows->name, "The Race of Shadows");
-    strcpy(race_of_shadows->description, "[The screen fades from black to reveal the protagonist seated in a sleek, futuristic vehicle, the hum of its engine vibrating through their bones. The starting line looms ahead, illuminated by the glare of neon lights and the distant roar of an eager crowd.]\nThe Race of Shadows begins, and the fate of the seeker hangs in the balance. Four skills pulsate within their grasp, each a weapon to be wielded with precision or cast aside in the heat of battle.\n[As the countdown commences, the protagonist surveys the winding track ahead, split into two diverging paths, each cloaked in uncertainty.]");
+    strcpy(race_of_shadows->description, "As the screen fades from black, you find yourself in a sleek, "
+    "futuristic vehicle, its engine's hum reverberating through your bones. Ahead lies the starting line, "
+    "bathed in neon lights and echoing with the distant roar of an eager crowd. The Race of Shadows begins, "
+    "and your fate hangs in the balance. As the countdown begins, you survey the winding track ahead, split "
+    "into two diverging paths, both shrouded in uncertainty.");
 
     // The decision is whether to take the left or right path:
     Decision *choose_path_race = (Decision*)malloc(sizeof(Decision));
     race_of_shadows->decision = choose_path_race;
     choose_path_race->num_options = 2;
-    strcpy(choose_path_race->question_text, "A decision must be made, a choice that will shape the course of destiny. Will they veer left, towards the path less traveled, or right, where the shadows writhe with hidden dangers?");
+    strcpy(choose_path_race->question_text, "A decision must be made, a choice that will shape the course "
+    "of destiny. Will they veer left, towards the path less traveled, or right, where the shadows writhe "
+    "with hidden dangers?");
 
     // The left path takes the player to the Veil of Obscurity:
     Option *veil_of_obscurity = (Option*)malloc(sizeof(Option));
-    choose_path_race->options_list[0] = veil_of_obscurity;
-    strcpy(veil_of_obscurity->response_text, "To the left, the Veil of Obscurity looms like a shadowy abyss, its depths shrouded in mystery. The path winds through a dense forest of gnarled trees and twisting vines, their branches reaching out like grasping fingers to ensnare the unwary.");
-    strcpy(veil_of_obscurity->narrative_text_before, "You steer your vehicle onto the left path, plunging into the dark and mysterious Veil of Obscurity. The shadows seem to close in around you as you navigate the winding track.");
+    choose_path_race->options_list[0] = *veil_of_obscurity;
+    strcpy(veil_of_obscurity->response_text, "To the left, the Veil of Obscurity looms like a shadowy abyss, "
+    "its depths shrouded in mystery. The path winds through a dense forest of gnarled trees and twisting vines, "
+    "their branches reaching out like grasping fingers to ensnare the unwary.");
+    strcpy(veil_of_obscurity->narrative_text_before, "You steer your vehicle onto the left path, plunging into "
+    "the dark and mysterious Veil of Obscurity. The shadows seem to close in around you as you navigate the "
+    "winding track.");
+    strcpy(veil_of_obscurity->narrative_text_after, "With adrenaline still coursing through your veins, you "
+    "navigate your car through the aftermath of the battle. As the dust settles, your eyes catch a glint among "
+    "the wreckage. Half-buried beneath the rubble is the first fragment of the riddle, its aged inscription "
+    "illuminated by the faint light. A surge of anticipation grips you as you trace the ancient words etched "
+    "into the stone, the first piece of the puzzle that will lead you to the final prize.");
     veil_of_obscurity->num_enemies = 2;
 
     // The enemies in the Veil of Obscurity:
@@ -40,9 +56,18 @@ int main(){
 
     // The right path takes the player to the Gauntlet of Peril:
     Option *gauntlet_of_peril = (Option*)malloc(sizeof(Option));
-    choose_path_race->options_list[1] = gauntlet_of_peril;
-    strcpy(gauntlet_of_peril->response_text, "To the right, the Gauntlet of Peril stretches out like a harrowing gauntlet of fire and brimstone. The landscape is a desolate wasteland of jagged rocks and bubbling lava pits, their fiery glow casting flickering shadows across the treacherous terrain.");
-    strcpy(gauntlet_of_peril->narrative_text_before, "You steer your vehicle onto the right path, facing the daunting challenges of the Gauntlet of Peril. The heat of the lava pits and the stench of sulfur assault your senses as you navigate the treacherous track.");
+    choose_path_race->options_list[1] = *gauntlet_of_peril;
+    strcpy(gauntlet_of_peril->response_text, "To the right, the Gauntlet of Peril stretches out like a "
+    "terrifying passage of fire and brimstone. The landscape is a desolate wasteland of jagged rocks and "
+    "bubbling lava pits, their fiery glow casting flickering shadows across the treacherous terrain.");
+    strcpy(gauntlet_of_peril->narrative_text_before, "You steer your vehicle onto the right path, facing the "
+    "daunting challenges of the Gauntlet of Peril. The heat of the lava pits and the stench of sulfur assault "
+    "your senses as you navigate the treacherous track.");
+    strcpy(gauntlet_of_peril->narrative_text_after, "With adrenaline still coursing through your veins, you "
+    "navigate your car through the aftermath of the battle. Your eyes catch a glint among the wreckage. "
+    "Half-buried beneath the rubble is the first fragment of the riddle, its aged inscription "
+    "illuminated by the glow of lava. A surge of anticipation grips you as you trace the ancient words etched "
+    "into the stone, the first piece of the puzzle that will lead you to the final prize.");
     gauntlet_of_peril->num_enemies = 1;
 
     // The enemy in the Gauntlet of Peril:
@@ -57,19 +82,34 @@ int main(){
     // Dynamic memory allocation for the scenario struct
     Scenario *crossroads_of_destiny = (Scenario*)malloc(sizeof(Scenario));
     strcpy(crossroads_of_destiny->name, "The Crossroads of Destiny");
-    strcpy(crossroads_of_destiny->description, "As the protagonist's vehicle hurtles down the track, they approach a fork in the road, each path shrouded in its own mystery and peril. The decision they make now will shape the course of their journey, determining not only the challenges they face but also the fate of those who stand in their way.");
+    strcpy(crossroads_of_destiny->description, "As your vehicle hurtles down the track, "
+    "you approach a fork in the road, each path shrouded in its own mystery and peril. The decision "
+    "you make now will shape the course of your journey, determining not only the challenges you face "
+    "but also the fate of those who stand in your way.");
 
     // The decision is to choose between the Forgotten Ruins or the Stormy Seas:
     Decision *choose_path_crossroads = (Decision*)malloc(sizeof(Decision));
     crossroads_of_destiny->decision = choose_path_crossroads;
     choose_path_crossroads->num_options = 2;
-    strcpy(choose_path_crossroads->question_text, "With the fate of their journey hanging in the balance, the protagonist must choose their path wisely.\nDo they venture into the depths of the Forgotten Ruins, where ancient mysteries await, or brave the tempestuous waters of the Stormy Seas, risking life and limb for the promise of untold rewards?");
+    strcpy(choose_path_crossroads->question_text, "With the fate of your journey hanging in the balance, "
+    "you must choose your path wisely.\nDo you venture into the depths of the Forgotten Ruins, "
+    "where ancient mysteries await, or brave the tempestuous waters of the Stormy Seas, risking life and limb "
+    "for the promise of untold rewards?");
 
     // Option A: The Forgotten Ruins
     Option *forgotten_ruins = (Option*)malloc(sizeof(Option));
-    choose_path_crossroads->options_list[0] = forgotten_ruins;
-    strcpy(forgotten_ruins->response_text, "To the left lies the path to the Forgotten Ruins, where ancient secrets lie buried beneath the crumbling stones. The air is heavy with the weight of history, and the ruins whisper tales of long-forgotten civilizations and untold treasures waiting to be discovered.");
-    strcpy(forgotten_ruins->narrative_text_before, "You steer your vehicle towards the left, heading into the depths of the Forgotten Ruins. The crumbling structures and overgrown foliage create an eerie atmosphere as you navigate the winding path.");
+    choose_path_crossroads->options_list[0] = *forgotten_ruins;
+    strcpy(forgotten_ruins->response_text, "To the left lies the path to the Forgotten Ruins, where ancient "
+    "secrets lie buried beneath the crumbling stones. The air is heavy with the weight of history, and the ruins "
+    "whisper tales of long-forgotten civilizations and untold treasures waiting to be discovered.");
+    strcpy(forgotten_ruins->narrative_text_before, "You steer your vehicle towards the left, heading into the "
+    "depths of the Forgotten Ruins. The crumbling structures and overgrown foliage create an eerie atmosphere as "
+    "you navigate the winding path.");
+    strcpy(forgotten_ruins->narrative_text_after, "With triumph coursing through your veins, you survey the "
+    "aftermath of the battle. Among the debris, a weathered stone altar catches your eye, bearing the second "
+    "fragment of the riddle. Anticipation grips you as you approach, the ancient symbols beckoning you closer. "
+    "With a steady hand, you claim the stone fragment etched with ancient words - only one more fragment stands "
+    "between you and the complete riddle. ");
     forgotten_ruins->num_enemies = 1;
 
     // Enemy in the Forgotten Ruins:
@@ -82,9 +122,18 @@ int main(){
 
     // Option B: The Stormy Seas
     Option *stormy_seas = (Option*)malloc(sizeof(Option));
-    choose_path_crossroads->options_list[1] = stormy_seas;
-    strcpy(stormy_seas->response_text, "To the right stretches the path to the Stormy Seas, where towering waves crash against rocky cliffs, and the wind howls like a vengeful spirit. The sea churns with hidden dangers, promising both riches and ruin to those brave enough to brave its wrath.");
-    strcpy(stormy_seas->narrative_text_before, "You veer towards the right, facing the treacherous waters of the Stormy Seas. The crashing waves and howling winds create a tumultuous environment as you navigate the rocky coastline.");
+    choose_path_crossroads->options_list[1] = *stormy_seas;
+    strcpy(stormy_seas->response_text, "To the right stretches the path to the Stormy Seas, where towering "
+    "waves crash against rocky cliffs, and the wind howls like a vengeful spirit. The sea churns with hidden "
+    "dangers, promising both riches and ruin to those brave enough to brave its wrath.");
+    strcpy(stormy_seas->narrative_text_before, "You veer towards the right, facing the treacherous waters of "
+    "the Stormy Seas. The crashing waves and howling winds create a tumultuous environment as you navigate the "
+    "rocky coastline.");
+    strcpy(stormy_seas->narrative_text_after, "With victory coursing through your veins, you stand amidst the "
+    "aftermath of the battle, the Stormy Seas raging beside you. Along the rugged coastline, where waves crash "
+    "against the cliffs with relentless fury, the second fragment of the riddle lies half-buried in the sand. "
+    "Anticipation grips you as you approach the weathered stone, its ancient markings illuminated by the glow of "
+    "your car lights - only one more fragment stands between you and the complete riddle. ");
     stormy_seas->num_enemies = 2;
 
     // Enemies in the Stormy Seas:
@@ -199,8 +248,8 @@ int main(){
     strcpy(enter_final_battle->narrative_text_before, "In a flash, you find yourself transported to the location "
     "of the Sacred Gemstones. Their radiant glow captivates you, but a dangerous presence lurks nearby. Three adversaries "
     "stand guard, each embodying the essence of the gemstone they protect: time, space, and spirituality.\nThe Guardian of "
-    "Time, spectral and adorned with ancient timepieces, disorients its opponents by manipulating time. The Guardian of Space, "
-    "enveloped in swirling darkness, commands the environment to its advantage. The Guardian of Spirituality, radiant and ethereal, "
+    "Time, spectral and adorned with ancient timepieces, disorients its opponents by manipulating time.\nThe Guardian of Space, "
+    "enveloped in swirling darkness, commands the environment to its advantage.\nThe Guardian of Spirituality, radiant and ethereal, "
     "draws upon otherworldly powers to weaken its prey.\nPrepare yourself for the final battle, as the fate of the Sacred Gemstones "
     "rests in your hands.");
     strcpy(enter_final_battle->narrative_text_after, "With a final blow, you defeat the three adversaries, their forms disappearing "
