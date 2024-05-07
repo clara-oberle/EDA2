@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
-#include "struct_definitions.c"
+#include <stdlib.h>
+#include "struct_definitions.h"
 
 int main(){
     // The third scenario is The Abandoned Castle:
@@ -21,7 +22,7 @@ int main(){
 
     // The left path takes the player to a crypt:
     Option *crypt = (Option*)malloc(sizeof(Option)); // Dynamic memory allocation for the first option struct
-    choose_path->options_list[0] = crypt;
+    choose_path->options_list[0] = *crypt;
     strcpy(crypt->response_text, "You descend into the depths of the crypt "
     "where secrets and unseen horrors await amongst the bones of past generations.");
     strcpy(crypt->narrative_text_before, "As you reach the crypt, a fearsome creature "
@@ -43,7 +44,7 @@ int main(){
 
     // The right path takes the player to a courtyard:
     Option *courtyard = (Option*)malloc(sizeof(Option)); // Dynamic memory allocation for the second option struct
-    choose_path->options_list[1] = courtyard;
+    choose_path->options_list[1] = *courtyard;
     strcpy(courtyard->response_text, "You step into the wild courtyard, surrounded by towering "
     "hedges, crumbling statues, and at its heart, a weathered fountain. Mist rises from the "
     "overgrown algae, cloaking the scene in a mystical atmosphere.");
@@ -95,7 +96,7 @@ int main(){
     
     // If the riddle is solved correctly, then the final battle can commence:
     Option *enter_final_battle = (Option*)malloc(sizeof(Option)); // Dynamic memory allocation for the option struct
-    solve_riddle->options_list[0] = enter_final_battle;
+    solve_riddle->options_list[0] = *enter_final_battle;
     strcpy(enter_final_battle->response_text, "Congratulations! You've successfully solved the riddle! "
     "The answer is indeed the letter E.");
     strcpy(enter_final_battle->narrative_text_before, "In a flash, you find yourself transported to the location "
