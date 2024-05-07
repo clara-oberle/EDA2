@@ -3,7 +3,7 @@
 #include <string.h>
 
 #define N 20 // max number of letters in the name
-#define M 500 //max number of letters for description
+#define M 700 //max number of letters for description
 #define S 4 //number of skills
 #define MAX_ENEMIES 3 //max number of enemies
 
