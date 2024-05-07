@@ -162,8 +162,8 @@ int main(){
     Decision *choose_path = (Decision*)malloc(sizeof(Decision)); // Dynamic memory allocation for the decision struct
     castle->decision = choose_path;
     choose_path->num_options = 2;
-    strcpy(choose_path->question_text, "Seeker of Gemstones, will you take" 
-    " the left path and venture deep into the castle's crypt, or will you explore "
+    strcpy(choose_path->question_text, "Seeker of Gemstones, will you take " 
+    "the left path and venture deep into the castle's crypt, or will you explore "
     "the right trail and wonder into the courtyard?");
 
     // The left path takes the player to a crypt:
