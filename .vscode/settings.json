@@ -1,6 +1,8 @@
 {
     "files.associations": {
-        "struct_definitions.h": "c",
-        "stdio.h": "c"
+        "common.h": "c",
+        "typeinfo": "c",
+        "stdlib.h": "c",
+        "struct_definitions.h": "c"
     }
 }
