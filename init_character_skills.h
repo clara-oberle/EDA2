@@ -4,8 +4,8 @@
 #include <stdlib.h>
 #include "struct_definitions.h"
 
-int main(){
-    // Character skills (player will choose 4):
+// Character skills (player will choose 4):
+Skill *init_shodowblade(){
     // Shadowblade strike 
     Skill *shadow_blade = (Skill*)malloc(sizeof(Skill));
     strcpy(shadow_blade->name, "Shadowblade strike");
@@ -16,7 +16,10 @@ int main(){
     shadow_blade->modifier[1] = 1.5; // ATK = ATK*1.5
     shadow_blade->modifier[2] =  NULL; // DEF is unchanged
     shadow_blade->duration_turn = 1; // modifies ATK points for only that turn
+    return shadow_blade;
+}
 
+Skill *init_energy_barrier(){
     // Energy barrier
     Skill *energy_barrier = (Skill*)malloc(sizeof(Skill));
     strcpy(energy_barrier->name, "Energy barrier");
@@ -28,7 +31,10 @@ int main(){
     energy_barrier->modifier[1] = NULL; // ATK is unchanged
     energy_barrier->modifier[2] =  2; // DEF is DEF*2
     energy_barrier->duration_turn = 1; // modifies DEF points for only that turn
+    return energy_barrier;
+}
 
+Skill *init_health_exchange(){
     // Health exchange
     Skill *health_exchange = (Skill*)malloc(sizeof(Skill));
     strcpy(health_exchange->name, "Health Exchange");
@@ -39,7 +45,10 @@ int main(){
     health_exchange->modifier[1] = NULL; // ATK is unchanged
     health_exchange->modifier[2] =  NULL; // DEF is unchanged
     health_exchange->duration_turn = 1; // swaps the HPs only in that round
+    return health_exchange;
+}
 
+Skill *init_fireball(){
     // Fireball
     Skill *fireball = (Skill*)malloc(sizeof(Skill));
     strcpy(fireball->name, "Fireball");
@@ -49,7 +58,10 @@ int main(){
     fireball->modifier[1] = 2; // ATK = ATK*2
     fireball->modifier[2] = NULL; // DEF is unchanged
     fireball->duration_turn = 1; // modifies ATK points for only that turn
+    return fireball;
+}
 
+Skill *init_healing_aura(){
     // Healing Auraa
     Skill *healing_aura = (Skill*)malloc(sizeof(Skill));
     strcpy(healing_aura->name, "Healing Aura");
@@ -59,4 +71,5 @@ int main(){
     healing_aura->modifier[1] = NULL; // ATK is unchanged
     healing_aura->modifier[2] = NULL; // DEF is unchanged
     healing_aura->duration_turn = 1; // modifies HP points for only that turn
+    return healing_aura;
 }
