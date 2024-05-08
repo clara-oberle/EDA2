@@ -5,6 +5,8 @@
 #include "struct_definitions.h"
 #include "init_character_skills.h"
 #include "init_scenarios.h"
+#include "init_character_skills.c"
+#include "init_scenarios.c"
 
 int main(){
     // Menu:
@@ -49,7 +51,7 @@ int main(){
         
         // Choose 4 skills
         // Initialise the skills:
-        Skill *shadow_blade = init_shodowblade();
+        Skill *shadow_blade = init_shadowblade();
         Skill *energy_barrier = init_energy_barrier();
         Skill *health_exchange = init_health_exchange();
         Skill *fireball = init_fireball();

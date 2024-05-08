@@ -1,7 +1,7 @@
 #include "init_character_skills.h"
 
 // Character skills (player will choose 4):
-Skill *init_shodowblade(){
+Skill *init_shadowblade(){
     // Shadowblade strike 
     Skill *shadow_blade = (Skill*)malloc(sizeof(Skill));
     strcpy(shadow_blade->name, "Shadowblade strike");

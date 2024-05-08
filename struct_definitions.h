@@ -1,6 +1,5 @@
-#include <stdio.h>
-#include <stdbool.h>
-#include <string.h>
+#ifndef STRUCTS_DEFINITIONS_H
+#define STRUCTS_DEFINITIONS_H
 
 #define N 20 // max number of letters in the name
 #define M 700 //max number of letters for description
@@ -55,3 +54,5 @@ typedef struct{
                             // Except for the last scenario where there is only one
     int num_options;
 } Decision;
+
+#endif
