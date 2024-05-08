@@ -39,4 +39,24 @@ int main(){
     health_exchange->modifier[1] = NULL; // ATK is unchanged
     health_exchange->modifier[2] =  NULL; // DEF is unchanged
     health_exchange->duration_turn = 1; // swaps the HPs only in that round
+
+    // Fireball
+    Skill *fireball = (Skill*)malloc(sizeof(Skill));
+    strcpy(fireball->name, "Fireball");
+    strcpy(fireball->description, "Launch a fireball towards your enemy, dealing damage equal to your attack points multiplied by 2. Can be used without limit in a battle.");
+    fireball->type = 1; // direct attack
+    fireball->modifier[0] = NULL; // HP is unchanged
+    fireball->modifier[1] = 2; // ATK = ATK*2
+    fireball->modifier[2] = NULL; // DEF is unchanged
+    fireball->duration_turn = 1; // modifies ATK points for only that turn
+
+    // Healing Auraa
+    Skill *healing_aura = (Skill*)malloc(sizeof(Skill));
+    strcpy(healing_aura->name, "Healing Aura");
+    strcpy(healing_aura->description, "Emit a healing aura, restoring a portion of your health points. Can be used without limit in a battle.");
+    healing_aura->type = 0; // temporal modifier
+    healing_aura->modifier[0] = 0.3; // HP increased by 30% of max HP
+    healing_aura->modifier[1] = NULL; // ATK is unchanged
+    healing_aura->modifier[2] = NULL; // DEF is unchanged
+    healing_aura->duration_turn = 1; // modifies HP points for only that turn
 }
