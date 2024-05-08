@@ -8,7 +8,7 @@ Scenario *init_scenario1(){
     // Scenario 1 - Race of Shadows
     // Dynamic memory allocation for the scenario struct for 1 
     Scenario *race_of_shadows = (Scenario*)malloc(sizeof(Scenario));
-    strcpy(race_of_shadows->name, "The Race of Shadows");
+    strcpy(race_of_shadows->name, "asf The Race of Shadows");
     strcpy(race_of_shadows->description, "As the screen fades from black, you find yourself in a sleek, "
     "futuristic vehicle, its engine's hum reverberating through your bones. Ahead lies the starting line, "
     "bathed in neon lights and echoing with the distant roar of an eager crowd. The Race of Shadows begins, "

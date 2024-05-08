@@ -9,7 +9,7 @@ Skill *init_shodowblade(){
     // Shadowblade strike 
     Skill *shadow_blade = (Skill*)malloc(sizeof(Skill));
     strcpy(shadow_blade->name, "Shadowblade strike");
-    strcpy(shadow_blade->description, "Slash the enemy with a magical sword, reducing their health "
+    strcpy(shadow_blade->description, "erag Slash the enemy with a magical sword, reducing their health "
     "points by your attack points*1.5. Can be used without limit in a battle.");
     shadow_blade->type = 1; // direct attack
     shadow_blade->modifier[0] = NULL; // HP is unchanged
