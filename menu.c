@@ -3,7 +3,8 @@
 #include <string.h>
 #include <stdlib.h>
 #include "struct_definitions.h"
-
+#include "init_character_skills.h"
+#include "init_scenarios.h"
 
 int main(){
     // Menu:
@@ -47,6 +48,11 @@ int main(){
         new_character->points[1], new_character->points[2]);
         
         // Choose 4 skills
+        // Initialise the skills:
+        Skill *shadow_blade = init_shodowblade();
+        
+
+        // Let the player preview the skills (see a description of each before choosing)
         printf("\nIt is time to select the four skills that will help you battle your way through this quest. Choose "
         "wisely for your fate relies on them. You can view a description of each skill before selecting it using the menu below:\n"
         "1. Shadowblade strike\n2. Energy Barrier\n3. Health exchange\n"); // add your skills here

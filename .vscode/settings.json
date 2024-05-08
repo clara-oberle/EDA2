@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "struct_definitions.h": "c"
+        "struct_definitions.h": "c",
+        "stdio.h": "c"
     }
 }
