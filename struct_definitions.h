@@ -7,7 +7,7 @@
 #define S 4 //number of skills
 #define MAX_ENEMIES 3 //max number of enemies
 
-typedef struct {
+typedef struct{
     char name[N];
     char description[M];
     int type; // if type = 0 --> temporary modifier, else (type = 1) --> direct attack
@@ -29,30 +29,29 @@ typedef struct{
     char name[N];
     int points[3]; //points[0] = life_points; points[1] = attack points; points[2] = defense points
     Skill skills[S]; //array of skills (of type Skill, the structure)
-}Character;
+} Character;
 
 typedef struct{
     char name[N], description[M];
     struct Decision *decision;
-}Scenario;
+} Scenario;
 
 typedef struct{
     char name[N];
     int points[3]; //points[0] = life_points; points[1] = attack points; points[2] = defense points
     Skill skills[S];
-}Enemy;
+} Enemy;
 
 typedef struct{
     char response_text[M], narrative_text_before[M], narrative_text_after[M];
     //narrative text before the battle and after the battle
     Enemy enemies[MAX_ENEMIES];
     int num_enemies; //to know exactly how many enemies are in the array
-}Option;
+} Option;
 
 typedef struct{
     char question_text[M];
     Option options_list[2]; // There are maximum two options to choose from: left path or right path
                             // Except for the last scenario where there is only one
     int num_options;
-}Decision;
-
+} Decision;

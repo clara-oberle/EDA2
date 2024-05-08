@@ -50,7 +50,10 @@ int main(){
         // Choose 4 skills
         // Initialise the skills:
         Skill *shadow_blade = init_shodowblade();
-        
+        Skill *energy_barrier = init_energy_barrier();
+        Skill *health_exchange = init_health_exchange();
+        Skill *fireball = init_fireball();
+        Skill *healing_aura = init_healing_aura();
 
         // Let the player preview the skills (see a description of each before choosing)
         printf("\nIt is time to select the four skills that will help you battle your way through this quest. Choose "
