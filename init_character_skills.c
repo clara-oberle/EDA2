@@ -79,7 +79,7 @@ Skill *init_thunderbolt(){
     thunderbolt->modifier[0] = 1; // HP is unchanged HP = HP*1
     thunderbolt->modifier[1] = 1.8; // ATK = ATK*1.8
     thunderbolt->modifier[2] = 1; // DEF is unchanged DEF = DEF*1
-    thunderbolt->duration_turn = 1; // modifies HP points for only that turn
+    thunderbolt->duration_turn = 1; // modifies ATK points for only that turn
     return thunderbolt;
 }
 
