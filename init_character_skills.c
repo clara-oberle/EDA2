@@ -69,3 +69,29 @@ Skill *init_healing_aura(){
     healing_aura->duration_turn = 1; // modifies HP points for only that turn
     return healing_aura;
 }
+
+Skill *init_thunderbolt(){
+    // ThunderBolt
+    Skill *thunderbolt = (Skill*)malloc(sizeof(Skill));
+    strcpy(thunderbolt->name, "ThunderBolt");
+    strcpy(thunderbolt->description, "ThunderBolt: Summon a bolt of lightning to strike the enemy, dealing damage equal to your attack points multiplied by 1.8. Can be used without limit in a battle");
+    thunderbolt->type = 0; // temporal modifier
+    thunderbolt->modifier[0] = 1; // HP is unchanged HP = HP*1
+    thunderbolt->modifier[1] = 1.8; // ATK = ATK*1.8
+    thunderbolt->modifier[2] = 1; // DEF is unchanged DEF = DEF*1
+    thunderbolt->duration_turn = 1; // modifies HP points for only that turn
+    return thunderbolt;
+}
+
+Skill *init_time_warp(){
+    // Time Warp
+    Skill *time_warp = (Skill*)malloc(sizeof(Skill));
+    strcpy(time_warp->name, "Time Warp");
+    strcpy(time_warp->description, "Rewind time to restore half your initial health points and undo any negative status effects. Can only be used once per battle");
+    time_warp->type = 1; // direct attack
+    time_warp->modifier[0] = 200; // HP = HP + 200
+    time_warp->modifier[1] = 1; // ATK is unchanged ATK = ATK*1
+    time_warp->modifier[2] = 1; // DEF is unchanged DEF = DEF*1
+    time_warp->duration_turn = 0; // modifies HP points "forever"
+    return time_warp;
+}
