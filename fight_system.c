@@ -8,13 +8,63 @@ int getRandomZeroOrOne() {
     return rand() % 2;
 }
 
+//initialize the queue
 void init_queue(Queue *queue) {
     queue->first = NULL;
     queue->last = NULL;
     queue->size = 0;
 }
+
+//check if empty
 bool is_empty(Queue *queue){
     return (queue->size == 0);
+}
+
+//to enqueue the char
+void enqueue_player(Queue *queue, Character *player){
+    //configure new fighter
+    Fighter* new_fighter = (Fighter*)malloc(sizeof(Fighter));
+ 
+    strcpy(new_fighter->name, player->name);
+    new_fighter->type = 0;
+    new_fighter->next= NULL;
+
+    if(is_empty(queue)){
+        //queue is empty, we configure the queue first and last
+        queue->first = new_fighter;
+        queue->last = new_fighter;
+    }
+    else{
+        //queue is not empty
+        //the next fighter from last is the new fighter, the new last is the new fighter
+        queue->last->next = new_fighter;
+        queue->last = new_fighter;
+    }
+    queue->size ++;
+}
+
+//to enqueue the enemy
+void enqueue_enemy(Queue *queue, Enemy *enemy){
+    //allocate memory for new fighter
+    Fighter* new_fighter = (Fighter*)malloc(sizeof(Fighter));
+
+    //configure the name, type and next
+    strcpy(new_fighter->name, enemy->name);
+    new_fighter->type = 1;
+    new_fighter->next = NULL;
+
+    if(is_empty(queue)){
+        //queue is empty, we configure first and last
+        queue->first = new_fighter;
+        queue->last = new_fighter;
+    }
+    else{
+        //queue is not empty
+        //the next fighter from last is the new fighter, the new last is the new fighter
+        queue->last->next = new_fighter;
+        queue->last = new_fighter;
+    }
+    queue->size++;
 }
 
 Queue *create_queue(Character *player, Enemy *enemy){
@@ -31,26 +81,15 @@ Queue *create_queue(Character *player, Enemy *enemy){
 
         //if random number is 0 --> char turn
         if(randomNumber == 0){
-            if(queue->size == 0){
-                //queue is empty, we configure the queue first 
-                strcpy(queue->first->name, player->name);
-                queue->first->type = 0;
-                queue->first->next = NULL;
-
-                //we also configure the queue last, which is the head
-                strcpy(queue->last->name, player->name);
-                queue->last->type = 0;
-                queue->last->next = NULL;
-            }
-            else{
-                //queue is not empty
-
-            }
+            enqueue_player(queue, player);
         }
         else{
-            //random numebr = 1 --> enemy turn
+            //random number = 1 --> enemy turn
+            enqueue_enemy(queue, enemy);
         }
     }
+    //queue is created, we can return it
+    return queue;
 }
 
 // Functions used in a fight:
