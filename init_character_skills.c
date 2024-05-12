@@ -7,7 +7,7 @@ Skill *init_shadowblade(){
     strcpy(shadow_blade->name, "Shadowblade strike");
     strcpy(shadow_blade->description, "Slash the enemy with a magical sword, reducing their health "
     "points by your attack points*1.5. Can be used without limit in a battle.");
-    shadow_blade->type = 1; // direct attack
+    shadow_blade->type = 0; // temporary attack
     shadow_blade->modifier[0] = 1; // HP is unchanged HP = HP*1
     shadow_blade->modifier[1] = 1.5; // ATK = ATK*1.5
     shadow_blade->modifier[2] =  1; // DEF is unchanged DEF = DEF*1
@@ -36,11 +36,11 @@ Skill *init_health_exchange(){
     strcpy(health_exchange->name, "Health Exchange");
     strcpy(health_exchange->description, "If your health points are dangerously low and you think your enemy "
     "is healthier, use this to swap your health points with theirs. This can only be used once in a battle");
-    health_exchange->type = 0; // temporal modifier 
+    health_exchange->type = 1; // direct attack
     health_exchange->modifier[0] = 1; // character HP will be swapped with enemy HP, but there is no multiplier
     health_exchange->modifier[1] = 1; // ATK is unchanged ATK = ATK*1
     health_exchange->modifier[2] =  1; // DEF is unchanged DEF = DEF*1
-    health_exchange->duration_turn = 1; // swaps the HPs only in that round
+    health_exchange->duration_turn = 0; // swaps the HPs "forever"
     return health_exchange;
 }
 
@@ -49,7 +49,7 @@ Skill *init_fireball(){
     Skill *fireball = (Skill*)malloc(sizeof(Skill));
     strcpy(fireball->name, "Fireball");
     strcpy(fireball->description, "Launch a fireball towards your enemy, dealing damage equal to your attack points multiplied by 2. Can be used without limit in a battle.");
-    fireball->type = 1; // direct attack
+    fireball->type = 0; // temporary modifier
     fireball->modifier[0] = 1; // HP is unchanged HP = HP*1
     fireball->modifier[1] = 2; // ATK = ATK*2
     fireball->modifier[2] = 1; // DEF is unchanged DEF = DEF*1
@@ -62,11 +62,11 @@ Skill *init_healing_aura(){
     Skill *healing_aura = (Skill*)malloc(sizeof(Skill));
     strcpy(healing_aura->name, "Healing Aura");
     strcpy(healing_aura->description, "Emit a healing aura, restoring a portion of your health points. Can be used without limit in a battle.");
-    healing_aura->type = 0; // temporal modifier
+    healing_aura->type = 1; // direct attack
     healing_aura->modifier[0] = 1.3; // HP increased by 30% of max HP (HP = HP*1.3)
     healing_aura->modifier[1] = 1; // ATK is unchanged ATK = ATK*1
     healing_aura->modifier[2] = 1; // DEF is unchanged DEF = DEF*1
-    healing_aura->duration_turn = 1; // modifies HP points for only that turn
+    healing_aura->duration_turn = 0; // modifies HP points "forever"
     return healing_aura;
 }
 
