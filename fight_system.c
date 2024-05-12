@@ -1,4 +1,5 @@
 #include "fight_system.h"
+#include <stdbool.h>
 
 Queue *create_queue(Character *player, Enemy *enemy){
     // Create the queue to decide the turns
