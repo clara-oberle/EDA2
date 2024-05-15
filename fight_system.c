@@ -106,7 +106,6 @@ void dequeue(FightQueue *queue){
     }
 }
 
-
 // Functions used in a fight:
 int generate_random_index(){
     // Randomly choose an index that will be used to choose the enemy's skill
@@ -205,28 +204,91 @@ bool find_in_queue(Skill *skill, OverlapQueue *queue){
     return false; // skill not found
 }
 
-void implement_player_skill(Skill *chosen_skill, Character *player, Enemy *enemy, OverlapQueue *overlap_queue){
-    if(chosen_skill->type == 0){ // if the skill is a temporal modifier
-        // remove finished skills (overlapping skills that have reached 0 duration turns):
-        remove_finished_skill(overlap_queue);
-        // find the modifiers of the overlapping skills (i.e. those with duration > 1) and implement them:
-        QueueSkill *current = overlap_queue->first;
-        QueueSkill *previous = NULL; 
-        while(current != NULL){ // loop through the overlap_queue
-            // find the modifiers for current skill
-            int modifiers[0] = current->
+bool one_time_skill(Skill *chosen_skill, SkillStack *player_used_skills){
+    if(strcmp(chosen_skill->name, "Health Exchange") && find_in_stack(chosen_skill, player_used_skills) == true){
+        return true;
+    } else if(strcmp(chosen_skill->name, "Time Warp") && find_in_stack(chosen_skill, player_used_skills) == true){
+        return true;
+    }
+    return false;
+}
 
-            //(check for sign of damage (dmg=def-atk))
+void add_to_stack(Skill *skill, SkillStack *stack){
+    ++stack->top;
+    stack->skills[stack->top] = skill;
+}
 
-
-            previous = current;
-            current = current->next;
+bool find_in_stack(Skill *skill, SkillStack *stack){
+    // looop through the stack starting from the top
+    for(int i = stack->top; i >= 0; i--){
+        // compare the skill in the stack to the target skill
+        if (stack->skills[i] == skill) {
+            return true; // if it's a match return true (found)
         }
+    }
+    return false; // otherwise, return false (not found)
+} 
 
-        // decrease the skill duration for the chosen and overlapping skills
+void find_used_DEF_modifiers_player(int modifiers[MAX_DURATION], OverlapQueue *queue, int fighter_type){
+    // Loop through the queue and find the skills that modify the figther_type's DEF: (player -> 0, enemy -> 1)
+    // if it is negative ignore it as it modifies the other fighter's DEF
+    // decrease the duration turn of the skill by one
+    // if there aren't any modifiers, add 1 to the array (DEF*1 means DEF stays the same):   
+}
 
-        // remove finished overlapping skills (i.e. duration turns have reached 0)
+void implement_player_skill(Skill *chosen_skill, Character *player, Enemy *enemy, OverlapQueue *overlap_queue, SkillStack *player_used_skills){
+    // add the skill to the player_used_skills stack
+    add_to_stack(chosen_skill, player_used_skills);
+    // remove finished skills (overlapping skills that have reached 0 duration turns):
+    remove_finished_skill(overlap_queue);
+    // variables to keep track of the player's modified ATK points and the enemy's modified DEF points:
+    int ATK_points = player->points[1];
+    int enemy_DEF = enemy->points[2];
 
+    /* Find the modifiers of the overlapping player skills (i.e. those with duration > 1) and modify the
+    ATK_points and enemy_DEF variables accordingly:*/
+    QueueSkill *current = overlap_queue->first;
+    QueueSkill *previous = NULL;
+    while(current != NULL){ // loop through the overlap_queue to find the modifiers for current skill
+        if(current->skill->type = 0){ // if it is a player's skill
+            // modify player's ATK (if modifier is 1 then it stays the same):
+            ATK_points *= current->skill->modifier[1];
+            // if the DEF modifier is negative then it affects the enemy's DEF:
+            if(current->skill->modifier[2] < 0){
+                enemy_DEF *= (abs(current->skill->modifier[2])); // use abs() function to get rid of the negative sign
+            }
+            --current->skill->duration_turn; // decrease the duration turn by one
+        }
+        // go to the next skill in the overlap_queue
+        previous = current;
+        current = current->next;
+    }
+
+    if(chosen_skill->type == 0){ // if the skill is a temporal modifier
+        // apply the modifiers of the chosen skill to the ATK_points:
+        ATK_points *= chosen_skill->modifier[1];
+        // if the enemy previously used a skill/s that increases their DEF calculate by how much (multiplier):
+        /* array to store the DEF modifiers: (this way if there are multiple defence skills in the overlap_queue
+        they can all be implemented) */
+        int DEF_modifiers[MAX_DURATION];
+        find_used_DEF_modifiers(DEF_modifiers, overlap_queue, 1);
+        int size = sizeof(DEF_modifiers)/sizeof(DEF_modifiers[0]); // size of the array
+        int total_DEF_modifier = 1; // variable to keep track of the total multiplier for player's DEF
+        for(int i=0; i<size; i++){
+            total_DEF_modifier *= DEF_modifiers[i];
+        }
+        // check if the player's chosen skill also modifies the enemy's DEF:
+        if(chosen_skill->modifier[2] < 0){
+                // if so, modify them:
+                enemy_DEF *= (abs(current->skill->modifier[2]));
+            }
+        // implement the damage to the enemy:
+        int damage = ATK_points - (enemy_DEF*total_DEF_modifier);
+        if(damage > 0){ // check that there is actual damage being done (DEF doesn't stop all ATK)
+            enemy->points[0] -= damage; // enemy HP = enemy HP - damage
+        }
+        // decrease the skill duration for the chosen_skill
+        --chosen_skill->duration_turn;
 
     } else if(chosen_skill->type == 1){ // if the skill is a direct attack
         // implement the special skill: (each has to be done separately)
@@ -243,24 +305,59 @@ void implement_player_skill(Skill *chosen_skill, Character *player, Enemy *enemy
 }
 
 void implement_enemy_skill(Skill *chosen_skill, Character *player, Enemy *enemy, OverlapQueue *overlap_queue){
+    // remove finished skills (overlapping skills that have reached 0 duration turns):
+    remove_finished_skill(overlap_queue);
+    // variables to keep track of the enemy's modified ATK points and the player's modified DEF points:
+    int ATK_points = enemy->points[1];
+    int player_DEF = player->points[2];
+
+    /* Find the modifiers of the overlapping enemy skills (i.e. those with duration > 1) and modify the
+    ATK_points and player_DEF variables accordingly:*/
+    QueueSkill *current = overlap_queue->first;
+    QueueSkill *previous = NULL;
+    while(current != NULL){ // loop through the overlap_queue to find the modifiers for current skill
+        if(current->skill->type == 1){
+            // modify enemy's ATK (if modifier is 1 then it stays the same):
+            ATK_points *= current->skill->modifier[1];
+            // if the DEF modifier is negative then it affects the player's DEF:
+            if(current->skill->modifier[2] < 0){
+                player_DEF *= (abs(current->skill->modifier[2])); // use abs() function to get rid of the negative sign
+            }
+            --current->skill->duration_turn; // decrease the duration turn by one
+            }
+        // go to the next skill in the overlap_queue
+        previous = current;
+        current = current->next;
+    }
+
     if(chosen_skill->type == 0){ // if the skill is a temporal modifier
-        // find the modifiers of the overlapping skills (i.e. those with duration > 1)
-
-        // check for player defence 
-
-        // apply the modifiers of the chosen skill and the overlapping skills
-        //(check for sign of damage (dmg=def-atk))
-
-        // decrease the skill duration for the chosen and overlapping skills
-
-        // remove finished overlapping skills (i.e. duration turns have reached 0)
+        // apply the modifiers of the chosen skill to the ATK_points:
+        ATK_points *= chosen_skill->modifier[1];
+        // if the player previously used a skill/s that increases their DEF calculate by how much (multiplier):
+        int DEF_modifiers[MAX_DURATION]; // array to store the DEF modifiers
+        find_used_DEF_modifiers(DEF_modifiers, overlap_queue, 0);
+        int size = sizeof(DEF_modifiers)/sizeof(DEF_modifiers[0]); // size of the array
+        int total_DEF_modifier = 1; // variable to keep track of the total multiplier for player's DEF
+        for(int i=0; i<size; i++){
+            total_DEF_modifier *= DEF_modifiers[i];
+        }
+        // check if the enemy's chosen skill also modifies the player's DEF:
+        if(chosen_skill->modifier[2] < 0){
+                // if so, modify them:
+                player_DEF *= (abs(current->skill->modifier[2]));
+            }
+        // implement the damage to the enemy:
+        int damage = ATK_points - (player_DEF*total_DEF_modifier);
+        if(damage > 0){ // check that there is actual damage being done (DEF doesn't stop all ATK)
+            player->points[0] -= damage; // player HP = player HP - damage
+        }
+        // decrease the skill duration for the chosen_skill
+        --chosen_skill->duration_turn;
 
     } else if(chosen_skill->type == 1){ // if the skill is a direct attack
         // implement the special skill: (each has to be done separately)
         if(strcmp(chosen_skill->name, "") == 0){
-
-        } else if(strcmp(chosen_skill->name, "") == 0){
-           
+            // To do
         }
     }
 }
@@ -288,6 +385,4 @@ void end_fight(){
     /* When fights end, in case of victory, the player is prompted with the next scene and its 
     narrative. On the contrary, in case of defeat, the player is prompted with the ability to 
     restart the game or restart the scenario. */
-
-    // I think we will have to code this in lab 3 when we do the graph
 }

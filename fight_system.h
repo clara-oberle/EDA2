@@ -2,6 +2,7 @@
 #define FIGHT_SYSTEM_H
 
 #define MAX_TURNS 20 
+#define MAX_DURATION 10 // maximum duration turns of a skill
 #include "struct_definitions.h"
 
 // Queue to decide turns:
@@ -34,6 +35,6 @@ typedef struct{
 typedef struct{
     int top;
     Skill *skills[MAX_TURNS];
-}TimeStrikeStack;
+}SkillStack;
 
 #endif
