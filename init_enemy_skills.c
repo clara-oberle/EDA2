@@ -4,7 +4,7 @@
 Skill *init_shadow_strike(){
     Skill *shadow_strike = (Skill*)malloc(sizeof(Skill));
     strcpy(shadow_strike->name, "Shadow Strike");
-    strcpy(shadow_strike->description, "Increases enemy's attack for a single turn.");
+    strcpy(shadow_strike->description, "Deals moderate damage to the player.");
     shadow_strike->type = 0; // Temporary modifier
     shadow_strike->modifier[0] = 1; // HP is unchanged (HP*1)
     shadow_strike->modifier[1] = 1.2; // moderate damage (ATK*1.2)
@@ -30,8 +30,8 @@ Skill *init_cutlass_slash(){
     strcpy(cutlass_slash->name, "Cutlass Slash");
     strcpy(cutlass_slash->description, "Swings cutlass at the player, increasing enemy's attack for one turn");
     cutlass_slash->type = 1; // direct attack
-    cutlass_slash->modifier[0] = 0.95; // moderate damage to player (HP player = HP*0.95)
-    cutlass_slash->modifier[1] = 1; // ATK is unchanged
+    cutlass_slash->modifier[0] = 1; // 
+    cutlass_slash->modifier[1] = 1.3; // ATK 
     cutlass_slash->modifier[2] = 1; // DEF is unchanged
     cutlass_slash->duration_turn = 1; // modifies HP points for only that turn
     return cutlass_slash;
