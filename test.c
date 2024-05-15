@@ -59,7 +59,7 @@ int main(){
                     scanf("%d", &skill_number);
                     Skill *chosen_skill = (Skill*)malloc(sizeof(Skill));
                     init_skill_copy(chosen_skill, &new_character->skills[skill_number-1]);
-                }
+                } // skills of duration more than 1 can only be chosen once in the battle
                 implement_player_skill(chosen_skill, new_character, new_enemy, overlap_queue_player);
                 if(chosen_skill->duration_turn != 0){
                     enqueue_overlap_skill(overlap_queue_player, chosen_skill);

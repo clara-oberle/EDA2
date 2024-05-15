@@ -4,11 +4,11 @@
 Skill *init_shadow_strike(){
     Skill *shadow_strike = (Skill*)malloc(sizeof(Skill));
     strcpy(shadow_strike->name, "Shadow Strike");
-    strcpy(shadow_strike->description, "Deals moderate damage to the playerr.");
-    shadow_strike->type = 1; // direct attack
-    shadow_strike->modifier[0] = NULL; // HP is unchanged
-    shadow_strike->modifier[1] = 1.2; // moderate damage
-    shadow_strike->modifier[2] = NULL; // DEF is unchanged
+    strcpy(shadow_strike->description, "Deals moderate damage to the player.");
+    shadow_strike->type = 0; // Temporary modifier
+    shadow_strike->modifier[0] = 1; // HP is unchanged (HP*1)
+    shadow_strike->modifier[1] = 1.2; // moderate damage (ATK*1.2)
+    shadow_strike->modifier[2] = 1; // DEF is unchanged
     shadow_strike->duration_turn = 1; // modifies ATK points for only that turn
     return shadow_strike;
 }
@@ -18,10 +18,10 @@ Skill *init_evasive_maneuver(){
     strcpy(evasive_maneuver->name, "Evasive Maneuver");
     strcpy(evasive_maneuver->description, "Increases enemy evasion for a single turn.");
     evasive_maneuver->type = 0; // temporal modifier
-    evasive_maneuver->modifier[0] = NULL; // HP is unchanged
-    evasive_maneuver->modifier[1] = NULL; // ATK is unchanged
-    evasive_maneuver->modifier[2] = 1.5; // increases evasion
-    evasive_maneuver->duration_turn = 1; // modifies DEF points for only that turn
+    evasive_maneuver->modifier[0] = 1; // HP is unchanged
+    evasive_maneuver->modifier[1] = 1; // ATK is unchanged
+    evasive_maneuver->modifier[2] = 1.5; // increases evasion (DEF*1.5)
+    evasive_maneuver->duration_turn = 2; // modifies DEF for the next turn, hence 2 (the current turn + next turn)
     return evasive_maneuver;
 }
 
@@ -30,10 +30,10 @@ Skill *init_cloak_of_darkness(){
     strcpy(cloak_of_darkness->name, "Cloak of Darkness");
     strcpy(cloak_of_darkness->description, "Grants the enemy temporary invisibility, making them immune to player attacks for one turn.");
     cloak_of_darkness->type = 0; // temporal modifier
-    cloak_of_darkness->modifier[0] = NULL; // HP is unchanged
-    cloak_of_darkness->modifier[1] = NULL; // ATK is unchanged
-    cloak_of_darkness->modifier[2] = NULL; // DEF is unchanged
-    cloak_of_darkness->duration_turn = 1; // makes enemy immune for only that turn
+    cloak_of_darkness->modifier[0] = 1; // HP is unchanged
+    cloak_of_darkness->modifier[1] = 1; // ATK is unchanged
+    cloak_of_darkness->modifier[2] = 1; // DEF is unchanged
+    cloak_of_darkness->duration_turn = 2; // makes enemy immune for the next turn
     return cloak_of_darkness;
 }
 
@@ -43,9 +43,9 @@ Skill *init_vine_bind(){
     strcpy(vine_bind->name, "Vine Bind");
     strcpy(vine_bind->description, "Traps the player with twisting vines, making them slower and easier to hit for one turn.");
     vine_bind->type = 0; // temporal modifier
-    vine_bind->modifier[0] = NULL; // HP is unchanged
-    vine_bind->modifier[1] = 0.8; // makes player slower
-    vine_bind->modifier[2] = NULL; // DEF is unchanged
+    vine_bind->modifier[0] = 1; // HP is unchanged
+    vine_bind->modifier[1] = 1.5; // makes player slower == make enemy faster
+    vine_bind->modifier[2] = 1; // DEF is unchanged
     vine_bind->duration_turn = 1; // modifies speed for only that turn
     return vine_bind;
 }
@@ -55,10 +55,10 @@ Skill *init_thorny_veil(){
     strcpy(thorny_veil->name, "Thorny Veil");
     strcpy(thorny_veil->description, "Shrouds the enemy in darkness, making them harder to hit and giving them a chance to avoid attacks for one turn.");
     thorny_veil->type = 0; // temporal modifier
-    thorny_veil->modifier[0] = NULL; // HP is unchanged
-    thorny_veil->modifier[1] = NULL; // ATK is unchanged
+    thorny_veil->modifier[0] = 1; // HP is unchanged
+    thorny_veil->modifier[1] = 1; // ATK is unchanged
     thorny_veil->modifier[2] = 1.2; // increases evasion
-    thorny_veil->duration_turn = 1; // modifies DEF points for only that turn
+    thorny_veil->duration_turn = 2; // modifies DEF points for the next turn
     return thorny_veil;
 }
 
@@ -68,8 +68,8 @@ Skill *init_life_drain(){
     strcpy(life_drain->description, "Drains the player's health, hurting them while healing the enemy a bit with the stolen life force.");
     life_drain->type = 1; // direct attack
     life_drain->modifier[0] = 0.5; // drains player's health
-    life_drain->modifier[1] = NULL; // ATK is unchanged
-    life_drain->modifier[2] = 0.2; // heals enemy
+    life_drain->modifier[1] = 1; // ATK is unchanged
+    life_drain->modifier[2] = 1.2; // heals enemy (DEF = DEF*1.2)
     life_drain->duration_turn = 1; // modifies HP points for only that turn
     return life_drain;
 }
@@ -80,9 +80,9 @@ Skill *init_flame_burst(){
     strcpy(flame_burst->name, "Flame Burst");
     strcpy(flame_burst->description, "Inflicts fire damage over time on the player.");
     flame_burst->type = 1; // direct attack
-    flame_burst->modifier[0] = 0.5; // fire damage over time
-    flame_burst->modifier[1] = NULL; // ATK is unchanged
-    flame_burst->modifier[2] = NULL; // DEF is unchanged
+    flame_burst->modifier[0] = 0.9; // fire damage over time (HP = HP*0.9)
+    flame_burst->modifier[1] = 1; // ATK is unchanged
+    flame_burst->modifier[2] = 1; // DEF is unchanged
     flame_burst->duration_turn = 3; // reduces HP points every 3 turns
     return flame_burst;
 }
@@ -92,10 +92,10 @@ Skill *init_infernal_barrier(){
     strcpy(infernal_barrier->name, "Infernal Barrier");
     strcpy(infernal_barrier->description, "Shields the enemy, reducing incoming damage for one turn.");
     infernal_barrier->type = 0; // temporal modifier
-    infernal_barrier->modifier[0] = NULL; // HP is unchanged
-    infernal_barrier->modifier[1] = NULL; // ATK is unchanged
+    infernal_barrier->modifier[0] = 1; // HP is unchanged
+    infernal_barrier->modifier[1] = 1; // ATK is unchanged
     infernal_barrier->modifier[2] = 1.5; // reduces damage
-    infernal_barrier->duration_turn = 1; // modifies DEF points for only that turn
+    infernal_barrier->duration_turn = 2; // modifies DEF points for the next turn
     return infernal_barrier;
 }
 
@@ -105,8 +105,8 @@ Skill *init_heatwave(){
     strcpy(heatwave->description, "Inflicts damage to the player while reducing their defense for one turn.");
     heatwave->type = 1; // direct attack
     heatwave->modifier[0] = 0.8; // inflicts damage
-    heatwave->modifier[1] = NULL; // ATK is unchanged
-    heatwave->modifier[2] = 0.8; // reduces defense
+    heatwave->modifier[1] = 1; // ATK is unchanged
+    heatwave->modifier[2] = 0.8; // reduces defense of character (def char = DEF*0.8)
     heatwave->duration_turn = 1; // modifies HP and DEF points for only that turn
     return heatwave;
 }
@@ -118,9 +118,9 @@ Skill *init_stone_smash(){
     strcpy(stone_smash->name, "Stone Smash");
     strcpy(stone_smash->description, "The golem smashes the ground with its stone fist, causing damage to the player.");
     stone_smash->type = 1; // direct attack
-    stone_smash->modifier[0] = 1.8; // high damage
-    stone_smash->modifier[1] = NULL; // ATK is unchanged
-    stone_smash->modifier[2] = NULL; // DEF is unchanged
+    stone_smash->modifier[0] = 1.8; // high damage to player (HP char = HP*0.8)
+    stone_smash->modifier[1] = 1; // ATK is unchanged
+    stone_smash->modifier[2] = 1; // DEF is unchanged
     stone_smash->duration_turn = 1; // modifies ATK points for only that turn
     return stone_smash;
 }
@@ -128,11 +128,11 @@ Skill *init_stone_smash(){
 Skill *init_arcane_blast(){
     Skill *arcane_blast = (Skill*)malloc(sizeof(Skill));
     strcpy(arcane_blast->name, "Arcane Blast");
-    strcpy(arcane_blast->description, "The golem unleashes a burst of magical energy towards the player, dealing damage.");
-    arcane_blast->type = 1; // direct attack
-    arcane_blast->modifier[0] = 1.5; // moderate damage
-    arcane_blast->modifier[1] = NULL; // ATK is unchanged
-    arcane_blast->modifier[2] = NULL; // DEF is unchanged
+    strcpy(arcane_blast->description, "The golem unleashes a burst of magical energy towards the player.");
+    arcane_blast->type = 0; // temporary modifier
+    arcane_blast->modifier[0] = 1; // HP is unchanged
+    arcane_blast->modifier[1] = 1.5; // ATK = ATK*1.5
+    arcane_blast->modifier[2] = 1; // DEF is unchanged
     arcane_blast->duration_turn = 1; // modifies ATK points for only that turn
     return arcane_blast;
 }
@@ -142,10 +142,10 @@ Skill *init_protective_aura(){
     strcpy(protective_aura->name, "Protective Aura");
     strcpy(protective_aura->description, "The golem surrounds itself with a protective aura, reducing damage taken for a short time.");
     protective_aura->type = 0; // temporal modifier
-    protective_aura->modifier[0] = NULL; // HP is unchanged
-    protective_aura->modifier[1] = NULL; // ATK is unchanged
+    protective_aura->modifier[0] = 1; // HP is unchanged
+    protective_aura->modifier[1] = 1; // ATK is unchanged
     protective_aura->modifier[2] = 1.5; // reduces damage
-    protective_aura->duration_turn = 1; // modifies DEF points for only that turn
+    protective_aura->duration_turn = 2; // modifies DEF points for the next turn
     return protective_aura;
 }
 
@@ -155,10 +155,10 @@ Skill *init_cutlass_slash(){
     strcpy(cutlass_slash->name, "Cutlass Slash");
     strcpy(cutlass_slash->description, "Captain Blackbeard swings his cutlass at the player, dealing damage.");
     cutlass_slash->type = 1; // direct attack
-    cutlass_slash->modifier[0] = 1.6; // moderate damage
-    cutlass_slash->modifier[1] = NULL; // ATK is unchanged
-    cutlass_slash->modifier[2] = NULL; // DEF is unchanged
-    cutlass_slash->duration_turn = 1; // modifies ATK points for only that turn
+    cutlass_slash->modifier[0] = 0.95; // moderate damage to player (HP player = HP*0.95)
+    cutlass_slash->modifier[1] = 1; // ATK is unchanged
+    cutlass_slash->modifier[2] = 1; // DEF is unchanged
+    cutlass_slash->duration_turn = 1; // modifies HP points for only that turn
     return cutlass_slash;
 }
 
@@ -167,10 +167,10 @@ Skill *init_rapid_dodge(){
     strcpy(rapid_dodge->name, "Evasive Maneuver");
     strcpy(rapid_dodge->description, "Captain Blackbeard quickly dodges, making him harder to hit for a turn.");
     rapid_dodge->type = 0; // temporal modifier
-    rapid_dodge->modifier[0] = NULL; // HP is unchanged
-    rapid_dodge->modifier[1] = NULL; // ATK is unchanged
+    rapid_dodge->modifier[0] = 1; // HP is unchanged
+    rapid_dodge->modifier[1] = 1; // ATK is unchanged
     rapid_dodge->modifier[2] = 2; // increases evasion
-    rapid_dodge->duration_turn = 1; // modifies DEF points for only that turn
+    rapid_dodge->duration_turn = 2; // modifies DEF points for only that turn
     return rapid_dodge;
 }
 
@@ -179,9 +179,9 @@ Skill *init_rally_crew(){
     strcpy(rally_crew->name, "Rally Crew");
     strcpy(rally_crew->description, "Captain Blackbeard calls for backup, boosting his attack for a turn.");
     rally_crew->type = 0; // temporal modifier
-    rally_crew->modifier[0] = NULL; // HP is unchanged
+    rally_crew->modifier[0] = 1; // HP is unchanged
     rally_crew->modifier[1] = 1.5; // increases ATK
-    rally_crew->modifier[2] = NULL; // DEF is unchanged
+    rally_crew->modifier[2] = 1; // DEF is unchanged
     rally_crew->duration_turn = 1; // modifies ATK points for only that turn
     return rally_crew;
 }
@@ -191,9 +191,9 @@ Skill *init_storm_strike(){
     strcpy(storm_strike->name, "Storm Strike");
     strcpy(storm_strike->description, "Siren summons a bolt of lightning to strike the player, causing damage.");
     storm_strike->type = 1; // direct attack
-    storm_strike->modifier[0] = 1.2; // moderate damage
-    storm_strike->modifier[1] = NULL; // ATK is unchanged
-    storm_strike->modifier[2] = NULL; // DEF is unchanged
+    storm_strike->modifier[0] = 0.92; // moderate damage (HP player = HP*0.92)
+    storm_strike->modifier[1] = 1; // ATK is unchanged
+    storm_strike->modifier[2] = 1; // DEF is unchanged
     storm_strike->duration_turn = 1; // modifies ATK points for only that turn
     return storm_strike;
 }
@@ -203,10 +203,10 @@ Skill *init_ensnaring_song(){
     strcpy(ensnaring_song->name, "Ensnaring Song");
     strcpy(ensnaring_song->description, "Siren sings a mesmerizing song, immobilizing the player for a turn.");
     ensnaring_song->type = 0; // temporal modifier
-    ensnaring_song->modifier[0] = NULL; // HP is unchanged
-    ensnaring_song->modifier[1] = NULL; // ATK is unchanged
-    ensnaring_song->modifier[2] = NULL; // DEF is unchanged
-    ensnaring_song->duration_turn = 1; // immobilizes player for only that turn
+    ensnaring_song->modifier[0] = 1; // HP is unchanged
+    ensnaring_song->modifier[1] = 1; // ATK is unchanged
+    ensnaring_song->modifier[2] = 0; // DEF of player is 0 for the next turn
+    ensnaring_song->duration_turn = 2; // immobilizes player for the next turn
     return ensnaring_song;
 }
 
@@ -214,10 +214,10 @@ Skill *init_healing_wave(){
     Skill *healing_wave = (Skill*)malloc(sizeof(Skill));
     strcpy(healing_wave->name, "Healing Wave");
     strcpy(healing_wave->description, "Siren sends a wave of healing energy, restoring health to herself or allies.");
-    healing_wave->type = 0; // temporal modifier
-    healing_wave->modifier[0] = 0.2; // restores health
-    healing_wave->modifier[1] = NULL; // ATK is unchanged
-    healing_wave->modifier[2] = NULL; // DEF is unchanged
+    healing_wave->type = 1; // direct attack
+    healing_wave->modifier[0] = 1.2; // restores health HP = HP*1.2
+    healing_wave->modifier[1] = 1; // ATK is unchanged
+    healing_wave->modifier[2] = 1; // DEF is unchanged
     healing_wave->duration_turn = 1; // modifies HP points for only that turn
     return healing_wave;
 }
@@ -228,9 +228,9 @@ Skill *init_shadow_leap(){
     strcpy(shadow_leap->name, "Shadow Leap");
     strcpy(shadow_leap->description, "The ghoul swiftly vanishes into the darkness and reappears behind its prey, launching a surprise attack.");
     shadow_leap->type = 1; // direct attack
-    shadow_leap->modifier[0] = 1.6; // moderate damage
-    shadow_leap->modifier[1] = NULL; // ATK is unchanged
-    shadow_leap->modifier[2] = NULL; // DEF is unchanged
+    shadow_leap->modifier[0] = 1; // HP unchanged
+    shadow_leap->modifier[1] = 1; // ATK is unchanged --> attacks the player with it's current atk points
+    shadow_leap->modifier[2] = 1; // DEF is unchanged
     shadow_leap->duration_turn = 1; // modifies ATK points for only that turn
     return shadow_leap;
 }
@@ -240,10 +240,10 @@ Skill *init_reflective_aura(){
     strcpy(reflective_aura->name, "Reflective Aura");
     strcpy(reflective_aura->description, "The ghoul creates a reflective aura, reflecting a portion of incoming attacks back at the attacker.");
     reflective_aura->type = 0; // temporal modifier
-    reflective_aura->modifier[0] = NULL; // HP is unchanged
-    reflective_aura->modifier[1] = NULL; // ATK is unchanged
-    reflective_aura->modifier[2] = 0.5; // reflects damage back at attacker
-    reflective_aura->duration_turn = 1; // modifies DEF points for only that turn
+    reflective_aura->modifier[0] = 1; // HP is unchanged
+    reflective_aura->modifier[1] = 1.5; // ATK increases
+    reflective_aura->modifier[2] = 1; // DEF is unchanged
+    reflective_aura->duration_turn = 1; // modifies ATK points for only that turn
     return reflective_aura;
 }
 
@@ -252,9 +252,9 @@ Skill *init_soul_grasp(){
     strcpy(soul_grasp->name, "Soul Grasp");
     strcpy(soul_grasp->description, "The ghoul extends its claws to grasp at the soul of its prey, draining a portion of their health points.");
     soul_grasp->type = 1; // direct attack
-    soul_grasp->modifier[0] = 0.8; // drains health
-    soul_grasp->modifier[1] = NULL; // ATK is unchanged
-    soul_grasp->modifier[2] = NULL; // DEF is unchanged
+    soul_grasp->modifier[0] = 0.8; // drains health HP player = HP*0.8
+    soul_grasp->modifier[1] = 1; // ATK is unchanged
+    soul_grasp->modifier[2] = 1; // DEF is unchanged
     soul_grasp->duration_turn = 1; // modifies ATK points for only that turn
     return soul_grasp;
 }
