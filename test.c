@@ -41,8 +41,7 @@ int main(){
     new_enemy->skills[2] = *cloak_of_darkness;
 
     FightQueue *fight_queue = create_queue(new_character, new_enemy);
-    OverlapQueue *overlap_queue_player = (OverlapQueue*)malloc(sizeof(OverlapQueue));
-    OverlapQueue *overlap_queue_enemy = (OverlapQueue*)malloc(sizeof(OverlapQueue));
+    OverlapQueue *overlap_queue = (OverlapQueue*)malloc(sizeof(OverlapQueue));
 
     while(fight_queue->size != 0){ // check that the queue is not empty
         if(check_win(new_character, new_enemy) == -1){ // if they both still have HP
@@ -53,16 +52,16 @@ int main(){
                 scanf("%d", &skill_number);
                 Skill *chosen_skill = (Skill*)malloc(sizeof(Skill));
                 init_skill_copy(chosen_skill, &new_character->skills[skill_number-1]);
-                while(find_in_queue(chosen_skill, overlap_queue_player) == true){
+                while(find_in_queue(chosen_skill, overlap_queue) == true){
                     free_skill_copy(chosen_skill);
                     printf("This skill still has duration turns left. Choose a different skill: ");
                     scanf("%d", &skill_number);
                     Skill *chosen_skill = (Skill*)malloc(sizeof(Skill));
                     init_skill_copy(chosen_skill, &new_character->skills[skill_number-1]);
                 } // skills of duration more than 1 can only be chosen once in the battle
-                implement_player_skill(chosen_skill, new_character, new_enemy, overlap_queue_player);
+                implement_player_skill(chosen_skill, new_character, new_enemy, overlap_queue);
                 if(chosen_skill->duration_turn != 0){
-                    enqueue_overlap_skill(overlap_queue_player, chosen_skill);
+                    enqueue_overlap_skill(overlap_queue, chosen_skill, 0);
                 } else{
                     free_skill_copy(chosen_skill);
                 }
@@ -70,14 +69,14 @@ int main(){
                 Skill *random_skill = (Skill*)malloc(sizeof(Skill));
                 int index = generate_random_index();
                 init_skill_copy(random_skill, &new_enemy->skills[index]);
-                while(find_in_queue(random_skill, overlap_queue_enemy) == true){
+                while(find_in_queue(random_skill, overlap_queue) == true){
                     free_skill_copy(random_skill);
                     int index = generate_random_index();
                     init_skill_copy(random_skill, &new_enemy->skills[index]);
                 }
-                implement_enemy_skill(random_skill, new_character, new_enemy, overlap_queue_enemy);
+                implement_enemy_skill(random_skill, new_character, new_enemy, overlap_queue);
                 if(random_skill->duration_turn =! 0){
-                    enqueue_overlap_skill(overlap_queue_enemy, random_skill);
+                    enqueue_overlap_skill(overlap_queue, random_skill, 1);
                 } else{
                     free_skill_copy(random_skill);
                 }

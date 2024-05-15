@@ -19,6 +19,7 @@ typedef struct{
 
 // Queue to keep track of skills that have duration > 1:
 typedef struct{
+    int fighter; // what fighter the skill belongs to: character -> 0, enemy -> 1
     Skill *skill;
     QueueSkill *next;
 }QueueSkill;

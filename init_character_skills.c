@@ -64,13 +64,13 @@ Skill *init_healing_aura(){
     // Healing Auraa
     Skill *healing_aura = (Skill*)malloc(sizeof(Skill));
     strcpy(healing_aura->name, "Healing Aura");
-    strcpy(healing_aura->description, "Emit a healing aura, restoring a portion of your health points. "
-    "Can be used without limit in a battle.");
-    healing_aura->type = 1; // direct attack
-    healing_aura->modifier[0] = 1.3; // HP increased by 30% of max HP (HP = HP*1.3)
+    strcpy(healing_aura->description, "Emit a healing aura, increasing your defence points by 30 percent "
+    "against your enemy's next attack. Can be used without limit in a battle.");
+    healing_aura->type = 0; // direct attack
+    healing_aura->modifier[0] = 1.3; // HP increased by 30% (HP = HP*1.3)
     healing_aura->modifier[1] = 1; // ATK is unchanged ATK = ATK*1
     healing_aura->modifier[2] = 1; // DEF is unchanged DEF = DEF*1
-    healing_aura->duration_turn = 0; // modifies HP points "forever"
+    healing_aura->duration_turn = 1; // modifies HP points "forever"
     return healing_aura;
 }
 
@@ -93,8 +93,8 @@ Skill *init_time_warp(){
     // Time Warp
     Skill *time_warp = (Skill*)malloc(sizeof(Skill));
     strcpy(time_warp->name, "Time Warp");
-    strcpy(time_warp->description, "Rewind time to restore half your initial health points and undo "
-    "any negative status effects. Can only be used once per battle.");
+    strcpy(time_warp->description, "Rewind time to restore half your initial health points."
+    "Can only be used once per battle.");
     time_warp->type = 1; // direct attack
     time_warp->modifier[0] = 1; // HP will increment by 200 but there is no multiplier
     time_warp->modifier[1] = 1; // ATK is unchanged ATK = ATK*1

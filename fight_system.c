@@ -114,12 +114,13 @@ int generate_random_index(){
     return rand() % 3; // select a random index from 0 to 2
 }
 
-void enqueue_overlap_skill(OverlapQueue *queue, Skill *skill){
+void enqueue_overlap_skill(OverlapQueue *queue, Skill *skill, int fighter_type){
     // Add the skill into the queue of skills that have duration > 1:
     QueueSkill *q_skill = (QueueSkill *)malloc(sizeof(QueueSkill));
     // initialise q_skill
     q_skill->skill = skill;
     q_skill->next = NULL;
+    q_skill->fighter = fighter_type;
     
     // if queue is empty, set head and tail to q_skill
     if (queue->size == 0) {
@@ -155,7 +156,7 @@ void remove_finished_skill(OverlapQueue *queue){
                 // free the memory of the removed element
                 QueueSkill *temp = current; // create a temporary pointer to the element
                 current = current->next; // go the next element in the queue
-                free(temp); // free the memory of the already analysed element
+                free(temp); // free the memory of the removed element
 
                 queue->size--; // decrease the size of the queue by 1
             
@@ -196,7 +197,7 @@ bool find_in_queue(Skill *skill, OverlapQueue *queue){
     // Loop through the queue:
     while (current != NULL) {
         // Compare the skill name of the current skill with the target skill name
-        if (current->skill->name == skill->name) {
+        if (current->skill->name == skill->name){
             return true; // skill found
         }
         current = current->next; // go to next skill
@@ -206,9 +207,49 @@ bool find_in_queue(Skill *skill, OverlapQueue *queue){
 
 void implement_player_skill(Skill *chosen_skill, Character *player, Enemy *enemy, OverlapQueue *overlap_queue){
     if(chosen_skill->type == 0){ // if the skill is a temporal modifier
+        // remove finished skills (overlapping skills that have reached 0 duration turns):
+        remove_finished_skill(overlap_queue);
+        // find the modifiers of the overlapping skills (i.e. those with duration > 1) and implement them:
+        QueueSkill *current = overlap_queue->first;
+        QueueSkill *previous = NULL; 
+        while(current != NULL){ // loop through the overlap_queue
+            // find the modifiers for current skill
+            int modifiers[0] = current->
+
+            //(check for sign of damage (dmg=def-atk))
+
+
+            previous = current;
+            current = current->next;
+        }
+
+        // decrease the skill duration for the chosen and overlapping skills
+
+        // remove finished overlapping skills (i.e. duration turns have reached 0)
+
+
+    } else if(chosen_skill->type == 1){ // if the skill is a direct attack
+        // implement the special skill: (each has to be done separately)
+        if(strcmp(chosen_skill->name, "Health Exchange") == 0){
+            // swap the enemy and player's HP
+            int temp = enemy->points[0];
+            enemy->points[0] = player->points[0];
+            player->points[0] = temp;
+        } else if(strcmp(chosen_skill->name, "Time Warp") == 0){
+            // restore half of the player's initial HP
+            player->points[0] += 200;
+        }
+    }
+}
+
+void implement_enemy_skill(Skill *chosen_skill, Character *player, Enemy *enemy, OverlapQueue *overlap_queue){
+    if(chosen_skill->type == 0){ // if the skill is a temporal modifier
         // find the modifiers of the overlapping skills (i.e. those with duration > 1)
 
+        // check for player defence 
+
         // apply the modifiers of the chosen skill and the overlapping skills
+        //(check for sign of damage (dmg=def-atk))
 
         // decrease the skill duration for the chosen and overlapping skills
 
@@ -216,13 +257,12 @@ void implement_player_skill(Skill *chosen_skill, Character *player, Enemy *enemy
 
     } else if(chosen_skill->type == 1){ // if the skill is a direct attack
         // implement the special skill: (each has to be done separately)
+        if(strcmp(chosen_skill->name, "") == 0){
 
+        } else if(strcmp(chosen_skill->name, "") == 0){
+           
+        }
     }
-
-}
-
-void implement_enemy_skill(Skill *chosen_skill, Character *player, Enemy *enemy, OverlapQueue *overlap_queue){
-    
 }
 
 int check_win(Character *player, Enemy *enemy){ 
