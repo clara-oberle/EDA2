@@ -15,7 +15,19 @@ typedef struct{
     Fighter *first; //head
     Fighter *last; //tail
     int size; //size of the queue
-}Queue;
+}FightQueue;
+
+// Queue to keep track of skills that have duration > 1:
+typedef struct{
+    Skill *skill;
+    QueueSkill *next;
+}QueueSkill;
+
+typedef struct{
+    QueueSkill *first; //head
+    QueueSkill *last; //tail
+    int size; //size of the queue
+}OverlapQueue;
 
 // Stack to keep track of player's moves:
 typedef struct{

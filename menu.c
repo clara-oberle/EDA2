@@ -52,7 +52,7 @@ int main(){
         // Choose 4 skills
         // Initialise the skills:
         Skill *shadow_blade = init_shadowblade();
-        Skill *energy_barrier = init_energy_barrier();
+        Skill *frostbite = init_frostbite();
         Skill *health_exchange = init_health_exchange();
         Skill *fireball = init_fireball();
         Skill *healing_aura = init_healing_aura();
@@ -62,7 +62,7 @@ int main(){
         // Let the player preview the skills (see a description of each before choosing)
         printf("\nIt is time to select the four skills that will help you battle your way through this quest. Choose "
         "wisely for your fate relies on them. You can view a description of each skill before selecting it using the menu below:\n"
-        "1. Shadowblade strike\n2. Energy Barrier\n3. Health exchange\n4. Fireball\n5. Healing Aura\n6. ThunderBolt\n7. Time Warp\n");
+        "1. Shadowblade strike\n2. Frostbite\n3. Health exchange\n4. Fireball\n5. Healing Aura\n6. ThunderBolt\n7. Time Warp\n");
         printf("\nEnter the number of the skill you wish to preview. When you are done previewing them enter -1: ");
         int skill_preview;
         scanf("%d", &skill_preview);
@@ -72,7 +72,7 @@ int main(){
                 printf("- %s:\n%s\n", shadow_blade->name, shadow_blade->description);
                 break;
             case 2:
-                printf("- %s:\n%s\n", energy_barrier->name, energy_barrier->description);
+                printf("- %s:\n%s\n", frostbite->name, frostbite->description);
                 break;
             case 3:
                 printf("- %s:\n%s\n", health_exchange->name, health_exchange->description);
@@ -113,7 +113,7 @@ int main(){
                     new_character->skills[i] = *shadow_blade;
                     break;
                 case 2:
-                    new_character->skills[i] = *energy_barrier;
+                    new_character->skills[i] = *frostbite;
                     break;
                 case 3:
                     new_character->skills[i] = *health_exchange;
