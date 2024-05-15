@@ -3,6 +3,7 @@
         "common.h": "c",
         "typeinfo": "c",
         "stdlib.h": "c",
-        "struct_definitions.h": "c"
+        "struct_definitions.h": "c",
+        "cstdlib": "c"
     }
 }
