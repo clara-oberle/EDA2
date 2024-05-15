@@ -8,6 +8,10 @@
 #include "init_character_skills.c"
 #include "init_scenarios.c"
 
+/*unit test suite: to code a function to check if the functions of the code work
+end to end test suite: a function to test all the other unit tests suites
+*/
+
 int main(){
     // Menu:
     printf("Do you wish to start a new game? (Y/N): ");
