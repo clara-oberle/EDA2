@@ -1,9 +1,8 @@
 #include "init_character_skills.h"
 
 // Character skills (player will choose 4):
-Skill *init_shadowblade(){
+void init_shadowblade(Skill *shadow_blade){
     // Shadowblade strike 
-    Skill *shadow_blade = (Skill*)malloc(sizeof(Skill));
     strcpy(shadow_blade->name, "Shadowblade strike");
     strcpy(shadow_blade->description, "Slash the enemy with a magical sword, reducing their health "
     "points by your attack points*1.5. Can be used without limit in a battle.");
@@ -12,12 +11,10 @@ Skill *init_shadowblade(){
     shadow_blade->modifier[1] = 1.5; // ATK = ATK*1.5
     shadow_blade->modifier[2] =  1; // DEF is unchanged DEF = DEF*1
     shadow_blade->duration_turn = 1; // modifies ATK points for only that turn
-    return shadow_blade;
 }
 
-Skill *init_frostbite(){
+void init_frostbite(Skill *frostbite){
     // Energy barrier
-    Skill *frostbite = (Skill*)malloc(sizeof(Skill));
     strcpy(frostbite->name, "Frostbite");
     strcpy(frostbite->description, "This skill covers the battlefield in a chilling blizzard, "
     "it increases your attack points by 20 percent and decreases the enemy's defense points by 15 percent "
@@ -27,12 +24,10 @@ Skill *init_frostbite(){
     frostbite->modifier[1] = 1.2; // ATK = ATK*1.2
     frostbite->modifier[2] = -0.85; // DEF of enemy *= 0.85 (it is negative to indicate that it affects the enemy)
     frostbite->duration_turn = 1; // lasts only that turn
-    return frostbite;
 }
 
-Skill *init_health_exchange(){
+void init_health_exchange(Skill *health_exchange){
     // Health exchange
-    Skill *health_exchange = (Skill*)malloc(sizeof(Skill));
     strcpy(health_exchange->name, "Health Exchange");
     strcpy(health_exchange->description, "If your health points are dangerously low and you think your enemy "
     "is healthier, use this to swap your health points with theirs. This can only be used once in a battle");
@@ -41,12 +36,10 @@ Skill *init_health_exchange(){
     health_exchange->modifier[1] = 1; // ATK is unchanged ATK = ATK*1
     health_exchange->modifier[2] =  1; // DEF is unchanged DEF = DEF*1
     health_exchange->duration_turn = 0; // swaps the HPs "forever"
-    return health_exchange;
 }
 
-Skill *init_fireball(){
+void init_fireball(Skill *fireball){
     // Fireball
-    Skill *fireball = (Skill*)malloc(sizeof(Skill));
     strcpy(fireball->name, "Fireball");
     strcpy(fireball->description, "Launch a fireball towards your enemy, engulfing them in flames. "
     "This fiery assault deals damage equal to your attack points multiplied by 1.3. The intense heat "
@@ -57,12 +50,10 @@ Skill *init_fireball(){
     fireball->modifier[1] = 1.3; // ATK = ATK*1.3
     fireball->modifier[2] = 1; // DEF is unchanged DEF = DEF*1
     fireball->duration_turn = 3; // modifies ATK points for 3 turns in total
-    return fireball;
 }
 
-Skill *init_healing_aura(){
+void init_healing_aura(Skill *healing_aura){
     // Healing Auraa
-    Skill *healing_aura = (Skill*)malloc(sizeof(Skill));
     strcpy(healing_aura->name, "Healing Aura");
     strcpy(healing_aura->description, "Emit a healing aura, increasing your defence points by 30 percent "
     "against your enemy's next attack. Can be used without limit in a battle.");
@@ -71,13 +62,11 @@ Skill *init_healing_aura(){
     healing_aura->modifier[1] = 1; // ATK is unchanged ATK = ATK*1
     healing_aura->modifier[2] = 1; // DEF = DEF*1.3
     healing_aura->duration_turn = 2; // modifies DEF for the next turn, hence 2 (the current turn + next turn)
-    return healing_aura;
 }
 
-Skill *init_thunderbolt(){
+void init_thunderbolt(Skill *thunderbolt){
     // ThunderBolt
-    Skill *thunderbolt = (Skill*)malloc(sizeof(Skill));
-    strcpy(thunderbolt->name, "ThunderBolt");
+    strcpy(thunderbolt->name, "Thunder Bolt");
     strcpy(thunderbolt->description, "ThunderBolt: Summon a bolt of lightning to strike the enemy, "
     "increasing your attack points by 30 percent and decreasing the enemy's defence points by 10 percent. "
     "The attack leaves the enemy electrified so that its effects last for 2 turns in total");
@@ -86,12 +75,10 @@ Skill *init_thunderbolt(){
     thunderbolt->modifier[1] = 1.3; // ATK = ATK*1.3
     thunderbolt->modifier[2] = -0.9; // DEF of enemy *= 0.9 (it is negative to indicate that it affects the enemy)
     thunderbolt->duration_turn = 2; // modifies ATK points for that turn and the next
-    return thunderbolt;
 }
 
-Skill *init_time_warp(){
+void init_time_warp(Skill *time_warp){
     // Time Warp
-    Skill *time_warp = (Skill*)malloc(sizeof(Skill));
     strcpy(time_warp->name, "Time Warp");
     strcpy(time_warp->description, "Rewind time to restore half your initial health points."
     "Can only be used once per battle.");
@@ -100,5 +87,4 @@ Skill *init_time_warp(){
     time_warp->modifier[1] = 1; // ATK is unchanged ATK = ATK*1
     time_warp->modifier[2] = 1; // DEF is unchanged DEF = DEF*1
     time_warp->duration_turn = 0; // modifies HP points "forever"
-    return time_warp;
 }

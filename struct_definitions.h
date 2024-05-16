@@ -11,7 +11,7 @@ typedef struct{
     char description[M];
     int type; // if type = 0 --> temporary modifier, else (type = 1) --> direct attack
     int duration_turn; // how many turns the skill lasts
-    int modifier[3]; // modifier[0] = life_points, modifier[1] = attack_points, modifier[2] = defense_points 
+    float modifier[3]; // modifier[0] = life_points, modifier[1] = attack_points, modifier[2] = defense_points 
 } Skill;
 /*
 --> Just to remember how it will have to be accessed and printed later on
@@ -26,7 +26,7 @@ Printing the name and description
 //
 typedef struct{
     char name[N];
-    int points[3]; //points[0] = life_points; points[1] = attack points; points[2] = defense points
+    float points[3]; //points[0] = life_points; points[1] = attack points; points[2] = defense points
     Skill skills[S]; //array of skills (of type Skill, the structure)
 } Character;
 
@@ -37,7 +37,7 @@ typedef struct{
 
 typedef struct{
     char name[N];
-    int points[3]; //points[0] = life_points; points[1] = attack points; points[2] = defense points
+    float points[3]; //points[0] = life_points; points[1] = attack points; points[2] = defense points
     Skill skills[S];
 } Enemy;
 

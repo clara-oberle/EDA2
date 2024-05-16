@@ -3,12 +3,12 @@
 
 #include "struct_definitions.h"
 
-Skill *init_shadowblade();
-Skill *init_frostbite();
-Skill *init_health_exchange();
-Skill *init_fireball();
-Skill *init_healing_aura();
-Skill *init_thunderbolt();
-Skill *init_time_warp();
+void init_shadowblade();
+void init_frostbite();
+void init_health_exchange();
+void init_fireball();
+void init_healing_aura();
+void init_thunderbolt();
+void init_time_warp();
 
 #endif

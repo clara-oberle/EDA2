@@ -9,7 +9,7 @@
 typedef struct{
     char name[N];
     int type; // Character -> 0, Enemy -> 1;
-    Fighter *next;
+    struct Fighter *next;
 }Fighter;
 
 typedef struct{
@@ -22,7 +22,7 @@ typedef struct{
 typedef struct{
     int fighter; // what fighter the skill belongs to: character -> 0, enemy -> 1
     Skill *skill;
-    QueueSkill *next;
+    struct QueueSkill *next;
 }QueueSkill;
 
 typedef struct{
