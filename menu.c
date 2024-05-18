@@ -4,9 +4,13 @@
 #include <stdlib.h>
 #include "struct_definitions.h"
 #include "init_character_skills.h"
-#include "init_scenarios.h"
 #include "init_character_skills.c"
+#include "init_scenarios.h"
 #include "init_scenarios.c"
+#include "init_enemy_skills.h"
+#include "init_enemy_skills.c"
+#include "fight_system.h"
+#include "fight_system.c"
 
 int main(){
     // Menu:
@@ -51,92 +55,23 @@ int main(){
         
         // Choose 4 skills
         // Initialise the skills:
-        Skill *shadow_blade = init_shadowblade();
-        Skill *frostbite = init_frostbite();
-        Skill *health_exchange = init_health_exchange();
-        Skill *fireball = init_fireball();
-        Skill *healing_aura = init_healing_aura();
-        Skill *thunderbolt = init_thunderbolt();
-        Skill *time_warp = init_time_warp();
+        Skill *shadow_blade = (Skill*)malloc(sizeof(Skill));
+        init_shadowblade(shadow_blade);
+        Skill *frostbite = (Skill*)malloc(sizeof(Skill));
+        init_frostbite(frostbite);
+        Skill *health_exchange = (Skill*)malloc(sizeof(Skill));
+        init_health_exchange(health_exchange);
+        Skill *fireball = (Skill*)malloc(sizeof(Skill));
+        init_fireball(fireball);
+        Skill *healing_aura = (Skill*)malloc(sizeof(Skill));
+        init_healing_aura(healing_aura);
+        Skill *thunderbolt = (Skill*)malloc(sizeof(Skill));
+        init_thunderbolt(thunderbolt);
+        Skill *time_warp = (Skill*)malloc(sizeof(Skill));
+        init_time_warp(time_warp);
 
-        // Let the player preview the skills (see a description of each before choosing)
-        printf("\nIt is time to select the four skills that will help you battle your way through this quest. Choose "
-        "wisely for your fate relies on them. You can view a description of each skill before selecting it using the menu below:\n"
-        "1. Shadowblade strike\n2. Frostbite\n3. Health exchange\n4. Fireball\n5. Healing Aura\n6. ThunderBolt\n7. Time Warp\n");
-        printf("\nEnter the number of the skill you wish to preview. When you are done previewing them enter -1: ");
-        int skill_preview;
-        scanf("%d", &skill_preview);
-        while(skill_preview != -1){
-            switch(skill_preview){
-            case 1:
-                printf("- %s:\n%s\n", shadow_blade->name, shadow_blade->description);
-                break;
-            case 2:
-                printf("- %s:\n%s\n", frostbite->name, frostbite->description);
-                break;
-            case 3:
-                printf("- %s:\n%s\n", health_exchange->name, health_exchange->description);
-                break;
-            case 4:
-                printf("- %s:\n%s\n", fireball->name, fireball->description);
-                break;
-            case 5:
-                printf("- %s:\n%s\n",healing_aura ->name, healing_aura->description);
-                break;
-            case 6:
-                printf("- %s:\n%s\n",thunderbolt->name, thunderbolt->description);
-                break;
-            case 7:
-                printf("- %s:\n%s\n", time_warp->name, time_warp->description);
-                break;
-            default: // In case the input is not a number in the menu
-                printf("Invalid input\n");
-            }
-            printf("\nEnter the number of the skill you wish to preview. When you are done previewing them enter -1: ");
-            scanf("%d", &skill_preview);
-        }
-
-        // Assigning the skills of the character:
-        printf("\nNow that you have become familiar with the available skills. Enter the number of the skill that "
-        "you wish to have:\n");
-        for(int i=0; i<4; ++i){
-            int selected_skill;
-            printf("Skill %d: ", i+1);
-            scanf("%d", &selected_skill);
-            while(selected_skill < 1 || selected_skill > 7){
-                //while the selected skill is not a number from 1 to 7, print error
-                printf("Invalid input. Enter the number of the skill (from 1 to 7)");
-                scanf("%d", &selected_skill);
-            }
-            switch(selected_skill){
-                case 1:
-                    new_character->skills[i] = *shadow_blade;
-                    break;
-                case 2:
-                    new_character->skills[i] = *frostbite;
-                    break;
-                case 3:
-                    new_character->skills[i] = *health_exchange;
-                    break;
-                case 4:
-                    new_character->skills[i] = *fireball;
-                    break;
-                case 5:
-                    new_character->skills[i] = *healing_aura;
-                    break;
-                case 6:
-                    new_character->skills[i] = *thunderbolt;
-                    break;
-                case 7:
-                    new_character->skills[i] = *time_warp;
-                    break;
-            }
-        }
-        printf("\nThe skills you have chosen are:\n");
-        for(int i=0; i<4; i++){
-            printf("- %s\n", new_character->skills[i].name);
-        }
-        printf("Good Luck!\n");
-    } 
+        init_character_skills(new_character, shadow_blade, frostbite, 
+                              health_exchange, fireball, healing_aura, thunderbolt, time_warp);
+    }
     return 0;
 }
