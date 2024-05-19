@@ -11,6 +11,8 @@
 #include "init_enemy_skills.c"
 #include "fight_system.h"
 #include "fight_system.c"
+#include "graph.h"
+
 
 int main(){
     // Menu:
