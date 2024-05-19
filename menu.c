@@ -72,6 +72,62 @@ int main(){
 
         init_character_skills(new_character, shadow_blade, frostbite, 
                               health_exchange, fireball, healing_aura, thunderbolt, time_warp);
+
+   // Initialize scenarios
+        Scenario *scenario1 = init_scenario1();
+        Scenario *scenario2 = init_scenario2();
+        Scenario *scenario3 = init_scenario3();
+        Scenario *scenario4 = init_scenario4();
+
+        // Create the graph to represent the scenarios
+        int num_scenarios = 4;
+        Graph *graph = create_graph(num_scenarios);
+
+        graph->adj_list[0] = (GraphNode*)malloc(sizeof(GraphNode));
+        graph->adj_list[0]->scenario = scenario1;
+        graph->adj_list[1] = (GraphNode*)malloc(sizeof(GraphNode));
+        graph->adj_list[1]->scenario = scenario2;
+        graph->adj_list[2] = (GraphNode*)malloc(sizeof(GraphNode));
+        graph->adj_list[2]->scenario = scenario3;
+        graph->adj_list[3] = (GraphNode*)malloc(sizeof(GraphNode));
+        graph->adj_list[3]->scenario = scenario4;
+
+        add_edge(graph, 0, 1);
+        add_edge(graph, 1, 2);
+        add_edge(graph, 2, 3);
+
+        // Current scenario pointer
+        GraphNode *current_node = graph->adj_list[0];
+
+        // Game loop for navigating scenarios
+        while (current_node) {
+            printf("You are now in: %s\n", current_node->scenario->name);
+            printf("%s\n", current_node->scenario->description);
+
+            Decision *decision = current_node->scenario->decision;
+            if (decision) {
+                printf("%s\n", decision->question_text);
+                for (int i = 0; i < decision->num_options; i++) {
+                    printf("%d: %s\n", i + 1, decision->options_list[i].response_text);
+                }
+                int choice;
+                scanf("%d", &choice);
+                if (choice >= 1 && choice <= decision->num_options) {
+                    Option chosen_option = decision->options_list[choice - 1];
+                    printf("%s\n", chosen_option.narrative_text_before);
+
+                    // Here, you could call a battle function with new_character and chosen_option.enemies
+
+                    printf("%s\n", chosen_option.narrative_text_after);
+                } else {
+                    printf("Invalid choice. Try again.\n");
+                    continue;
+                }
+            }
+
+            // Move to the next scenario (for now, just move linearly through the graph)
+            current_node = current_node->next;
+        }
     }
     return 0;
 }
