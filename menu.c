@@ -73,7 +73,7 @@ int main(){
         init_character_skills(new_character, shadow_blade, frostbite, 
                               health_exchange, fireball, healing_aura, thunderbolt, time_warp);
 
-   // Initialize scenarios
+  // Initialize scenarios
         Scenario *scenario1 = init_scenario1();
         Scenario *scenario2 = init_scenario2();
         Scenario *scenario3 = init_scenario3();
