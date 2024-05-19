@@ -75,38 +75,25 @@ int main(){
         init_character_skills(new_character, shadow_blade, frostbite, 
                               health_exchange, fireball, healing_aura, thunderbolt, time_warp);
 
-  // Initialize scenarios
+ // Initialize scenarios
         Scenario *scenario1 = init_scenario1();
         Scenario *scenario2 = init_scenario2();
         Scenario *scenario3 = init_scenario3();
         Scenario *scenario4 = init_scenario4();
 
-        // Create the graph to represent the scenarios
-        int num_scenarios = 4;
-        Graph *graph = create_graph(num_scenarios);
-
-        graph->adj_list[0] = (GraphNode*)malloc(sizeof(GraphNode));
-        graph->adj_list[0]->scenario = scenario1;
-        graph->adj_list[1] = (GraphNode*)malloc(sizeof(GraphNode));
-        graph->adj_list[1]->scenario = scenario2;
-        graph->adj_list[2] = (GraphNode*)malloc(sizeof(GraphNode));
-        graph->adj_list[2]->scenario = scenario3;
-        graph->adj_list[3] = (GraphNode*)malloc(sizeof(GraphNode));
-        graph->adj_list[3]->scenario = scenario4;
-
-        add_edge(graph, 0, 1);
-        add_edge(graph, 1, 2);
-        add_edge(graph, 2, 3);
+        // Track completed scenarios
+        bool completed_scenarios[4] = {false, false, false, false};
+        completed_scenarios[0] = true; // First scenario is always completed first
 
         // Current scenario pointer
-        GraphNode *current_node = graph->adj_list[0];
+        Scenario *current_scenario = scenario1;
 
         // Game loop for navigating scenarios
-        while (current_node) {
-            printf("You are now in: %s\n", current_node->scenario->name);
-            printf("%s\n", current_node->scenario->description);
+        while (current_scenario) {
+            printf("You are now in: %s\n", current_scenario->name);
+            printf("%s\n", current_scenario->description);
 
-            Decision *decision = current_node->scenario->decision;
+            Decision *decision = current_scenario->decision;
             if (decision) {
                 printf("%s\n", decision->question_text);
                 for (int i = 0; i < decision->num_options; i++) {
@@ -127,9 +114,44 @@ int main(){
                 }
             }
 
-            // Move to the next scenario (for now, just move linearly through the graph)
-            current_node = current_node->next;
+            // Move to the next scenario
+            if (current_scenario == scenario1) {
+                // From the first scenario, choose between second and third
+                printf("Choose your next scenario:\n");
+                printf("1: %s\n", scenario2->name);
+                printf("2: %s\n", scenario3->name);
+                int next_choice;
+                scanf("%d", &next_choice);
+                if (next_choice == 1) {
+                    current_scenario = scenario2;
+                    completed_scenarios[1] = true;
+                } else if (next_choice == 2) {
+                    current_scenario = scenario3;
+                    completed_scenarios[2] = true;
+                } else {
+                    printf("Invalid choice. Try again.\n");
+                    continue;
+                }
+            } else if (current_scenario == scenario2 || current_scenario == scenario3) {
+                // After completing either second or third, check if both are done
+                if (completed_scenarios[1] && completed_scenarios[2]) {
+                    current_scenario = scenario4;
+                } else {
+                    // Choose the other middle scenario
+                    if (!completed_scenarios[1]) {
+                        current_scenario = scenario2;
+                        completed_scenarios[1] = true;
+                    } else {
+                        current_scenario = scenario3;
+                        completed_scenarios[2] = true;
+                    }
+                }
+            } else {
+                // Last scenario, end the game
+                break;
+            }
         }
+        printf("Congratulations! You have completed the game.\n");
     }
     return 0;
 }
