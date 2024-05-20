@@ -11,7 +11,7 @@
 #include "init_enemy_skills.c"
 #include "fight_system.h"
 #include "fight_system.c"
-#include "graph.h"
+#include "graphs.h"
 
 
 int main(){
@@ -75,7 +75,7 @@ int main(){
         init_character_skills(new_character, shadow_blade, frostbite, 
                               health_exchange, fireball, healing_aura, thunderbolt, time_warp);
 
- // Initialize scenarios
+        // Initialize scenarios
         Scenario *scenario1 = init_scenario1();
         Scenario *scenario2 = init_scenario2();
         Scenario *scenario3 = init_scenario3();
@@ -105,8 +105,17 @@ int main(){
                     Option chosen_option = decision->options_list[choice - 1];
                     printf("%s\n", chosen_option.narrative_text_before);
 
-                    // Here, you could call a battle function with new_character and chosen_option.enemies
-
+                    // Call a battle function with new_character and chosen_option.enemies
+                    for(int i=0; i<chosen_option.num_enemies; i++){
+                        // initialise the queue to decide the turns, the queue for skills with duration > 1, and the stack to store player's used skills
+                        FightQueue *fight_queue = create_queue(new_character, &chosen_option.enemies[i]);
+                        OverlapQueue *overlap_queue = (OverlapQueue*)malloc(sizeof(OverlapQueue));
+                        init_overap_queue(overlap_queue);
+                        SkillStack *player_used_skills = (SkillStack*)malloc(sizeof(SkillStack));
+                        player_used_skills->top = -1;
+                        // do the battle and return wether the player has won (win = true) or lost (win = false):
+                        bool win = battle(new_character, &chosen_option.enemies[i], fight_queue, overlap_queue, player_used_skills);
+                    }
                     printf("%s\n", chosen_option.narrative_text_after);
                 } else {
                     printf("Invalid choice. Try again.\n");
