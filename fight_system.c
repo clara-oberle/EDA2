@@ -415,15 +415,18 @@ int check_win(Character *player, Enemy *enemy){
 // function for a battle (uses all the above functions):
 // returns true if player has won batlle and false if not
 bool battle(Character *character, Enemy *enemy, FightQueue *fight_queue, OverlapQueue *overlap_queue, SkillStack *player_used_skills){
+    printf("Prepare yourself, for in this battle you will confront the formidable %s. Good luck!", enemy->name);
     while(fight_queue->size != 0){ // check that the queue is not empty
         if(check_win(character, enemy) == -1){ // if they both still have HP
             if(fight_queue->first->type == 0){ // character's turn
                 int skill_number;
                 printf("Your turn. Choose a skill:\n1- Thunder Bolt\n2- Frost bite\n"
                 "3- Health exchange\n4- Fire ball\nEnter the number of the chosen skill: ");
-                scanf("%d", &skill_number);
-                Skill *chosen_skill = (Skill*)malloc(sizeof(Skill));
+                scanf("%d", &skill_number); // ask the player to choose a skill
+                // create a copy of the skill (this way its duration turns can be modified without affecting the original skill)
+                Skill *chosen_skill = (Skill*)malloc(sizeof(Skill)); 
                 init_skill_copy(chosen_skill, &character->skills[skill_number-1]);
+                // check if the skill is one that can only be used once (if so ask the player to choose a different skill)
                 while(one_time_skill(chosen_skill, player_used_skills) == true){
                     free(chosen_skill);
                     printf("This skill can only be used once during the battle and it has already been used."
@@ -432,6 +435,8 @@ bool battle(Character *character, Enemy *enemy, FightQueue *fight_queue, Overlap
                     Skill *chosen_skill = (Skill*)malloc(sizeof(Skill));
                     init_skill_copy(chosen_skill, &character->skills[skill_number-1]);
                 }
+                // check if the skill is one that has more than one duration turn and still has duration turns left
+                // (if so ask the player to choose a different skill)
                 while(find_in_queue(chosen_skill, overlap_queue) == true){
                     free(chosen_skill);
                     printf("This skill still has duration turns left. Choose a different skill: ");
@@ -440,18 +445,23 @@ bool battle(Character *character, Enemy *enemy, FightQueue *fight_queue, Overlap
                     init_skill_copy(chosen_skill, &character->skills[skill_number-1]);
                 }
                 printf("You have chosen %s\n", chosen_skill->name);
+                // implement the skill (modify ATK, HP and DEF accordingly):
                 implement_player_skill(chosen_skill, character, enemy, overlap_queue, player_used_skills);
+                // let the player know how much damage they have caused to the enemy in this turn:
                 printf("The enemy's current HP: %.2f\n", enemy->points[0]);
+                // add the skill to the overlap queue if its duration turn was more than one:
                 if(chosen_skill->duration_turn > 0){
                     enqueue_overlap_skill(overlap_queue, chosen_skill, 0);
-                } else{
+                } else{ // otherwise free the copy of the chosen skill
                     free(chosen_skill);
                 }
             }else if(fight_queue->first->type == 1){ // enemy's turn
                 Skill *random_skill = (Skill*)malloc(sizeof(Skill));
                 srand(time(NULL)); // initialize random number generator with current time
-                int index = generate_random_index();
+                int index = generate_random_index(); // get a random index from 0 to 2 
+                // create a copy of the skill corresponding to the randomly generated index
                 init_skill_copy(random_skill, &enemy->skills[index]);
+                // if it is a skill that still has duration turns left, choose another one:
                 while(find_in_queue(random_skill, overlap_queue) == true){
                     free(random_skill);
                     Skill *random_skill = (Skill*)malloc(sizeof(Skill));
@@ -459,24 +469,28 @@ bool battle(Character *character, Enemy *enemy, FightQueue *fight_queue, Overlap
                     init_skill_copy(random_skill, &enemy->skills[index]);
                 }
                 printf("%s has chosen %s\n", enemy->name, random_skill->name);
+                // implement the skill (modify ATK, HP and DEF accordingly):
                 implement_enemy_skill(random_skill, character, enemy, overlap_queue);
+                // let the player know how much damage the enemy has caused them in this turn:
                 printf("Your current HP: %.2f\n", character->points[0]);
+                // add the skill to the overlap queue if its duration turn was more than one:
                 if(random_skill->duration_turn > 0){
                     enqueue_overlap_skill(overlap_queue, random_skill, 1);
-                } else{
+                } else{ // otherwise, free the copy of the chosen skill
                     free(random_skill);
                 }
             }
-        } else if(check_win(character, enemy) == 0){
+        } else if(check_win(character, enemy) == 0){ // if the player has won, return true
             printf("Congratulations, you have emerged victorious!\n");
             return true;
-        } else if(check_win(character, enemy) == 1){
+        } else if(check_win(character, enemy) == 1){ // if the player has lost, return false
             printf("You have been defeated. Better luck next time!\n");
             return false;
         }
-        dequeue(fight_queue);
+        dequeue(fight_queue); // next turn
     }
-    if(check_win(character, enemy) == -1){
+    if(check_win(character, enemy) == -1){ // if the player and enemy still have HP left but the queue is empty
+        // the battle is over and the enemy has won so return false
         printf("The battle is over and %s is still alive. You loose\n", enemy->name);
         return false;
     }

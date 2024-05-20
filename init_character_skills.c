@@ -16,7 +16,7 @@ void init_shadowblade(Skill *shadow_blade){
 }
 
 void init_frostbite(Skill *frostbite){
-    // Energy barrier
+    // Frostbite
     strcpy(frostbite->name, "Frostbite");
     strcpy(frostbite->description, "This skill covers the battlefield in a chilling blizzard, "
     "it increases your attack points by 20 percent and decreases the enemy's defense points by 15 percent "
