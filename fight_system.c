@@ -412,8 +412,8 @@ int check_win(Character *player, Enemy *enemy){
     return -1;
 }
 
-// function for a battle (uses all the above functions):
-// returns true if player has won batlle and false if not
+// function for a battle - uses all the above functions:
+// (returns true if player has won batlle and false if not)
 bool battle(Character *character, Enemy *enemy, FightQueue *fight_queue, OverlapQueue *overlap_queue, SkillStack *player_used_skills){
     printf("Prepare yourself, for in this battle you will confront the formidable %s. Good luck!", enemy->name);
     while(fight_queue->size != 0){ // check that the queue is not empty

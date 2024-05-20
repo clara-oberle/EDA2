@@ -38,7 +38,7 @@ typedef struct{
     Skill *skills[MAX_TURNS];
 }SkillStack;
 
-// functions:
+// Functions:
 int getRandomZeroOrOne();
 void init_queue(FightQueue *queue);
 bool is_empty(FightQueue *queue);
