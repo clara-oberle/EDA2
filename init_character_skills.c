@@ -4,7 +4,7 @@
 
 // Character skills (player will choose 4):
 void init_shadowblade(Skill *shadow_blade){
-    // Shadowblade strike 
+    // Shadowblade 
     strcpy(shadow_blade->name, "Shadowblade strike");
     strcpy(shadow_blade->description, "Slash the enemy with a magical sword, reducing their health "
     "points by your attack points*1.5. Can be used without limit in a battle.");

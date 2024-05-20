@@ -105,7 +105,7 @@ int main(){
                     Option chosen_option = decision->options_list[choice - 1];
                     printf("%s\n", chosen_option.narrative_text_before);
 
-                    // Call a battle function with new_character and chosen_option.enemies
+                    // Call a battle for each enemy in the chosen option:
                     for(int i=0; i<chosen_option.num_enemies; i++){
                         // initialise the queue to decide the turns, the queue for skills with duration > 1, and the stack to store player's used skills
                         FightQueue *fight_queue = create_queue(new_character, &chosen_option.enemies[i]);
