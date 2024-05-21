@@ -4,9 +4,15 @@
 #include <stdlib.h>
 #include "struct_definitions.h"
 #include "init_character_skills.h"
-#include "init_scenarios.h"
 #include "init_character_skills.c"
+#include "init_scenarios.h"
 #include "init_scenarios.c"
+#include "init_enemy_skills.h"
+#include "init_enemy_skills.c"
+#include "fight_system.h"
+#include "fight_system.c"
+#include "graphs.h"
+
 
 /*unit test suite: to code a function to check if the functions of the code work
 end to end test suite: a function to test all the other unit tests suites
@@ -55,92 +61,110 @@ int main(){
         
         // Choose 4 skills
         // Initialise the skills:
-        Skill *shadow_blade = init_shadowblade();
-        Skill *frostbite = init_frostbite();
-        Skill *health_exchange = init_health_exchange();
-        Skill *fireball = init_fireball();
-        Skill *healing_aura = init_healing_aura();
-        Skill *thunderbolt = init_thunderbolt();
-        Skill *time_warp = init_time_warp();
+        Skill *shadow_blade = (Skill*)malloc(sizeof(Skill));
+        init_shadowblade(shadow_blade);
+        Skill *frostbite = (Skill*)malloc(sizeof(Skill));
+        init_frostbite(frostbite);
+        Skill *health_exchange = (Skill*)malloc(sizeof(Skill));
+        init_health_exchange(health_exchange);
+        Skill *fireball = (Skill*)malloc(sizeof(Skill));
+        init_fireball(fireball);
+        Skill *healing_aura = (Skill*)malloc(sizeof(Skill));
+        init_healing_aura(healing_aura);
+        Skill *thunderbolt = (Skill*)malloc(sizeof(Skill));
+        init_thunderbolt(thunderbolt);
+        Skill *time_warp = (Skill*)malloc(sizeof(Skill));
+        init_time_warp(time_warp);
 
-        // Let the player preview the skills (see a description of each before choosing)
-        printf("\nIt is time to select the four skills that will help you battle your way through this quest. Choose "
-        "wisely for your fate relies on them. You can view a description of each skill before selecting it using the menu below:\n"
-        "1. Shadowblade strike\n2. Frostbite\n3. Health exchange\n4. Fireball\n5. Healing Aura\n6. ThunderBolt\n7. Time Warp\n");
-        printf("\nEnter the number of the skill you wish to preview. When you are done previewing them enter -1: ");
-        int skill_preview;
-        scanf("%d", &skill_preview);
-        while(skill_preview != -1){
-            switch(skill_preview){
-            case 1:
-                printf("- %s:\n%s\n", shadow_blade->name, shadow_blade->description);
-                break;
-            case 2:
-                printf("- %s:\n%s\n", frostbite->name, frostbite->description);
-                break;
-            case 3:
-                printf("- %s:\n%s\n", health_exchange->name, health_exchange->description);
-                break;
-            case 4:
-                printf("- %s:\n%s\n", fireball->name, fireball->description);
-                break;
-            case 5:
-                printf("- %s:\n%s\n",healing_aura ->name, healing_aura->description);
-                break;
-            case 6:
-                printf("- %s:\n%s\n",thunderbolt->name, thunderbolt->description);
-                break;
-            case 7:
-                printf("- %s:\n%s\n", time_warp->name, time_warp->description);
-                break;
-            default: // In case the input is not a number in the menu
-                printf("Invalid input\n");
-            }
-            printf("\nEnter the number of the skill you wish to preview. When you are done previewing them enter -1: ");
-            scanf("%d", &skill_preview);
-        }
+        init_character_skills(new_character, shadow_blade, frostbite, 
+                              health_exchange, fireball, healing_aura, thunderbolt, time_warp);
 
-        // Assigning the skills of the character:
-        printf("\nNow that you have become familiar with the available skills. Enter the number of the skill that "
-        "you wish to have:\n");
-        for(int i=0; i<4; ++i){
-            int selected_skill;
-            printf("Skill %d: ", i+1);
-            scanf("%d", &selected_skill);
-            while(selected_skill < 1 || selected_skill > 7){
-                //while the selected skill is not a number from 1 to 7, print error
-                printf("Invalid input. Enter the number of the skill (from 1 to 7)");
-                scanf("%d", &selected_skill);
+        // Initialize scenarios
+        Scenario *scenario1 = init_scenario1();
+        Scenario *scenario2 = init_scenario2();
+        Scenario *scenario3 = init_scenario3();
+        Scenario *scenario4 = init_scenario4();
+
+        // Track completed scenarios
+        bool completed_scenarios[4] = {false, false, false, false};
+        completed_scenarios[0] = true; // First scenario is always completed first
+
+        // Current scenario pointer
+        Scenario *current_scenario = scenario1;
+
+        // Game loop for navigating scenarios
+        while (current_scenario) {
+            printf("You are now in: %s\n", current_scenario->name);
+            printf("%s\n", current_scenario->description);
+
+            Decision *decision = current_scenario->decision;
+            if (decision) {
+                printf("%s\n", decision->question_text);
+                for (int i = 0; i < decision->num_options; i++) {
+                    printf("%d: %s\n", i + 1, decision->options_list[i].response_text);
+                }
+                int choice;
+                scanf("%d", &choice);
+                if (choice >= 1 && choice <= decision->num_options) {
+                    Option chosen_option = decision->options_list[choice - 1];
+                    printf("%s\n", chosen_option.narrative_text_before);
+
+                    // Call a battle for each enemy in the chosen option:
+                    for(int i=0; i<chosen_option.num_enemies; i++){
+                        // initialise the queue to decide the turns, the queue for skills with duration > 1, and the stack to store player's used skills
+                        FightQueue *fight_queue = create_queue(new_character, &chosen_option.enemies[i]);
+                        OverlapQueue *overlap_queue = (OverlapQueue*)malloc(sizeof(OverlapQueue));
+                        init_overap_queue(overlap_queue);
+                        SkillStack *player_used_skills = (SkillStack*)malloc(sizeof(SkillStack));
+                        player_used_skills->top = -1;
+                        // do the battle and return wether the player has won (win = true) or lost (win = false):
+                        bool win = battle(new_character, &chosen_option.enemies[i], fight_queue, overlap_queue, player_used_skills);
+                    }
+                    printf("%s\n", chosen_option.narrative_text_after);
+                } else {
+                    printf("Invalid choice. Try again.\n");
+                    continue;
+                }
             }
-            switch(selected_skill){
-                case 1:
-                    new_character->skills[i] = *shadow_blade;
-                    break;
-                case 2:
-                    new_character->skills[i] = *frostbite;
-                    break;
-                case 3:
-                    new_character->skills[i] = *health_exchange;
-                    break;
-                case 4:
-                    new_character->skills[i] = *fireball;
-                    break;
-                case 5:
-                    new_character->skills[i] = *healing_aura;
-                    break;
-                case 6:
-                    new_character->skills[i] = *thunderbolt;
-                    break;
-                case 7:
-                    new_character->skills[i] = *time_warp;
-                    break;
+
+            // Move to the next scenario
+            if (current_scenario == scenario1) {
+                // From the first scenario, choose between second and third
+                printf("Choose your next scenario:\n");
+                printf("1: %s\n", scenario2->name);
+                printf("2: %s\n", scenario3->name);
+                int next_choice;
+                scanf("%d", &next_choice);
+                if (next_choice == 1) {
+                    current_scenario = scenario2;
+                    completed_scenarios[1] = true;
+                } else if (next_choice == 2) {
+                    current_scenario = scenario3;
+                    completed_scenarios[2] = true;
+                } else {
+                    printf("Invalid choice. Try again.\n");
+                    continue;
+                }
+            } else if (current_scenario == scenario2 || current_scenario == scenario3) {
+                // After completing either second or third, check if both are done
+                if (completed_scenarios[1] && completed_scenarios[2]) {
+                    current_scenario = scenario4;
+                } else {
+                    // Choose the other middle scenario
+                    if (!completed_scenarios[1]) {
+                        current_scenario = scenario2;
+                        completed_scenarios[1] = true;
+                    } else {
+                        current_scenario = scenario3;
+                        completed_scenarios[2] = true;
+                    }
+                }
+            } else {
+                // Last scenario, end the game
+                break;
             }
         }
-        printf("\nThe skills you have chosen are:\n");
-        for(int i=0; i<4; i++){
-            printf("- %s\n", new_character->skills[i].name);
-        }
-        printf("Good Luck!\n");
-    } 
+        printf("Congratulations! You have completed the game.\n");
+    }
     return 0;
 }
