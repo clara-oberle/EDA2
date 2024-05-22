@@ -7,7 +7,7 @@
 #include "struct_definitions.h"
 
 // Queue to decide turns:
-typedef struct{
+typedef struct Fighter{
     char name[N];
     int type; // Character -> 0, Enemy -> 1;
     struct Fighter *next;
@@ -20,7 +20,7 @@ typedef struct{
 }FightQueue;
 
 // Queue to keep track of skills that have duration > 1:
-typedef struct{
+typedef struct QueueSkill{
     int fighter; // what fighter the skill belongs to: character -> 0, enemy -> 1
     Skill *skill;
     struct QueueSkill *next;

@@ -104,7 +104,10 @@ void dequeue(FightQueue *queue){
         free(temp);
         // update the size of the queue
         queue->size--;
-    }
+        if (queue->size == 0) {
+            queue->last = NULL;
+            }
+    }  
 }
 
 // Functions used in a fight:
