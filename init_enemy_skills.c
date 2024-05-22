@@ -93,7 +93,7 @@ Skill *init_healing_wave(){
     strcpy(healing_wave->name, "Healing Wave");
     strcpy(healing_wave->description, "Sends a wave of healing energy, restoring health to the enemy");
     healing_wave->type = 1; // direct attack
-    healing_wave->modifier[0] = 1.3; // restores health HP = HP*1.2
+    healing_wave->modifier[0] = 1.3; // restores health HP = HP*1.3
     healing_wave->modifier[1] = 1; // ATK is unchanged
     healing_wave->modifier[2] = 1; // DEF is unchanged
     healing_wave->duration_turn = 1; // modifies HP points for only that turn
