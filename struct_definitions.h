@@ -50,7 +50,7 @@ typedef struct{
 
 typedef struct{
     char question_text[M];
-    Option *options_list[2]; // There are maximum two options to choose from: left path or right path
+    Option options_list[2]; // There are maximum two options to choose from: left path or right path
                             // Except for the last scenario where there is only one
     int num_options;
 } Decision;

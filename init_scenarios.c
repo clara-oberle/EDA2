@@ -19,7 +19,7 @@ void init_scenario1(Scenario *race_of_shadows ){
 
     // The left path takes the player to the Veil of Obscurity:
     Option *veil_of_obscurity = (Option*)malloc(sizeof(Option));
-    choose_path_race->options_list[0] = veil_of_obscurity;
+    choose_path_race->options_list[0] =veil_of_obscurity;
     strcpy(veil_of_obscurity->response_text, "To the left, the Veil of Obscurity looms like a shadowy abyss, "
     "its depths shrouded in mystery. The path winds through a dense forest of gnarled trees and twisting vines, "
     "their branches reaching out like grasping fingers to ensnare the unwary.");
