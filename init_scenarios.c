@@ -237,7 +237,8 @@ void init_scenario4(Scenario *final_battle){
     solve_riddle->num_options = 1;
     strcpy(solve_riddle->question_text, "Brave adventurer, your path has led you to this critical moment. "
     "Before you lies the final mystery to unravel before claiming the gems. Listen closely:\nIt is the beginning "
-    "of eternity,\nthe end of time and space,\nthe beginning of the end,\nand the end of every space.\nWhat is it?: ");
+    "of eternity,\nthe end of time and space,\nthe beginning of the end,\nand the end of every space.\nWhat is it? (write "
+    "your answer in lower case): ");
     
     // If the riddle is solved correctly, then the final battle can commence:
     Option *enter_final_battle = (Option*)malloc(sizeof(Option)); // Dynamic memory allocation for the option struct

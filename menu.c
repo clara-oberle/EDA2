@@ -12,6 +12,7 @@
 #include "fight_system.h"
 #include "fight_system.c"
 #include "graphs.h"
+#include "graphs.c"
 
 
 /*unit test suite: to code a function to check if the functions of the code work
@@ -20,7 +21,7 @@ end to end test suite: a function to test all the other unit tests suites
 
 int main(){
     // Menu:
-    printf("Do you wish to start a new game? (Y/N): ");
+    printf("\nDo you wish to start a new game? (Y/N): ");
     char new_game[N];
     scanf("%s", new_game);
     // Check if input is valid
@@ -98,27 +99,31 @@ int main(){
 
         // Game loop for navigating scenarios
         while (current_scenario != NULL) {
-            printf("You are now in: %s\n", current_scenario->name);
+            printf("\nYou are now in: %s\n", current_scenario->name);
             printf("%s\n", current_scenario->description);
 
             Decision *decision = current_scenario->decision;
             if (decision != NULL) {
-                printf("%s\n", decision->question_text);
-                for (int i = 0; i < decision->num_options; i++) {
-                    printf("%d: %s\n", i + 1, decision->options_list[i].response_text);
-                }
+                printf("\n%s\n", decision->question_text);
+                char answer[N];
                 int choice;
-                scanf("%d", &choice);
-                if (choice >= 1 && choice <= decision->num_options) {
+                if(strcmp(current_scenario->name, "The Battle for the Gemstones") == 0 ){
+                    scanf("%s", answer);
+                    choice = 1;
+                } else{
+                    scanf("%d", &choice);
+                }
+                if ((choice >= 1 && choice <= decision->num_options) || strcmp(answer, "the letter e") == 0){
                     Option chosen_option = decision->options_list[choice - 1];
-                    printf("%s\n", chosen_option.narrative_text_before);
+                    printf("\n%s\n", chosen_option.response_text);
+                    printf("\n%s\n", chosen_option.narrative_text_before);
 
                     // Call a battle for each enemy in the chosen option:
                     for(int i=0; i<chosen_option.num_enemies; i++){
                         // initialise the queue to decide the turns, the queue for skills with duration > 1, and the stack to store player's used skills
                         FightQueue *fight_queue = create_queue(new_character, &chosen_option.enemies[i]);
                         OverlapQueue *overlap_queue = (OverlapQueue*)malloc(sizeof(OverlapQueue));
-                        init_overap_queue(overlap_queue);
+                        init_overlap_queue(overlap_queue);
                         SkillStack *player_used_skills = (SkillStack*)malloc(sizeof(SkillStack));
                         player_used_skills->top = -1;
                         // do the battle and return wether the player has won (win = true) or lost (win = false):
