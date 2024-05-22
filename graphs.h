@@ -17,4 +17,5 @@ Graph* create_graph(int num_scenarios);
 void add_edge(Graph *graph, Scenario *src, Scenario *dest); // Updated to use Scenario pointers
 void print_graph(Graph *graph);
 
-#endif
+#endif // GRAPH_H
+
