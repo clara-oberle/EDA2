@@ -73,17 +73,6 @@ Skill *init_thorny_veil(){
     return thorny_veil;
 }
 
-void init_cloak_of_darkness(Skill *cloak_of_darkness){
-    strcpy(cloak_of_darkness->name, "Cloak of Darkness");
-    strcpy(cloak_of_darkness->description, "Attack increases by 20 percent and player's DEF decreases by 15 percent for two turns.");
-    cloak_of_darkness->type = 0; // temporal modifier
-    cloak_of_darkness->modifier[0] = 1; // HP is unchanged
-    cloak_of_darkness->modifier[1] = -1; // ATK of player is changed, so that damage = defense - attack is positive
-    cloak_of_darkness->modifier[2] = 1; // DEF is unchanged
-    cloak_of_darkness->duration_turn = 1; // makes enemy immune for the next turn
-    return cloak_of_darkness;
-}
-
 //special
 Skill *init_vine_bind(){
     Skill *vine_bind = (Skill*)malloc(sizeof(Skill));
