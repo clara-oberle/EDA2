@@ -92,10 +92,24 @@ int main(){
 
         // Initialize graph
         Graph *graph = create_graph(4);
-        add_edge(graph, scenario1, scenario2);
-        add_edge(graph, scenario1, scenario3);
-        add_edge(graph, scenario2, scenario4);
-        add_edge(graph, scenario3, scenario4);
+        //add the four scenarios as nodes
+        add_scenario(&graph, &scenario1);
+        add_scenario(&graph, &scenario2);
+        add_scenario(&graph, &scenario3);
+        add_scenario(&graph, &scenario4);
+
+        //add edges between the nodes. You can travel from:
+        /*Scenario 1 to scenario 2 or 3
+        Scenario 2 to scenario 3 and 4 (only if completed 3)
+        Scenario 3 to scenario 2 and 4 (only if comleted 2)
+        Scenario 4 nowhere
+        */
+        add_edge(&graph, &scenario1, &scenario2);
+        add_edge(&graph, &scenario1, &scenario3);
+        add_edge(&graph, &scenario2, &scenario3);
+        add_edge(&graph, &scenario2, &scenario4);
+        add_edge(&graph, &scenario3, &scenario2);
+        add_edge(&graph, &scenario3, &scenario4);
 
         // Track completed scenarios
         bool completed_scenarios[4] = {false, false, false, false};
@@ -123,7 +137,8 @@ int main(){
                         printf("Wrong answer! Try again (remember it has to be lowercase): ");
                         scanf("%s", answer);
                     }
-                } else{
+                }
+                else{
                     strcpy(answer, "e"); // since it is not the last scenario make the defualt for the answer the correct one
                     scanf("%d", &choice); // choose between left (1) or right (2)
                 }
@@ -147,7 +162,8 @@ int main(){
                     }
                     */
                     printf("\n%s\n", chosen_option->narrative_text_after);
-                } else {
+                }
+                else {
                     printf("Invalid choice. Try again.\n");
                     continue;
                 }
