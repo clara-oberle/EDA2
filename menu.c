@@ -4,15 +4,10 @@
 #include <stdlib.h>
 #include "struct_definitions.h"
 #include "init_character_skills.h"
-#include "init_character_skills.c"
 #include "init_scenarios.h"
-#include "init_scenarios.c"
 #include "init_enemy_skills.h"
-#include "init_enemy_skills.c"
 #include "fight_system.h"
-#include "fight_system.c"
 #include "graphs.h"
-#include "graphs.c"
 
 /*unit test suite: to code a function to check if the functions of the code work
 end to end test suite: a function to test all the other unit tests suites
