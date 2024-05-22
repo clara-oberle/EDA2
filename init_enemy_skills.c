@@ -61,18 +61,6 @@ Skill *init_thorny_veil(){
     return thorny_veil;
 }
 
-Skill *init_thorny_veil(){
-    Skill *thorny_veil = (Skill*)malloc(sizeof(Skill));
-    strcpy(thorny_veil->name, "Thorny Veil");
-    strcpy(thorny_veil->description, "Shrouds the enemy in darkness, making them harder to hit and giving them a chance to avoid attacks for one turn.");
-    thorny_veil->type = 0; // temporal modifier
-    thorny_veil->modifier[0] = 1; // HP is unchanged
-    thorny_veil->modifier[1] = 1; // ATK is unchanged
-    thorny_veil->modifier[2] = 1.3; // increases evasion
-    thorny_veil->duration_turn = 1; // modifies DEF points for the next turn
-    return thorny_veil;
-}
-
 //special
 Skill *init_vine_bind(){
     Skill *vine_bind = (Skill*)malloc(sizeof(Skill));
