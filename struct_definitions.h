@@ -27,25 +27,25 @@ Printing the name and description
 typedef struct{
     char name[N];
     float points[3]; //points[0] = life_points; points[1] = attack points; points[2] = defense points
-    Skill skills[S]; //array of skills (of type Skill, the structure)
+    Skill *skills[S]; //array of skills (of type Skill, the structure)
 } Character;
 
 typedef struct{
     char name[N];
     float points[3]; //points[0] = life_points; points[1] = attack points; points[2] = defense points
-    Skill skills[S];
+    Skill *skills[S];
 } Enemy;
 
 typedef struct{
     char response_text[M], narrative_text_before[M], narrative_text_after[M];
     //narrative text before the battle and after the battle
-    Enemy enemies[MAX_ENEMIES];
+    Enemy *enemies[MAX_ENEMIES];
     int num_enemies; //to know exactly how many enemies are in the array
 } Option;
 
 typedef struct{
     char question_text[M];
-    Option options_list[2]; // There are maximum two options to choose from: left path or right path
+    Option *options_list[2]; // There are maximum two options to choose from: left path or right path
                             // Except for the last scenario where there is only one
     int num_options;
 } Decision;

@@ -14,6 +14,7 @@ void init_scenario1(Scenario *race_of_shadows ){
     "into two diverging paths, both shrouded in uncertainty.");
 
     // The decision is whether to take the left or right path:
+    // dynamically allocate memory for the decision struct and for the options array inside the decision struct
     Decision *choose_path_race = (Decision*)malloc(sizeof(Decision));
     race_of_shadows->decision = choose_path_race;
     choose_path_race->num_options = 2;
@@ -22,8 +23,8 @@ void init_scenario1(Scenario *race_of_shadows ){
     "with hidden dangers? Enter the number corresponding to your choice: ");
 
     // The left path takes the player to the Veil of Obscurity:
-    Option *veil_of_obscurity = (Option*)malloc(sizeof(Option));
-    choose_path_race->options_list[0] = *veil_of_obscurity;
+    choose_path_race->options_list[0] = (Option*)malloc(sizeof(Option));
+    Option *veil_of_obscurity = choose_path_race->options_list[0];
     strcpy(veil_of_obscurity->response_text, "To the left, the Veil of Obscurity looms like a shadowy abyss, "
     "its depths shrouded in mystery. The path winds through a dense forest of gnarled trees and twisting vines, "
     "their branches reaching out like grasping fingers to ensnare the unwary.");
@@ -38,8 +39,8 @@ void init_scenario1(Scenario *race_of_shadows ){
     veil_of_obscurity->num_enemies = 2;
 
     // The enemies in the Veil of Obscurity:
-    Enemy *shadow_stalker = (Enemy*)malloc(sizeof(Enemy));
-    veil_of_obscurity->enemies[0] = *shadow_stalker;
+    veil_of_obscurity->enemies[0] = (Enemy*)malloc(sizeof(Enemy));
+    Enemy *shadow_stalker = veil_of_obscurity->enemies[0];
     strcpy(shadow_stalker->name, "Shadow Stalker");
     shadow_stalker->points[0] = 250; // HP
     shadow_stalker->points[1] = 30; // ATK
@@ -49,23 +50,23 @@ void init_scenario1(Scenario *race_of_shadows ){
     //We create a pointer to the skill that it's initialized and then, we add this skill to the array.
     //Lastly, we free the pointer. This is done for every skill of every enemy
     Skill *skill_1 = init_shadow_strike();
-    shadow_stalker->skills[0] = *skill_1;
+    shadow_stalker->skills[0] = skill_1;
     free(skill_1);
 
     Skill *skill_2 = init_evasive_maneuver();
-    shadow_stalker->skills[1] = *skill_2;
+    shadow_stalker->skills[1] = skill_2;
     free(skill_2);
 
     Skill *skill_3 = init_flame_burst();
-    shadow_stalker->skills[2] = *skill_3;
+    shadow_stalker->skills[2] = skill_3;
     free(skill_3);
 
     Skill *skill_4 = init_arcane_blast();
-    shadow_stalker->skills[3] = *skill_4;
+    shadow_stalker->skills[3] = skill_4;
     free(skill_4);
 
-    Enemy *thorn_strangle = (Enemy*)malloc(sizeof(Enemy));
-    veil_of_obscurity->enemies[1] = *thorn_strangle;
+    veil_of_obscurity->enemies[1] = (Enemy*)malloc(sizeof(Enemy));
+    Enemy *thorn_strangle = veil_of_obscurity->enemies[0];
     strcpy(thorn_strangle->name, "Thorn Strangle");
     thorn_strangle->points[0] = 200; // HP
     thorn_strangle->points[1] = 20; // ATK
@@ -73,24 +74,24 @@ void init_scenario1(Scenario *race_of_shadows ){
 
     //initialize skills of thorn_strangler
     Skill *skill_5 = init_cutlass_slash();
-    thorn_strangle->skills[0] = *skill_5;
+    thorn_strangle->skills[0] = skill_5;
     free(skill_5);
 
     Skill *skill_6 = init_thorny_veil();
-    thorn_strangle->skills[1] = *skill_6;
+    thorn_strangle->skills[1] = skill_6;
     free(skill_6);
 
     Skill *skill_7 = init_vine_bind();
-    thorn_strangle->skills[2] = *skill_7;
+    thorn_strangle->skills[2] = skill_7;
     free(skill_7);
 
     Skill *skill_8 = init_healing_wave();
-    thorn_strangle->skills[3] = *skill_8;
+    thorn_strangle->skills[3] = skill_8;
     free(skill_8);
 
     // The right path takes the player to the Gauntlet of Peril:
-    Option *gauntlet_of_peril = (Option*)malloc(sizeof(Option));
-    choose_path_race->options_list[1] = *gauntlet_of_peril;
+    choose_path_race->options_list[1] = (Option*)malloc(sizeof(Option));
+    Option *gauntlet_of_peril = choose_path_race->options_list[1];
     strcpy(gauntlet_of_peril->response_text, "To the right, the Gauntlet of Peril stretches out like a "
     "terrifying passage of fire and brimstone. The landscape is a desolate wasteland of jagged rocks and "
     "bubbling lava pits, their fiery glow casting flickering shadows across the treacherous terrain.");
@@ -105,8 +106,8 @@ void init_scenario1(Scenario *race_of_shadows ){
     gauntlet_of_peril->num_enemies = 1;
 
     // The enemy in the Gauntlet of Peril:
-    Enemy *inferno_fiend = (Enemy*)malloc(sizeof(Enemy));
-    gauntlet_of_peril->enemies[0] = *inferno_fiend;
+    gauntlet_of_peril->enemies[0] = (Enemy*)malloc(sizeof(Enemy));
+    Enemy *inferno_fiend = gauntlet_of_peril->enemies[0];
     strcpy(inferno_fiend->name, "Inferno Fiend");
     inferno_fiend->points[0] = 300; // HP
     inferno_fiend->points[1] = 25; // ATK
@@ -114,19 +115,19 @@ void init_scenario1(Scenario *race_of_shadows ){
 
     //initialize skills of inferno fiend
     Skill *skill_9 = init_shadow_strike();
-    inferno_fiend->skills[0] = *skill_9;
+    inferno_fiend->skills[0] = skill_9;
     free(skill_9);
 
     Skill *skill_10 = init_healing_wave();
-    inferno_fiend->skills[1] = *skill_10;
+    inferno_fiend->skills[1] = skill_10;
     free(skill_10);
 
     Skill *skill_11 = init_vine_bind();
-    inferno_fiend->skills[2] = *skill_11;
+    inferno_fiend->skills[2] = skill_11;
     free(skill_11);
 
     Skill *skill_12 = init_evasive_maneuver();
-    inferno_fiend->skills[3] = *skill_12;
+    inferno_fiend->skills[3] = skill_12;
     free(skill_12);
 }
 
@@ -148,8 +149,8 @@ void init_scenario2(Scenario *crossroads_of_destiny){
     "for the promise of untold rewards? Enter the number corresponding to your choice: ");
 
     // Option A: The Forgotten Ruins
-    Option *forgotten_ruins = (Option*)malloc(sizeof(Option));
-    choose_path_crossroads->options_list[0] = *forgotten_ruins;
+    choose_path_crossroads->options_list[0] = (Option*)malloc(sizeof(Option));
+    Option *forgotten_ruins = choose_path_crossroads->options_list[0];
     strcpy(forgotten_ruins->response_text, "To the left lies the path to the Forgotten Ruins, where ancient "
     "secrets lie buried beneath the crumbling stones. The air is heavy with the weight of history, and the ruins "
     "whisper tales of long-forgotten civilizations and untold treasures waiting to be discovered.");
@@ -164,8 +165,8 @@ void init_scenario2(Scenario *crossroads_of_destiny){
     forgotten_ruins->num_enemies = 1;
 
     // Enemy in the Forgotten Ruins:
-    Enemy *guardian_ruins = (Enemy*)malloc(sizeof(Enemy));
-    forgotten_ruins->enemies[0] = *guardian_ruins;
+    forgotten_ruins->enemies[0] = (Enemy*)malloc(sizeof(Enemy));
+    Enemy *guardian_ruins = forgotten_ruins->enemies[0];
     strcpy(guardian_ruins->name, "Guardian of the Forgotten Ruins");
     guardian_ruins->points[0] = 400; // HP
     guardian_ruins->points[1] = 35; // ATK
@@ -173,24 +174,24 @@ void init_scenario2(Scenario *crossroads_of_destiny){
 
     //Skills
     Skill *skill_1 = init_evasive_maneuver();
-    guardian_ruins->skills[0] = *skill_1;
+    guardian_ruins->skills[0] = skill_1;
     free(skill_1);
 
     Skill *skill_2 = init_flame_burst();
-    guardian_ruins->skills[1] = *skill_2;
+    guardian_ruins->skills[1] = skill_2;
     free(skill_2);
 
     Skill *skill_3 = init_arcane_blast();
-    guardian_ruins->skills[2] = *skill_3;
+    guardian_ruins->skills[2] = skill_3;
     free(skill_3);
 
     Skill *skill_4 = init_cutlass_slash();
-    guardian_ruins->skills[3] = *skill_4;
+    guardian_ruins->skills[3] = skill_4;
     free(skill_4);
 
     // Option B: The Stormy Seas
-    Option *stormy_seas = (Option*)malloc(sizeof(Option));
-    choose_path_crossroads->options_list[1] = *stormy_seas;
+    choose_path_crossroads->options_list[1] = (Option*)malloc(sizeof(Option));
+    Option *stormy_seas = choose_path_crossroads->options_list[1];
     strcpy(stormy_seas->response_text, "To the right stretches the path to the Stormy Seas, where towering "
     "waves crash against rocky cliffs, and the wind howls like a vengeful spirit. The sea churns with hidden "
     "dangers, promising both riches and ruin to those brave enough to brave its wrath.");
@@ -205,8 +206,8 @@ void init_scenario2(Scenario *crossroads_of_destiny){
     stormy_seas->num_enemies = 2;
 
     // Enemies in the Stormy Seas:
-    Enemy *sea_marauders = (Enemy*)malloc(sizeof(Enemy));
-    stormy_seas->enemies[0] = *sea_marauders;
+    stormy_seas->enemies[0] = (Enemy*)malloc(sizeof(Enemy));
+    Enemy *sea_marauders = stormy_seas->enemies[0];
     strcpy(sea_marauders->name, "Captain Blackbeard");
     sea_marauders->points[0] = 300; // HP
     sea_marauders->points[1] = 30; // ATK
@@ -214,42 +215,42 @@ void init_scenario2(Scenario *crossroads_of_destiny){
 
     //skills:
     Skill *skill_5 = init_cutlass_slash();
-    sea_marauders->skills[0] = *skill_5;
+    sea_marauders->skills[0] = skill_5;
     free(skill_5);
 
     Skill *skill_6 = init_thorny_veil();
-    sea_marauders->skills[1] = *skill_6;
+    sea_marauders->skills[1] = skill_6;
     free(skill_6);
 
     Skill *skill_7 = init_vine_bind();
-    sea_marauders->skills[2] = *skill_7;
+    sea_marauders->skills[2] = skill_7;
     free(skill_7);
 
     Skill *skill_8 = init_healing_wave();
-    sea_marauders->skills[3] = *skill_8;
+    sea_marauders->skills[3] = skill_8;
     free(skill_8);
 
-    Enemy *siren_sorceress = (Enemy*)malloc(sizeof(Enemy));
-    stormy_seas->enemies[1] = *siren_sorceress;
+    stormy_seas->enemies[1] = (Enemy*)malloc(sizeof(Enemy));
+    Enemy *siren_sorceress = stormy_seas->enemies[0];
     strcpy(siren_sorceress->name, "Siren the Sorceress");
     siren_sorceress->points[0] = 250; // HP
     siren_sorceress->points[1] = 25; // ATK
     siren_sorceress->points[2] = 15; // DEF
     //Skills
     Skill *skill_9 = init_healing_wave();
-    siren_sorceress->skills[0] = *skill_9;
+    siren_sorceress->skills[0] = skill_9;
     free(skill_9);
 
     Skill *skill_10 = init_evasive_maneuver();
-    siren_sorceress->skills[1] = *skill_10;
+    siren_sorceress->skills[1] = skill_10;
     free(skill_10);
 
     Skill *skill_11 = init_shadow_strike();
-    siren_sorceress->skills[2] = *skill_11;
+    siren_sorceress->skills[2] = skill_11;
     free(skill_11);
 
     Skill *skill_12 = init_arcane_blast();
-    siren_sorceress->skills[3] = *skill_12;
+    siren_sorceress->skills[3] = skill_12;
     free(skill_12);
 }
 
@@ -269,8 +270,8 @@ void init_scenario3(Scenario *castle){
     "the right trail (2) and wonder into the courtyard? Enter the number corresponding to your choice: ");
 
     // The left path takes the player to a crypt:
-    Option *crypt = (Option*)malloc(sizeof(Option)); // Dynamic memory allocation for the first option struct
-    choose_path->options_list[0] = *crypt;
+    choose_path->options_list[0] = (Option*)malloc(sizeof(Option));
+    Option *crypt = choose_path->options_list[0];
     strcpy(crypt->response_text, "You descend into the depths of the crypt "
     "where secrets and unseen horrors await amongst the bones of past generations.");
     strcpy(crypt->narrative_text_before, "As you reach the crypt, a fearsome creature "
@@ -283,8 +284,8 @@ void init_scenario3(Scenario *castle){
     crypt->num_enemies = 1;
 
     // The enemy of the crypt is a ghoul:
-    Enemy *ghoul = (Enemy*)malloc(sizeof(Enemy)); // Dynamic memory allocation for the enemy struct
-    crypt->enemies[0] = *ghoul;
+    crypt->enemies[0] = (Enemy*)malloc(sizeof(Enemy));
+    Enemy *ghoul = crypt->enemies[0];
     strcpy(ghoul->name, "Ghoul");
     ghoul->points[0] = 200; // HP (when this reaches 0 the enemy is defeated)
     ghoul->points[1] = 20; // ATK (an attack reduces the player's HP by 20)
@@ -292,24 +293,24 @@ void init_scenario3(Scenario *castle){
 
     //Skill
     Skill *skill_1 = init_shadow_strike();
-    ghoul->skills[0] = *skill_1;
+    ghoul->skills[0] = skill_1;
     free(skill_1);
 
     Skill *skill_2 = init_evasive_maneuver();
-    ghoul->skills[1] = *skill_2;
+    ghoul->skills[1] = skill_2;
     free(skill_2);
 
     Skill *skill_3 = init_flame_burst();
-    ghoul->skills[2] = *skill_3;
+    ghoul->skills[2] = skill_3;
     free(skill_3);
 
     Skill *skill_4 = init_arcane_blast();
-    ghoul->skills[3] = *skill_4;
+    ghoul->skills[3] = skill_4;
     free(skill_4);
 
     // The right path takes the player to a courtyard:
-    Option *courtyard = (Option*)malloc(sizeof(Option)); // Dynamic memory allocation for the second option struct
-    choose_path->options_list[1] = *courtyard;
+    choose_path->options_list[1] = (Option*)malloc(sizeof(Option));
+    Option *courtyard = choose_path->options_list[1];
     strcpy(courtyard->response_text, "You step into the wild courtyard, surrounded by towering "
     "hedges, crumbling statues, and at its heart, a weathered fountain. Mist rises from the "
     "overgrown algae, cloaking the scene in a mystical atmosphere.");
@@ -327,32 +328,32 @@ void init_scenario3(Scenario *castle){
     courtyard->num_enemies = 2;
 
     // The first enemy of the courtyard is a stone guardian:
-    Enemy *stone_guardian = (Enemy*)malloc(sizeof(Enemy)); // Dynamic memory allocation for the first enemy struct
-    courtyard->enemies[0] = *stone_guardian;
+    courtyard->enemies[0] = (Enemy*)malloc(sizeof(Enemy));
+    Enemy *stone_guardian = courtyard->enemies[0];
     strcpy(stone_guardian->name, "Stone Guardian");
     stone_guardian->points[0] = 150; // HP (when this reaches 0 the enemy is defeated)
     stone_guardian->points[1] = 15; // ATK (an attack reduces the player's HP by 15)
     stone_guardian->points[2] = 10; // DEF (blocks 10 ATK)
     //Skills
     Skill *skill_5 = init_evasive_maneuver();
-    stone_guardian->skills[0] = *skill_5;
+    stone_guardian->skills[0] = skill_5;
     free(skill_5);
 
     Skill *skill_6 = init_flame_burst();
-    stone_guardian->skills[1] = *skill_6;
+    stone_guardian->skills[1] = skill_6;
     free(skill_6);
 
     Skill *skill_7 = init_arcane_blast();
-    stone_guardian->skills[2] = *skill_7;
+    stone_guardian->skills[2] = skill_7;
     free(skill_7);
 
     Skill *skill_8 = init_cutlass_slash();
-    stone_guardian->skills[3] = *skill_8;
+    stone_guardian->skills[3] = skill_8;
     free(skill_8);
 
     // The second enemy of the courtyard is deadly nightshade:
-    Enemy *deadly_nightshade = (Enemy*)malloc(sizeof(Enemy)); // Dynamic memory allocation for the second enemy struct
-    courtyard->enemies[1] = *deadly_nightshade;
+    courtyard->enemies[1] = (Enemy*)malloc(sizeof(Enemy));
+    Enemy *deadly_nightshade = courtyard->enemies[1];
     strcpy(deadly_nightshade->name, "Deadly Nightshade");
     deadly_nightshade->points[0] = 100; // HP (when this reaches 0 the enemy is defeated)
     deadly_nightshade->points[1] = 10; // ATK (an attack reduces the player's HP by 10)
@@ -360,21 +361,20 @@ void init_scenario3(Scenario *castle){
 
     //Skills
     Skill *skill_9 = init_shadow_strike();
-    deadly_nightshade->skills[0] = *skill_9;
+    deadly_nightshade->skills[0] = skill_9;
     free(skill_9);
 
     Skill *skill_10 = init_healing_wave();
-    deadly_nightshade->skills[1] = *skill_10;
+    deadly_nightshade->skills[1] = skill_10;
     free(skill_10);
 
     Skill *skill_11 = init_vine_bind();
-    deadly_nightshade->skills[2] = *skill_11;
+    deadly_nightshade->skills[2] = skill_11;
     free(skill_11);
 
     Skill *skill_12 = init_evasive_maneuver();
-    deadly_nightshade->skills[3] = *skill_12;
+    deadly_nightshade->skills[3] = skill_12;
     free(skill_12);
-
 }
 
 void init_scenario4(Scenario *final_battle){
@@ -396,8 +396,8 @@ void init_scenario4(Scenario *final_battle){
     "your answer in lower case): ");
     
     // If the riddle is solved correctly, then the final battle can commence:
-    Option *enter_final_battle = (Option*)malloc(sizeof(Option)); // Dynamic memory allocation for the option struct
-    solve_riddle->options_list[0] = *enter_final_battle;
+    solve_riddle->options_list[0] = (Option*)malloc(sizeof(Option));
+    Option *enter_final_battle = solve_riddle->options_list[0];
     strcpy(enter_final_battle->response_text, "Congratulations! You've successfully solved the riddle! "
     "The answer is indeed the letter E.");
     strcpy(enter_final_battle->narrative_text_before, "In a flash, you find yourself transported to the location "
@@ -416,32 +416,32 @@ void init_scenario4(Scenario *final_battle){
 
     // The three enemies in this scenario are each associated with a gemstone (time, space and spirituality):
     // The first enemy is associated with time:
-    Enemy *time_guardian = (Enemy*)malloc(sizeof(Enemy)); // Dynamic memory allocation for the enemy struct
-    enter_final_battle->enemies[0] = *time_guardian;
+    enter_final_battle->enemies[0] = (Enemy*)malloc(sizeof(Enemy));
+    Enemy *time_guardian = enter_final_battle->enemies[0];
     strcpy(time_guardian->name, "Guardian of Time");
     time_guardian->points[0] = 300; // HP (when this reaches 0 the enemy is defeated)
     time_guardian->points[1] = 30; // ATK (an attack reduces the player's HP by 20)
     time_guardian->points[2] = 20; // DEF (blocks 15 ATK)
 
     Skill *skill_1 = init_evasive_maneuver();
-    time_guardian->skills[0] = *skill_1;
+    time_guardian->skills[0] = skill_1;
     free(skill_1);
 
     Skill *skill_2 = init_flame_burst();
-    time_guardian->skills[1] = *skill_2;
+    time_guardian->skills[1] = skill_2;
     free(skill_2);
 
     Skill *skill_3 = init_healing_wave();
-    time_guardian->skills[2] = *skill_3;
+    time_guardian->skills[2] = skill_3;
     free(skill_3);
 
     Skill *skill_4 = init_cutlass_slash();
-    time_guardian->skills[3] = *skill_4;
+    time_guardian->skills[3] = skill_4;
     free(skill_4);
 
     // The second enemy is associated with space:
-    Enemy *space_guardian = (Enemy*)malloc(sizeof(Enemy)); // Dynamic memory allocation for the first enemy struct
-    enter_final_battle->enemies[1] = *space_guardian;
+    enter_final_battle->enemies[1] = (Enemy*)malloc(sizeof(Enemy));
+    Enemy *space_guardian = enter_final_battle->enemies[1];
     strcpy(space_guardian->name, "Guardian of Space");
     space_guardian->points[0] = 300; // HP (when this reaches 0 the enemy is defeated)
     space_guardian->points[1] = 20; // ATK (an attack reduces the player's HP by 15)
@@ -449,24 +449,24 @@ void init_scenario4(Scenario *final_battle){
 
     //Skills
     Skill *skill_5 = init_cutlass_slash();
-    space_guardian->skills[0] = *skill_5;
+    space_guardian->skills[0] = skill_5;
     free(skill_5);
 
     Skill *skill_6 = init_thorny_veil();
-    space_guardian->skills[1] = *skill_6;
+    space_guardian->skills[1] = skill_6;
     free(skill_6);
 
     Skill *skill_7 = init_vine_bind();
-    space_guardian->skills[2] = *skill_7;
+    space_guardian->skills[2] = skill_7;
     free(skill_7);
 
     Skill *skill_8 = init_shadow_strike();
-    space_guardian->skills[3] = *skill_8;
-    free(skill_8);    
+    space_guardian->skills[3] = skill_8;
+    free(skill_8);
 
     // The third enemy is associated with spirituality:
-    Enemy *spirituality_guardian = (Enemy*)malloc(sizeof(Enemy)); // Dynamic memory allocation for the second enemy struct
-    enter_final_battle->enemies[2] = *spirituality_guardian;
+    enter_final_battle->enemies[2] = (Enemy*)malloc(sizeof(Enemy));
+    Enemy *spirituality_guardian = enter_final_battle->enemies[2];
     strcpy(spirituality_guardian->name, "Guardian of Spirituality");
     spirituality_guardian->points[0] = 300; // HP (when this reaches 0 the enemy is defeated)
     spirituality_guardian->points[1] = 25; // ATK (an attack reduces the player's HP by 10)
@@ -474,18 +474,18 @@ void init_scenario4(Scenario *final_battle){
     
     //Skills
     Skill *skill_9 = init_healing_wave();
-    spirituality_guardian->skills[0] = *skill_9;
+    spirituality_guardian->skills[0] = skill_9;
     free(skill_9);
 
     Skill *skill_10 = init_evasive_maneuver();
-    spirituality_guardian->skills[1] = *skill_10;
+    spirituality_guardian->skills[1] = skill_10;
     free(skill_10);
 
     Skill *skill_11 = init_shadow_strike();
-    spirituality_guardian->skills[2] = *skill_11;
+    spirituality_guardian->skills[2] = skill_11;
     free(skill_11);
 
     Skill *skill_12 = init_arcane_blast();
-    spirituality_guardian->skills[3] = *skill_12;
+    spirituality_guardian->skills[3] = skill_12;
     free(skill_12);
 }

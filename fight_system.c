@@ -398,8 +398,8 @@ void implement_enemy_skill(Skill *chosen_skill, Character *player, Enemy *enemy,
 
     } else if(chosen_skill->type == 1){ // if the skill is a direct attack
         // implement the special skill: (each has to be done separately)
-        if(strcmp(chosen_skill->name, "") == 0){
-            // To do
+        if(strcmp(chosen_skill->name, "Healing Wave") == 0){
+            enemy->points[0] *= 1.3; // restores the enemy's HP by 30%
         }
     }
 }
@@ -418,40 +418,41 @@ int check_win(Character *player, Enemy *enemy){
 // function for a battle - uses all the above functions:
 // (returns true if player has won batlle and false if not)
 bool battle(Character *character, Enemy *enemy, FightQueue *fight_queue, OverlapQueue *overlap_queue, SkillStack *player_used_skills){
-    printf("Prepare yourself, for in this battle you will confront the formidable %s. Good luck!", enemy->name);
+    printf("\nPrepare yourself, for in this battle you will confront the formidable %s. Good luck!\n", enemy->name);
     while(fight_queue->size != 0){ // check that the queue is not empty
         if(check_win(character, enemy) == -1){ // if they both still have HP
             if(fight_queue->first->type == 0){ // character's turn
                 int skill_number;
-                printf("Your turn. Choose a skill:\n1- Thunder Bolt\n2- Frost bite\n"
-                "3- Health exchange\n4- Fire ball\nEnter the number of the chosen skill: ");
+                printf("\nYour turn. Choose a skill:\n1- %s\n2- %s\n"
+                "3- %s\n4- %s\nEnter the number of the chosen skill: ", character->skills[0]->name,
+                character->skills[1]->name, character->skills[2]->name, character->skills[3]->name);
                 scanf("%d", &skill_number); // ask the player to choose a skill
                 // create a copy of the skill (this way its duration turns can be modified without affecting the original skill)
                 Skill *chosen_skill = (Skill*)malloc(sizeof(Skill)); 
-                init_skill_copy(chosen_skill, &character->skills[skill_number-1]);
+                init_skill_copy(chosen_skill, character->skills[skill_number-1]);
                 // check if the skill is one that can only be used once (if so ask the player to choose a different skill)
                 while(one_time_skill(chosen_skill, player_used_skills) == true){
                     free(chosen_skill);
-                    printf("This skill can only be used once during the battle and it has already been used."
+                    printf("\nThis skill can only be used once during the battle and it has already been used."
                     "Choose a different skill: ");
                     scanf("%d", &skill_number);
                     Skill *chosen_skill = (Skill*)malloc(sizeof(Skill));
-                    init_skill_copy(chosen_skill, &character->skills[skill_number-1]);
+                    init_skill_copy(chosen_skill, character->skills[skill_number-1]);
                 }
                 // check if the skill is one that has more than one duration turn and still has duration turns left
                 // (if so ask the player to choose a different skill)
                 while(find_in_queue(chosen_skill, overlap_queue) == true){
                     free(chosen_skill);
-                    printf("This skill still has duration turns left. Choose a different skill: ");
+                    printf("\nThis skill still has duration turns left. Choose a different skill: ");
                     scanf("%d", &skill_number);
                     Skill *chosen_skill = (Skill*)malloc(sizeof(Skill));
-                    init_skill_copy(chosen_skill, &character->skills[skill_number-1]);
+                    init_skill_copy(chosen_skill, character->skills[skill_number-1]);
                 }
-                printf("You have chosen %s\n", chosen_skill->name);
+                printf("\nYou have chosen %s\n", chosen_skill->name);
                 // implement the skill (modify ATK, HP and DEF accordingly):
                 implement_player_skill(chosen_skill, character, enemy, overlap_queue, player_used_skills);
                 // let the player know how much damage they have caused to the enemy in this turn:
-                printf("The enemy's current HP: %.2f\n", enemy->points[0]);
+                printf("\nThe enemy's current HP: %.2f\n", enemy->points[0]);
                 // add the skill to the overlap queue if its duration turn was more than one:
                 if(chosen_skill->duration_turn > 0){
                     enqueue_overlap_skill(overlap_queue, chosen_skill, 0);
@@ -463,19 +464,19 @@ bool battle(Character *character, Enemy *enemy, FightQueue *fight_queue, Overlap
                 srand(time(NULL)); // initialize random number generator with current time
                 int index = generate_random_index(); // get a random index from 0 to 2 
                 // create a copy of the skill corresponding to the randomly generated index
-                init_skill_copy(random_skill, &enemy->skills[index]);
+                init_skill_copy(random_skill, enemy->skills[index]);
                 // if it is a skill that still has duration turns left, choose another one:
                 while(find_in_queue(random_skill, overlap_queue) == true){
                     free(random_skill);
                     Skill *random_skill = (Skill*)malloc(sizeof(Skill));
                     int index = generate_random_index();
-                    init_skill_copy(random_skill, &enemy->skills[index]);
+                    init_skill_copy(random_skill, enemy->skills[index]);
                 }
-                printf("%s has chosen %s\n", enemy->name, random_skill->name);
+                printf("\n%s has chosen %s\n", enemy->name, random_skill->name);
                 // implement the skill (modify ATK, HP and DEF accordingly):
                 implement_enemy_skill(random_skill, character, enemy, overlap_queue);
                 // let the player know how much damage the enemy has caused them in this turn:
-                printf("Your current HP: %.2f\n", character->points[0]);
+                printf("\nYour current HP: %.2f\n", character->points[0]);
                 // add the skill to the overlap queue if its duration turn was more than one:
                 if(random_skill->duration_turn > 0){
                     enqueue_overlap_skill(overlap_queue, random_skill, 1);
@@ -484,7 +485,7 @@ bool battle(Character *character, Enemy *enemy, FightQueue *fight_queue, Overlap
                 }
             }
         } else if(check_win(character, enemy) == 0){ // if the player has won, return true
-            printf("Congratulations, you have emerged victorious!\n");
+            printf("\nCongratulations, you have emerged victorious!\n");
             return true;
         } else if(check_win(character, enemy) == 1){ // if the player has lost, return false
             printf("You have been defeated. Better luck next time!\n");

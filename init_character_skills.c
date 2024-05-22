@@ -145,31 +145,31 @@ void init_character_skills(Character *new_character, Skill *shadow_blade, Skill 
         }
         switch(selected_skill){
             case 1:
-                new_character->skills[i] = *shadow_blade;
+                new_character->skills[i] = shadow_blade;
                 break;
             case 2:
-                new_character->skills[i] = *frostbite;
+                new_character->skills[i] = frostbite;
                 break;
             case 3:
-                new_character->skills[i] = *health_exchange;
+                new_character->skills[i] = health_exchange;
                 break;
             case 4:
-                new_character->skills[i] = *fireball;
+                new_character->skills[i] = fireball;
                 break;
             case 5:
-                new_character->skills[i] = *healing_aura;
+                new_character->skills[i] = healing_aura;
                 break;
             case 6:
-                new_character->skills[i] = *thunderbolt;
+                new_character->skills[i] = thunderbolt;
                 break;
             case 7:
-                new_character->skills[i] = *time_warp;
+                new_character->skills[i] = time_warp;
                 break;
         }
     }
     printf("\nThe skills you have chosen are:\n");
     for(int i=0; i<4; i++){
-        printf("- %s\n", new_character->skills[i].name);
+        printf("- %s\n", new_character->skills[i]->name);
     }
     printf("Good Luck!\n");
 }
