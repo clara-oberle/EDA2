@@ -118,7 +118,7 @@ int main(){
                         // initialise the queue to decide the turns, the queue for skills with duration > 1, and the stack to store player's used skills
                         FightQueue *fight_queue = create_queue(new_character, &chosen_option.enemies[i]);
                         OverlapQueue *overlap_queue = (OverlapQueue*)malloc(sizeof(OverlapQueue));
-                        init_overap_queue(overlap_queue);
+                        init_overlap_queue(overlap_queue);
                         SkillStack *player_used_skills = (SkillStack*)malloc(sizeof(SkillStack));
                         player_used_skills->top = -1;
                         // do the battle and return wether the player has won (win = true) or lost (win = false):
