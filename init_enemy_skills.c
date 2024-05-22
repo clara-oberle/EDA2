@@ -10,6 +10,7 @@ Skill *init_shadow_strike(){
     shadow_strike->modifier[1] = 1.2; // moderate damage (ATK*1.2)
     shadow_strike->modifier[2] = 1; // DEF is unchanged
     shadow_strike->duration_turn = 1; // modifies ATK points for only that turn
+    return shadow_strike;
 }
 
 Skill *init_arcane_blast(){
