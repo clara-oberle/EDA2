@@ -71,7 +71,7 @@ void init_scenario1(Scenario *race_of_shadows ){
     thorn_strangle->points[1] = 20; // ATK
     thorn_strangle->points[2] = 5; // DEF
 
-    //initialize skills of thorn_strangle
+    //initialize skills of thorn_strangler
     Skill *skill_5 = init_cutlass_slash();
     thorn_strangle->skills[0] = *skill_5;
     free(skill_5);
