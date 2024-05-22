@@ -1,4 +1,7 @@
 #include "init_scenarios.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 
 void init_scenario1(Scenario *race_of_shadows ){
     // Scenario 1 - Race of Shadows
@@ -19,7 +22,7 @@ void init_scenario1(Scenario *race_of_shadows ){
 
     // The left path takes the player to the Veil of Obscurity:
     Option *veil_of_obscurity = (Option*)malloc(sizeof(Option));
-    choose_path_race->options_list[0] =veil_of_obscurity;
+    choose_path_race->options_list[0] = *veil_of_obscurity;
     strcpy(veil_of_obscurity->response_text, "To the left, the Veil of Obscurity looms like a shadowy abyss, "
     "its depths shrouded in mystery. The path winds through a dense forest of gnarled trees and twisting vines, "
     "their branches reaching out like grasping fingers to ensnare the unwary.");
@@ -50,7 +53,7 @@ void init_scenario1(Scenario *race_of_shadows ){
 
     // The right path takes the player to the Gauntlet of Peril:
     Option *gauntlet_of_peril = (Option*)malloc(sizeof(Option));
-    choose_path_race->options_list[1] = gauntlet_of_peril;
+    choose_path_race->options_list[1] = *gauntlet_of_peril;
     strcpy(gauntlet_of_peril->response_text, "To the right, the Gauntlet of Peril stretches out like a "
     "terrifying passage of fire and brimstone. The landscape is a desolate wasteland of jagged rocks and "
     "bubbling lava pits, their fiery glow casting flickering shadows across the treacherous terrain.");
@@ -92,7 +95,7 @@ void init_scenario2(Scenario *crossroads_of_destiny){
 
     // Option A: The Forgotten Ruins
     Option *forgotten_ruins = (Option*)malloc(sizeof(Option));
-    choose_path_crossroads->options_list[0] = forgotten_ruins;
+    choose_path_crossroads->options_list[0] = *forgotten_ruins;
     strcpy(forgotten_ruins->response_text, "To the left lies the path to the Forgotten Ruins, where ancient "
     "secrets lie buried beneath the crumbling stones. The air is heavy with the weight of history, and the ruins "
     "whisper tales of long-forgotten civilizations and untold treasures waiting to be discovered.");
@@ -116,7 +119,7 @@ void init_scenario2(Scenario *crossroads_of_destiny){
 
     // Option B: The Stormy Seas
     Option *stormy_seas = (Option*)malloc(sizeof(Option));
-    choose_path_crossroads->options_list[1] = stormy_seas;
+    choose_path_crossroads->options_list[1] = *stormy_seas;
     strcpy(stormy_seas->response_text, "To the right stretches the path to the Stormy Seas, where towering "
     "waves crash against rocky cliffs, and the wind howls like a vengeful spirit. The sea churns with hidden "
     "dangers, promising both riches and ruin to those brave enough to brave its wrath.");
@@ -163,7 +166,7 @@ void init_scenario3(Scenario *castle){
 
     // The left path takes the player to a crypt:
     Option *crypt = (Option*)malloc(sizeof(Option)); // Dynamic memory allocation for the first option struct
-    choose_path->options_list[0] = crypt;
+    choose_path->options_list[0] = *crypt;
     strcpy(crypt->response_text, "You descend into the depths of the crypt "
     "where secrets and unseen horrors await amongst the bones of past generations.");
     strcpy(crypt->narrative_text_before, "As you reach the crypt, a fearsome creature "
@@ -185,7 +188,7 @@ void init_scenario3(Scenario *castle){
 
     // The right path takes the player to a courtyard:
     Option *courtyard = (Option*)malloc(sizeof(Option)); // Dynamic memory allocation for the second option struct
-    choose_path->options_list[1] = courtyard;
+    choose_path->options_list[1] = *courtyard;
     strcpy(courtyard->response_text, "You step into the wild courtyard, surrounded by towering "
     "hedges, crumbling statues, and at its heart, a weathered fountain. Mist rises from the "
     "overgrown algae, cloaking the scene in a mystical atmosphere.");
@@ -238,7 +241,7 @@ void init_scenario4(Scenario *final_battle){
     
     // If the riddle is solved correctly, then the final battle can commence:
     Option *enter_final_battle = (Option*)malloc(sizeof(Option)); // Dynamic memory allocation for the option struct
-    solve_riddle->options_list[0] = enter_final_battle;
+    solve_riddle->options_list[0] = *enter_final_battle;
     strcpy(enter_final_battle->response_text, "Congratulations! You've successfully solved the riddle! "
     "The answer is indeed the letter E.");
     strcpy(enter_final_battle->narrative_text_before, "In a flash, you find yourself transported to the location "

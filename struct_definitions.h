@@ -31,11 +31,6 @@ typedef struct{
 } Character;
 
 typedef struct{
-    char name[N], description[M];
-    struct Decision *decision;
-} Scenario;
-
-typedef struct{
     char name[N];
     float points[3]; //points[0] = life_points; points[1] = attack points; points[2] = defense points
     Skill skills[S];
@@ -54,5 +49,10 @@ typedef struct{
                             // Except for the last scenario where there is only one
     int num_options;
 } Decision;
+
+typedef struct{
+    char name[N], description[M];
+    Decision *decision;
+} Scenario;
 
 #endif
