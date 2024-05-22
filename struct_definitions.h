@@ -55,5 +55,4 @@ typedef struct{
     int num_options;
 } Decision;
 
-
 #endif

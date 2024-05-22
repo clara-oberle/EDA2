@@ -3,9 +3,9 @@
 
 #include "struct_definitions.h"
 
-Scenario *init_scenario1();
-Scenario *init_scenario2();
-Scenario *init_scenario3();
-Scenario *init_scenario4();
+void init_scenario1();
+void init_scenario2();
+void init_scenario3();
+void init_scenario4();
 
 #endif

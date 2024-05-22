@@ -10,7 +10,6 @@ Skill *init_shadow_strike(){
     shadow_strike->modifier[1] = 1.2; // moderate damage (ATK*1.2)
     shadow_strike->modifier[2] = 1; // DEF is unchanged
     shadow_strike->duration_turn = 1; // modifies ATK points for only that turn
-    return shadow_strike;
 }
 
 Skill *init_arcane_blast(){
@@ -46,7 +45,7 @@ Skill *init_evasive_maneuver(){
     evasive_maneuver->modifier[0] = 1; // HP is unchanged
     evasive_maneuver->modifier[1] = 1; // ATK is unchanged
     evasive_maneuver->modifier[2] = 1.5; // increases evasion (DEF*1.5)
-    evasive_maneuver->duration_turn = 1; // modifies DEF points for only that turn
+    evasive_maneuver->duration_turn = 2; // modifies DEF for the next turn, hence 2 (the current turn + next turn)
     return evasive_maneuver;
 }
 
@@ -62,10 +61,21 @@ Skill *init_thorny_veil(){
     return thorny_veil;
 }
 
-Skill *init_cloak_of_darkness(){
-    Skill *cloak_of_darkness = (Skill*)malloc(sizeof(Skill));
+Skill *init_thorny_veil(){
+    Skill *thorny_veil = (Skill*)malloc(sizeof(Skill));
+    strcpy(thorny_veil->name, "Thorny Veil");
+    strcpy(thorny_veil->description, "Shrouds the enemy in darkness, making them harder to hit and giving them a chance to avoid attacks for one turn.");
+    thorny_veil->type = 0; // temporal modifier
+    thorny_veil->modifier[0] = 1; // HP is unchanged
+    thorny_veil->modifier[1] = 1; // ATK is unchanged
+    thorny_veil->modifier[2] = 1.3; // increases evasion
+    thorny_veil->duration_turn = 1; // modifies DEF points for the next turn
+    return thorny_veil;
+}
+
+void init_cloak_of_darkness(Skill *cloak_of_darkness){
     strcpy(cloak_of_darkness->name, "Cloak of Darkness");
-    strcpy(cloak_of_darkness->description, "Grants the enemy temporary invisibility, making them immune to player attacks for one turn.");
+    strcpy(cloak_of_darkness->description, "Attack increases by 20 percent and player's DEF decreases by 15 percent for two turns.");
     cloak_of_darkness->type = 0; // temporal modifier
     cloak_of_darkness->modifier[0] = 1; // HP is unchanged
     cloak_of_darkness->modifier[1] = -1; // ATK of player is changed, so that damage = defense - attack is positive

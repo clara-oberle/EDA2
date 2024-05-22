@@ -80,10 +80,14 @@ int main(){
                               health_exchange, fireball, healing_aura, thunderbolt, time_warp);
 
         // Initialize scenarios
-        Scenario *scenario1 = init_scenario1();
-        Scenario *scenario2 = init_scenario2();
-        Scenario *scenario3 = init_scenario3();
-        Scenario *scenario4 = init_scenario4();
+        Scenario *scenario1 = (Scenario*)malloc(sizeof(Scenario));
+        init_scenario1(scenario1);
+        Scenario *scenario2 = (Scenario*)malloc(sizeof(Scenario));
+        init_scenario2(scenario2);
+        Scenario *scenario3 = (Scenario*)malloc(sizeof(Scenario));
+        init_scenario3(scenario3);
+        Scenario *scenario4 = (Scenario*)malloc(sizeof(Scenario));
+        init_scenario4(scenario4);
 
         // Track completed scenarios
         bool completed_scenarios[4] = {false, false, false, false};
