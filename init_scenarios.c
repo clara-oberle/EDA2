@@ -1,9 +1,7 @@
 #include "init_scenarios.h"
 
-Scenario *init_scenario1(){
+void init_scenario1(Scenario *race_of_shadows ){
     // Scenario 1 - Race of Shadows
-    // Dynamic memory allocation for the scenario struct for 1 
-    Scenario *race_of_shadows = (Scenario*)malloc(sizeof(Scenario));
     strcpy(race_of_shadows->name, "The Race of Shadows");
     strcpy(race_of_shadows->description, "As the screen fades from black, you find yourself in a sleek, "
     "futuristic vehicle, its engine's hum reverberating through your bones. Ahead lies the starting line, "
@@ -16,12 +14,12 @@ Scenario *init_scenario1(){
     race_of_shadows->decision = choose_path_race;
     choose_path_race->num_options = 2;
     strcpy(choose_path_race->question_text, "A decision must be made, a choice that will shape the course "
-    "of destiny. Will they veer left, towards the path less traveled, or right, where the shadows writhe "
-    "with hidden dangers?");
+    "of destiny. Will they veer left (1), towards the path less traveled, or right (2), where the shadows writhe "
+    "with hidden dangers? Enter the number corresponding to your choice: ");
 
     // The left path takes the player to the Veil of Obscurity:
     Option *veil_of_obscurity = (Option*)malloc(sizeof(Option));
-    choose_path_race->options_list[0] = *veil_of_obscurity;
+    choose_path_race->options_list[0] = veil_of_obscurity;
     strcpy(veil_of_obscurity->response_text, "To the left, the Veil of Obscurity looms like a shadowy abyss, "
     "its depths shrouded in mystery. The path winds through a dense forest of gnarled trees and twisting vines, "
     "their branches reaching out like grasping fingers to ensnare the unwary.");
@@ -52,7 +50,7 @@ Scenario *init_scenario1(){
 
     // The right path takes the player to the Gauntlet of Peril:
     Option *gauntlet_of_peril = (Option*)malloc(sizeof(Option));
-    choose_path_race->options_list[1] = *gauntlet_of_peril;
+    choose_path_race->options_list[1] = gauntlet_of_peril;
     strcpy(gauntlet_of_peril->response_text, "To the right, the Gauntlet of Peril stretches out like a "
     "terrifying passage of fire and brimstone. The landscape is a desolate wasteland of jagged rocks and "
     "bubbling lava pits, their fiery glow casting flickering shadows across the treacherous terrain.");
@@ -73,14 +71,10 @@ Scenario *init_scenario1(){
     inferno_fiend->points[0] = 300; // HP
     inferno_fiend->points[1] = 25; // ATK
     inferno_fiend->points[2] = 15; // DEF
-
-    return race_of_shadows;
 }
 
-Scenario *init_scenario2(){
+void init_scenario2(Scenario *crossroads_of_destiny){
     // Scenario 2 - Crossroads of Destiny
-    // Dynamic memory allocation for the scenario struct
-    Scenario *crossroads_of_destiny = (Scenario*)malloc(sizeof(Scenario));
     strcpy(crossroads_of_destiny->name, "The Crossroads of Destiny");
     strcpy(crossroads_of_destiny->description, "As your vehicle hurtles down the track, "
     "you approach a fork in the road, each path shrouded in its own mystery and peril. The decision "
@@ -92,13 +86,13 @@ Scenario *init_scenario2(){
     crossroads_of_destiny->decision = choose_path_crossroads;
     choose_path_crossroads->num_options = 2;
     strcpy(choose_path_crossroads->question_text, "With the fate of your journey hanging in the balance, "
-    "you must choose your path wisely.\nDo you venture into the depths of the Forgotten Ruins, "
-    "where ancient mysteries await, or brave the tempestuous waters of the Stormy Seas, risking life and limb "
-    "for the promise of untold rewards?");
+    "you must choose your path wisely.\nDo you venture into the depths of the Forgotten Ruins (1), "
+    "where ancient mysteries await, or brave the tempestuous waters of the Stormy Seas (2), risking life and limb "
+    "for the promise of untold rewards? Enter the number corresponding to your choice: ");
 
     // Option A: The Forgotten Ruins
     Option *forgotten_ruins = (Option*)malloc(sizeof(Option));
-    choose_path_crossroads->options_list[0] = *forgotten_ruins;
+    choose_path_crossroads->options_list[0] = forgotten_ruins;
     strcpy(forgotten_ruins->response_text, "To the left lies the path to the Forgotten Ruins, where ancient "
     "secrets lie buried beneath the crumbling stones. The air is heavy with the weight of history, and the ruins "
     "whisper tales of long-forgotten civilizations and untold treasures waiting to be discovered.");
@@ -122,7 +116,7 @@ Scenario *init_scenario2(){
 
     // Option B: The Stormy Seas
     Option *stormy_seas = (Option*)malloc(sizeof(Option));
-    choose_path_crossroads->options_list[1] = *stormy_seas;
+    choose_path_crossroads->options_list[1] = stormy_seas;
     strcpy(stormy_seas->response_text, "To the right stretches the path to the Stormy Seas, where towering "
     "waves crash against rocky cliffs, and the wind howls like a vengeful spirit. The sea churns with hidden "
     "dangers, promising both riches and ruin to those brave enough to brave its wrath.");
@@ -150,13 +144,10 @@ Scenario *init_scenario2(){
     siren_sorceress->points[0] = 250; // HP
     siren_sorceress->points[1] = 25; // ATK
     siren_sorceress->points[2] = 15; // DEF
-
-    return crossroads_of_destiny;
 }
 
-Scenario *init_scenario3(){
+void init_scenario3(Scenario *castle){
     // Scenario 3 - The Abandoned Castle:
-    Scenario *castle = (Scenario*)malloc(sizeof(Scenario)); // Dynamic memory allocation for the scenario struct
     strcpy(castle->name, "Abandoned Castle");
     strcpy(castle->description, "The screen shifts to reveal an ancient castle "
     "enveloped in dense fog. Two paths diverge at the entrance, offering a crucial "
@@ -167,12 +158,12 @@ Scenario *init_scenario3(){
     castle->decision = choose_path;
     choose_path->num_options = 2;
     strcpy(choose_path->question_text, "Seeker of Gemstones, will you take " 
-    "the left path and venture deep into the castle's crypt, or will you explore "
-    "the right trail and wonder into the courtyard?");
+    "the left path (1) and venture deep into the castle's crypt, or will you explore "
+    "the right trail (2) and wonder into the courtyard? Enter the number corresponding to your choice: ");
 
     // The left path takes the player to a crypt:
     Option *crypt = (Option*)malloc(sizeof(Option)); // Dynamic memory allocation for the first option struct
-    choose_path->options_list[0] = *crypt;
+    choose_path->options_list[0] = crypt;
     strcpy(crypt->response_text, "You descend into the depths of the crypt "
     "where secrets and unseen horrors await amongst the bones of past generations.");
     strcpy(crypt->narrative_text_before, "As you reach the crypt, a fearsome creature "
@@ -194,7 +185,7 @@ Scenario *init_scenario3(){
 
     // The right path takes the player to a courtyard:
     Option *courtyard = (Option*)malloc(sizeof(Option)); // Dynamic memory allocation for the second option struct
-    choose_path->options_list[1] = *courtyard;
+    choose_path->options_list[1] = courtyard;
     strcpy(courtyard->response_text, "You step into the wild courtyard, surrounded by towering "
     "hedges, crumbling statues, and at its heart, a weathered fountain. Mist rises from the "
     "overgrown algae, cloaking the scene in a mystical atmosphere.");
@@ -226,13 +217,10 @@ Scenario *init_scenario3(){
     deadly_nightshade->points[0] = 100; // HP (when this reaches 0 the enemy is defeated)
     deadly_nightshade->points[1] = 10; // ATK (an attack reduces the player's HP by 10)
     deadly_nightshade->points[2] = 5; // DEF (blocks 5 ATK)
-
-    return castle;
 }
 
-Scenario *init_scenario4(){
+void init_scenario4(Scenario *final_battle){
     // Last Scenario - The Battle for the Gemstones:
-    Scenario *final_battle = (Scenario*)malloc(sizeof(Scenario)); // Dynamic memory allocation for the scenario struct
     strcpy(final_battle->name, "The Battle for the Gemstones");
     strcpy(final_battle->description, "As you emerge victorious from the towering castle, clutching the "
     "final shard of the riddle, the air crackles with anticipation. The time has come to solve the riddle "
@@ -246,11 +234,11 @@ Scenario *init_scenario4(){
     solve_riddle->num_options = 1;
     strcpy(solve_riddle->question_text, "Brave adventurer, your path has led you to this critical moment. "
     "Before you lies the final mystery to unravel before claiming the gems. Listen closely:\nIt is the beginning "
-    "of eternity,\nthe end of time and space,\nthe beginning of the end,\nand the end of every space.\nWhat is it?");
+    "of eternity,\nthe end of time and space,\nthe beginning of the end,\nand the end of every space.\nWhat is it?: ");
     
     // If the riddle is solved correctly, then the final battle can commence:
     Option *enter_final_battle = (Option*)malloc(sizeof(Option)); // Dynamic memory allocation for the option struct
-    solve_riddle->options_list[0] = *enter_final_battle;
+    solve_riddle->options_list[0] = enter_final_battle;
     strcpy(enter_final_battle->response_text, "Congratulations! You've successfully solved the riddle! "
     "The answer is indeed the letter E.");
     strcpy(enter_final_battle->narrative_text_before, "In a flash, you find yourself transported to the location "
@@ -291,6 +279,4 @@ Scenario *init_scenario4(){
     spirituality_guardian->points[0] = 300; // HP (when this reaches 0 the enemy is defeated)
     spirituality_guardian->points[1] = 25; // ATK (an attack reduces the player's HP by 10)
     spirituality_guardian->points[2] = 20; // DEF (blocks 5 ATK)
-
-    return final_battle;
 }
