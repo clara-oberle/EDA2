@@ -56,7 +56,7 @@ int main(){
         new_character->points[0] = 400; // HP
         new_character->points[1] = 40; // ATK
         new_character->points[2] = 20; // DEF
-        printf("\nWelcome %s! You have:\n- %d health points (HP)\n- %d attack points (ATK)\n- %d defence points (DEF)\n"
+        printf("\nWelcome %s! You have:\n- %.2f health points (HP)\n- %.2f attack points (ATK)\n- %.2f defence points (DEF)\n"
         "They will regenerate at the start of each battle.\n", new_character->name, new_character->points[0], 
         new_character->points[1], new_character->points[2]);
         
@@ -107,14 +107,23 @@ int main(){
                 printf("\n%s\n", decision->question_text);
                 char answer[N];
                 int choice;
+                // check if it is the last scenario
                 if(strcmp(current_scenario->name, "The Battle for the Gemstones") == 0 ){
+                    // input the answer to the riddle
                     scanf("%s", answer);
-                    choice = 1;
+                    choice = 1; // there is only one option: to enter the final battle
+                    while(strcmp(answer, "e") != 0){ // while the answer is not correct
+                        printf("Wrong answer! Try again (remember it has to be lowercase): ");
+                        scanf("%c", answer);
+                    }
                 } else{
+                    answer = 'e'; // since it is not the last scenario make the defualt for the answer the correct one
                     scanf("%d", &choice);
                 }
-                if ((choice >= 1 && choice <= decision->num_options) || strcmp(answer, "the letter e") == 0){
+                // if choice is within the correct bounds and the answer to the riddle is correct, enter the chosen option
+                if ((choice >= 1 && choice <= decision->num_options) && strcmp(answer, "e") == 0){
                     Option chosen_option = decision->options_list[choice - 1];
+                    printf("\nnum: %d\n", chosen_option.num_enemies);
                     printf("\n%s\n", chosen_option.response_text);
                     printf("\n%s\n", chosen_option.narrative_text_before);
 
