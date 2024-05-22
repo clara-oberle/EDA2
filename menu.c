@@ -97,12 +97,12 @@ int main(){
         Scenario *current_scenario = scenario1;
 
         // Game loop for navigating scenarios
-        while (current_scenario) {
+        while (current_scenario != NULL) {
             printf("You are now in: %s\n", current_scenario->name);
             printf("%s\n", current_scenario->description);
 
             Decision *decision = current_scenario->decision;
-            if (decision) {
+            if (decision != NULL) {
                 printf("%s\n", decision->question_text);
                 for (int i = 0; i < decision->num_options; i++) {
                     printf("%d: %s\n", i + 1, decision->options_list[i].response_text);
