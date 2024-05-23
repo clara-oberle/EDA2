@@ -138,7 +138,8 @@ int main(){
                         printf("Wrong answer! Try again (remember it has to be lowercase): ");
                         scanf("%s", answer);
                     }
-                } else{
+                }
+                else{
                     strcpy(answer, "e"); // since it is not the last scenario make the defualt for the answer the correct one
                     scanf("%d", &choice); // choose between left (1) or right (2)
                 }
@@ -148,7 +149,7 @@ int main(){
                     strcpy(answer, "e"); // since it is not the last scenario make the defualt for the answer the correct one
                     scanf("%d", &choice); // choose between left (1) or right (2)
                 }
-
+               
                 Option *chosen_option = decision->options_list[choice-1];
                 printf("\n%s\n", chosen_option->response_text);
                 printf("\n%s\n", chosen_option->narrative_text_before);
