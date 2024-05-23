@@ -14,6 +14,7 @@
 #include "graphs.h"
 #include "graphs.c"
 
+
 /*unit test suite: to code a function to check if the functions of the code work
 end to end test suite: a function to test all the other unit tests suites
 */
@@ -91,20 +92,35 @@ int main(){
 
         // Initialize graph
         Graph *graph = create_graph(4);
-        add_edge(graph, scenario1, scenario2);
-        add_edge(graph, scenario1, scenario3);
-        add_edge(graph, scenario2, scenario4);
-        add_edge(graph, scenario3, scenario4);
+        //add the four scenarios as nodes
+        add_scenario(&graph, &scenario1);
+        add_scenario(&graph, &scenario2);
+        add_scenario(&graph, &scenario3);
+        add_scenario(&graph, &scenario4);
+
+        //add edges between the nodes. You can travel from:
+        /*Scenario 1 to scenario 2 or 3
+        Scenario 2 to scenario 3 and 4 (only if completed 3)
+        Scenario 3 to scenario 2 and 4 (only if comleted 2)
+        Scenario 4 nowhere
+        */
+        add_edge(&graph, &scenario1, &scenario2);
+        add_edge(&graph, &scenario1, &scenario3);
+        add_edge(&graph, &scenario2, &scenario3);
+        add_edge(&graph, &scenario2, &scenario4);
+        add_edge(&graph, &scenario3, &scenario2);
+        add_edge(&graph, &scenario3, &scenario4);
 
         // Track completed scenarios
         bool completed_scenarios[4] = {false, false, false, false};
-        completed_scenarios[0] = true; // First scenario is always completed first
+        //completed_scenarios[0] = true; // First scenario is always completed first
 
         // Current scenario pointer
         Scenario *current_scenario = scenario1;
 
         // Game loop for navigating scenarios
-        while (current_scenario != NULL) {
+        //While the fourth scenario is not completed
+        while (completed_scenarios[3] != true) {
             printf("\nYou are now in: %s\n", current_scenario->name);
             printf("%s\n", current_scenario->description);
 
@@ -126,32 +142,57 @@ int main(){
                     strcpy(answer, "e"); // since it is not the last scenario make the defualt for the answer the correct one
                     scanf("%d", &choice); // choose between left (1) or right (2)
                 }
-                // if choice is within the correct bounds and the answer to the riddle is correct, enter the chosen option
-                if ((choice >= 1 && choice <= decision->num_options) && strcmp(answer, "e") == 0){
-                    Option *chosen_option = decision->options_list[choice-1];
-                    printf("\n%s\n", chosen_option->response_text);
-                    printf("\n%s\n", chosen_option->narrative_text_before);
-
-                    // Call a battle for each enemy in the chosen option here
-                    /*
-                    for(int i=0; i<chosen_option->num_enemies; i++){
-                        // initialise the queue to decide the turns, the queue for skills with duration > 1, and the stack to store player's used skills
-                        FightQueue *fight_queue = create_queue(new_character, chosen_option->enemies[i]);
-                        OverlapQueue *overlap_queue = (OverlapQueue*)malloc(sizeof(OverlapQueue));
-                        init_overlap_queue(overlap_queue);
-                        SkillStack *player_used_skills = (SkillStack*)malloc(sizeof(SkillStack));
-                        player_used_skills->top = -1;
-                        // do the battle and return wether the player has won (win = true) or lost (win = false):
-                        bool win = battle(new_character, &chosen_option->enemies[i], fight_queue, overlap_queue, player_used_skills);
-                    }
-                    */
-                    printf("\n%s\n", chosen_option->narrative_text_after);
-                } else {
-                    printf("Invalid choice. Try again.\n");
-                    continue;
+                //while the choice is not correct (must be between 1 and 4)
+                while (choice < 1 && choice > decision->num_options){
+                    printf("Invalid choice. Try again.\n%s", current_scenario->decision->question_text);
+                    strcpy(answer, "e"); // since it is not the last scenario make the defualt for the answer the correct one
+                    scanf("%d", &choice); // choose between left (1) or right (2)
                 }
-            }
 
+                Option *chosen_option = decision->options_list[choice-1];
+                printf("\n%s\n", chosen_option->response_text);
+                printf("\n%s\n", chosen_option->narrative_text_before);
+
+                // Call a battle for each enemy in the chosen option here
+                bool win;
+                for(int i=0; i<chosen_option->num_enemies; i++){
+                    // initialise the queue to decide the turns, the queue for skills with duration > 1, and the stack to store player's used skills
+                    FightQueue *fight_queue = create_queue(new_character, chosen_option->enemies[i]);
+                    OverlapQueue *overlap_queue = (OverlapQueue*)malloc(sizeof(OverlapQueue));
+                    init_overlap_queue(overlap_queue);
+                    SkillStack *player_used_skills = (SkillStack*)malloc(sizeof(SkillStack));
+                    player_used_skills->top = -1;
+                    bool win = battle(new_character, chosen_option->enemies[i], fight_queue, overlap_queue, player_used_skills);
+                    if(win == false){ // if the player looses a fight with one of the enemies they cannot continue to fight the next enemy
+                        free(fight_queue);
+                        free(overlap_queue);
+                        free(player_used_skills);
+                        break; // exit the for loop 
+                    } else{
+                        // free fight memory allocations ready for the next fight
+                        free(fight_queue);
+                        free(overlap_queue);
+                        free(player_used_skills);
+                    }
+                }
+
+                /*
+                When fights end, in case of victory, the player is prompted with the next scene and its narrative. 
+                On the contrary, in case of defeat, the player is prompted with the ability to restart the game or 
+                restart the scenario.
+                */
+
+                //assuming win == true
+                if(win == false){
+                    completed_scenarios[3] == true; //this breaks the loop
+                    break;
+                }
+                printf("\n%s\n", chosen_option->narrative_text_after);
+                }
+                //switch(curre)
+                
+            
+            /*
             // Move to the next scenario
             free(current_scenario); // Free the memory of the current scenario before moving to the next
 
@@ -178,7 +219,6 @@ int main(){
                     current_scenario = temp->scenario;
                 } else {
                     printf("Invalid choice. Try again.\n");
-                    continue;
                 }
             } else if (current_scenario == scenario2 || current_scenario == scenario3) {
                 if (completed_scenarios[1] && completed_scenarios[2]) {
@@ -190,12 +230,14 @@ int main(){
                     } else {
                         current_scenario = scenario3;
                         completed_scenarios[2] = true;
-                    }
+                    } 
                 }
-            } else {
-                break;
             }
+            */
+            }
+        if(completed_scenarios[3] == true && win == false)
         }
+        //once the fourth scenario has been completed, you win
+        //remember we can only reach the fourth scenario if we have won the other 3
         printf("\nCongratulations! You have completed the game.\n");
     }
-}

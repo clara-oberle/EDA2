@@ -62,6 +62,5 @@ void implement_enemy_skill(Skill *chosen_skill, Character *player, Enemy *enemy,
 int check_win(Character *player, Enemy *enemy);
 bool battle(Character *character, Enemy *enemy, FightQueue *fight_queue, OverlapQueue *overlap_queue, SkillStack *player_used_skills);
 void time_strike();
-void end_fight();
 
 #endif

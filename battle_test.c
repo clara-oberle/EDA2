@@ -32,9 +32,9 @@ int main(){
 
     Enemy *enemy1 = (Enemy*)malloc(sizeof(Enemy));
     strcpy(enemy1->name, "Enemy1");
-    enemy1->points[0] = 100;
-    enemy1->points[1] = 20;
-    enemy1->points[2] = 15;
+    enemy1->points[0] = 400;
+    enemy1->points[1] = 40;
+    enemy1->points[2] = 20;
 
     enemy1->skills[0] = (Skill*)malloc(sizeof(Skill));
     Skill *shadow_strike = enemy1->skills[0];

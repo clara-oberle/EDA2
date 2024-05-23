@@ -151,21 +151,21 @@ void remove_finished_skills(OverlapQueue *queue){
         while (current != NULL) { // while the end of the queue is not reached
             // check if the duration turn of the current skill is 0
             if (current->skill->duration_turn == 0) {
+                QueueSkill *to_remove = current; // save the current skill to be removed
                 // if so, remove it from the queue
                 if (previous == NULL) { // if it is the first element
                     queue->first = current->next; // the next element becomes the first
-                } else { // otherwise...
-                    previous->next = current->next; // the next of the previous becomes the next of the current
-                }
-                if (current == queue->last) { // if the element is also the last
-                    queue->last = previous; // set the last to the previous
+                } else{
+                    previous->next = current->next; // skip the skill to be removed
                 }
 
-                // free the memory of the removed element
-                QueueSkill *temp = current; // create a temporary pointer to the element
-                current = current->next; // go the next element in the queue
-                free(temp); // free the memory of the removed element
+                if(current->next == NULL){ // if it was the last skill
+                    queue->last = previous; // update the last skill to be the previous one
+                }
 
+                // go the next element in the queue
+                current = current->next;
+                free(to_remove); // free memory of removed skill
                 queue->size--; // decrease the size of the queue by 1
             
             } else { // if the element/skill still has duration turns
@@ -204,9 +204,12 @@ bool find_in_queue(Skill *skill, OverlapQueue *queue){
 
 bool find_in_stack(Skill *skill, SkillStack *stack){
     // loop through the stack starting from the top
+    if(stack->top == -1){ // if the stack is empty
+        return false; // return not found (i.e. false)
+    }
     for(int i = stack->top; i >= 0; i--){
         // compare the skill in the stack to the target skill
-        if (stack->skills[i] == skill) {
+        if (strcmp(stack->skills[i]->name, skill->name) == 0) {
             return true; // if it's a match return true (found)
         }
     }
@@ -215,9 +218,9 @@ bool find_in_stack(Skill *skill, SkillStack *stack){
 
 bool one_time_skill(Skill *chosen_skill, SkillStack *player_used_skills){
     // check if the chosen skill is one that can only be used once and it has already been used:
-    if(strcmp(chosen_skill->name, "Health Exchange") && find_in_stack(chosen_skill, player_used_skills) == true){
+    if((strcmp(chosen_skill->name, "Health Exchange") == 0) && find_in_stack(chosen_skill, player_used_skills) == true){
         return true;
-    } else if(strcmp(chosen_skill->name, "Time Warp") && find_in_stack(chosen_skill, player_used_skills) == true){
+    } else if((strcmp(chosen_skill->name, "Time Warp") == 0) && find_in_stack(chosen_skill, player_used_skills) == true){
         return true;
     }
     return false;
@@ -233,11 +236,12 @@ int find_used_DEF_modifiers(float modifiers[MAX_DURATION], OverlapQueue *queue, 
     QueueSkill *current = queue->first;
     int index = 0; // variable to keep track of the index of the modifers array
     while(current != NULL){
-        if(current->skill->type == fighter_type){ // check if the skill belongs to the desired fighter
+        if(current->fighter == fighter_type){ // check if the skill belongs to the desired fighter
         /* check if the skill modifies the fighter's DEF - if it were negative it would modify the other 
         fighter's DEF, and if it were 1 it wouldn't modify the DEF since DEF*1 = DEF */
             if(current->skill->modifier[2] > 1){
                 modifiers[index] = current->skill->modifier[2]; // save the modifer in the array
+                printf("previously used def %d (from inside function): %.2f\n", index+1, modifiers[index]);
                 ++index;
             }
         }
@@ -250,6 +254,7 @@ int find_used_DEF_modifiers(float modifiers[MAX_DURATION], OverlapQueue *queue, 
 }
 
 void print_overlap_queue(OverlapQueue *queue, int fighter_type){
+    printf("size of overlap queue: %d\n", queue->size);
     if (queue->size == 0) {
         printf("There are no skills with remaining duration turns.\n");
     }
@@ -257,15 +262,27 @@ void print_overlap_queue(OverlapQueue *queue, int fighter_type){
     QueueSkill *current = queue->first;
     while (current != NULL){
         if(current->fighter == fighter_type){
-            printf("- %s: %d turn/s left\n", current->skill->name, current->skill->duration_turn);
+            printf("- %s (current fighter): %d turn/s left\n", current->skill->name, current->skill->duration_turn);
         }
         current = current->next;
+    }
+}
+
+void printStack(SkillStack *stack) {
+    if (stack->top == -1) {
+        printf("No previously used player skills.\n");
+    } else{
+        printf("Previously used player skills:\n");
+        for (int i = stack->top; i >= 0; i--) {
+            printf("- %s\n", stack->skills[i]->name);
+        }
     }
 }
 
 void implement_player_skill(Skill *chosen_skill, Character *player, Enemy *enemy, OverlapQueue *overlap_queue, SkillStack *player_used_skills){
     // add the skill to the player_used_skills stack
     add_to_stack(chosen_skill, player_used_skills);
+    printStack(player_used_skills);
     // remove finished skills (overlapping skills that have reached 0 duration turns):
     remove_finished_skills(overlap_queue);
     // let the player know the skills that are in the overlap queue:
@@ -278,8 +295,8 @@ void implement_player_skill(Skill *chosen_skill, Character *player, Enemy *enemy
     /* Find the modifiers of the overlapping player skills (i.e. those with duration > 1) and modify the
     ATK_points and enemy_DEF variables accordingly:*/
     QueueSkill *current = overlap_queue->first;
-    while(current != NULL){ // loop through the overlap_queue to find the modifiers for current skill
-        if(current->skill->type == 0){ // if it is a player's skill
+    while(current != NULL){ // loop through the overlap_queue to find the modifiers for current skill that belongs to the player
+        if(current->fighter == 0 && current->skill->duration_turn > 0){ // double check that there are duration turns left just in case
             // modify player's ATK (if modifier is 1 then it stays the same):
             ATK_points *= current->skill->modifier[1];
             // if the DEF modifier is negative then it affects the enemy's DEF:
@@ -352,8 +369,8 @@ void implement_enemy_skill(Skill *chosen_skill, Character *player, Enemy *enemy,
     /* Find the modifiers of the overlapping enemy skills (i.e. those with duration > 1) and modify the
     ATK_points and player_DEF variables accordingly:*/
     QueueSkill *current = overlap_queue->first;
-    while(current != NULL){ // loop through the overlap_queue to find the modifiers for current skill
-        if(current->skill->type == 1){
+    while(current != NULL){ // loop through the overlap_queue to find the modifiers for current skill that belong to the enemy
+        if(current->fighter == 1 && current->skill->duration_turn > 0){ // double check that there are duration turns left just in case
             // modify enemy's ATK (if modifier is 1 then it stays the same):
             ATK_points *= current->skill->modifier[1];
             // if the DEF modifier is negative then it affects the player's DEF:
@@ -396,20 +413,18 @@ void implement_enemy_skill(Skill *chosen_skill, Character *player, Enemy *enemy,
         // decrease the skill duration for the chosen_skill
         --chosen_skill->duration_turn;
 
-    } else if(chosen_skill->type == 1){ // if the skill is a direct attack
-        // implement the special skill: (each has to be done separately)
-        if(strcmp(chosen_skill->name, "Healing Wave") == 0){
-            enemy->points[0] *= 1.3; // restores the enemy's HP by 30%
-        }
+    } else if(strcmp(chosen_skill->name, "Healing Wave") == 0){
+        // implement the special skill
+        enemy->points[0] *= 1.3; // restores the enemy's HP by 30%
     }
 }
 
 int check_win(Character *player, Enemy *enemy){ 
     // Check HP points of enemy and player
     // return 0 if character has won, 1 if enemy has won and -1 if they both still have HP left
-    if(enemy->points[0] == 0){
+    if(enemy->points[0] <= 0){
         return 0;
-    } else if(player->points[0] == 0){
+    } else if(player->points[0] <= 0){
         return 1;
     }
     return -1;
@@ -427,6 +442,11 @@ bool battle(Character *character, Enemy *enemy, FightQueue *fight_queue, Overlap
                 "3- %s\n4- %s\nEnter the number of the chosen skill: ", character->skills[0]->name,
                 character->skills[1]->name, character->skills[2]->name, character->skills[3]->name);
                 scanf("%d", &skill_number); // ask the player to choose a skill
+                // check that the user's input is valid
+                while(skill_number > 4 || skill_number < 1){
+                    printf("Invalid input. Try again: ");
+                    scanf("%d", &skill_number);
+                }
                 // create a copy of the skill (this way its duration turns can be modified without affecting the original skill)
                 Skill *chosen_skill = (Skill*)malloc(sizeof(Skill)); 
                 init_skill_copy(chosen_skill, character->skills[skill_number-1]);
@@ -506,10 +526,4 @@ void time_strike(){ // Parameters are the stack and the enemy structure to modif
     the player (which is a stack) and randomly selects the k-th move executed counting 
     from the last one, then executes it again with double power. This move can only be 
     used once during the battle */
-}
-
-void end_fight(){
-    /* When fights end, in case of victory, the player is prompted with the next scene and its 
-    narrative. On the contrary, in case of defeat, the player is prompted with the ability to 
-    restart the game or restart the scenario. */
 }

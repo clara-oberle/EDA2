@@ -51,19 +51,12 @@ void init_scenario1(Scenario *race_of_shadows ){
     //Lastly, we free the pointer. This is done for every skill of every enemy
     Skill *skill_1 = init_shadow_strike();
     shadow_stalker->skills[0] = skill_1;
-    free(skill_1);
-
     Skill *skill_2 = init_evasive_maneuver();
     shadow_stalker->skills[1] = skill_2;
-    free(skill_2);
-
     Skill *skill_3 = init_flame_burst();
     shadow_stalker->skills[2] = skill_3;
-    free(skill_3);
-
     Skill *skill_4 = init_arcane_blast();
     shadow_stalker->skills[3] = skill_4;
-    free(skill_4);
 
     veil_of_obscurity->enemies[1] = (Enemy*)malloc(sizeof(Enemy));
     Enemy *thorn_strangle = veil_of_obscurity->enemies[0];
@@ -75,19 +68,12 @@ void init_scenario1(Scenario *race_of_shadows ){
     //initialize skills of thorn_strangler
     Skill *skill_5 = init_cutlass_slash();
     thorn_strangle->skills[0] = skill_5;
-    free(skill_5);
-
     Skill *skill_6 = init_thorny_veil();
     thorn_strangle->skills[1] = skill_6;
-    free(skill_6);
-
     Skill *skill_7 = init_vine_bind();
     thorn_strangle->skills[2] = skill_7;
-    free(skill_7);
-
     Skill *skill_8 = init_healing_wave();
     thorn_strangle->skills[3] = skill_8;
-    free(skill_8);
 
     // The right path takes the player to the Gauntlet of Peril:
     choose_path_race->options_list[1] = (Option*)malloc(sizeof(Option));
@@ -116,19 +102,12 @@ void init_scenario1(Scenario *race_of_shadows ){
     //initialize skills of inferno fiend
     Skill *skill_9 = init_shadow_strike();
     inferno_fiend->skills[0] = skill_9;
-    free(skill_9);
-
     Skill *skill_10 = init_healing_wave();
     inferno_fiend->skills[1] = skill_10;
-    free(skill_10);
-
     Skill *skill_11 = init_vine_bind();
     inferno_fiend->skills[2] = skill_11;
-    free(skill_11);
-
     Skill *skill_12 = init_evasive_maneuver();
     inferno_fiend->skills[3] = skill_12;
-    free(skill_12);
 }
 
 void init_scenario2(Scenario *crossroads_of_destiny){
@@ -175,19 +154,12 @@ void init_scenario2(Scenario *crossroads_of_destiny){
     //Skills
     Skill *skill_1 = init_evasive_maneuver();
     guardian_ruins->skills[0] = skill_1;
-    free(skill_1);
-
     Skill *skill_2 = init_flame_burst();
     guardian_ruins->skills[1] = skill_2;
-    free(skill_2);
-
     Skill *skill_3 = init_arcane_blast();
     guardian_ruins->skills[2] = skill_3;
-    free(skill_3);
-
     Skill *skill_4 = init_cutlass_slash();
     guardian_ruins->skills[3] = skill_4;
-    free(skill_4);
 
     // Option B: The Stormy Seas
     choose_path_crossroads->options_list[1] = (Option*)malloc(sizeof(Option));
@@ -216,19 +188,12 @@ void init_scenario2(Scenario *crossroads_of_destiny){
     //skills:
     Skill *skill_5 = init_cutlass_slash();
     sea_marauders->skills[0] = skill_5;
-    free(skill_5);
-
     Skill *skill_6 = init_thorny_veil();
     sea_marauders->skills[1] = skill_6;
-    free(skill_6);
-
     Skill *skill_7 = init_vine_bind();
     sea_marauders->skills[2] = skill_7;
-    free(skill_7);
-
     Skill *skill_8 = init_healing_wave();
     sea_marauders->skills[3] = skill_8;
-    free(skill_8);
 
     stormy_seas->enemies[1] = (Enemy*)malloc(sizeof(Enemy));
     Enemy *siren_sorceress = stormy_seas->enemies[0];
@@ -236,22 +201,16 @@ void init_scenario2(Scenario *crossroads_of_destiny){
     siren_sorceress->points[0] = 250; // HP
     siren_sorceress->points[1] = 25; // ATK
     siren_sorceress->points[2] = 15; // DEF
+    
     //Skills
     Skill *skill_9 = init_healing_wave();
     siren_sorceress->skills[0] = skill_9;
-    free(skill_9);
-
     Skill *skill_10 = init_evasive_maneuver();
     siren_sorceress->skills[1] = skill_10;
-    free(skill_10);
-
     Skill *skill_11 = init_shadow_strike();
     siren_sorceress->skills[2] = skill_11;
-    free(skill_11);
-
     Skill *skill_12 = init_arcane_blast();
     siren_sorceress->skills[3] = skill_12;
-    free(skill_12);
 }
 
 void init_scenario3(Scenario *castle){
@@ -294,19 +253,12 @@ void init_scenario3(Scenario *castle){
     //Skill
     Skill *skill_1 = init_shadow_strike();
     ghoul->skills[0] = skill_1;
-    free(skill_1);
-
     Skill *skill_2 = init_evasive_maneuver();
     ghoul->skills[1] = skill_2;
-    free(skill_2);
-
     Skill *skill_3 = init_flame_burst();
     ghoul->skills[2] = skill_3;
-    free(skill_3);
-
     Skill *skill_4 = init_arcane_blast();
     ghoul->skills[3] = skill_4;
-    free(skill_4);
 
     // The right path takes the player to a courtyard:
     choose_path->options_list[1] = (Option*)malloc(sizeof(Option));
@@ -337,19 +289,12 @@ void init_scenario3(Scenario *castle){
     //Skills
     Skill *skill_5 = init_evasive_maneuver();
     stone_guardian->skills[0] = skill_5;
-    free(skill_5);
-
     Skill *skill_6 = init_flame_burst();
     stone_guardian->skills[1] = skill_6;
-    free(skill_6);
-
     Skill *skill_7 = init_arcane_blast();
     stone_guardian->skills[2] = skill_7;
-    free(skill_7);
-
     Skill *skill_8 = init_cutlass_slash();
     stone_guardian->skills[3] = skill_8;
-    free(skill_8);
 
     // The second enemy of the courtyard is deadly nightshade:
     courtyard->enemies[1] = (Enemy*)malloc(sizeof(Enemy));
@@ -362,19 +307,12 @@ void init_scenario3(Scenario *castle){
     //Skills
     Skill *skill_9 = init_shadow_strike();
     deadly_nightshade->skills[0] = skill_9;
-    free(skill_9);
-
     Skill *skill_10 = init_healing_wave();
     deadly_nightshade->skills[1] = skill_10;
-    free(skill_10);
-
     Skill *skill_11 = init_vine_bind();
     deadly_nightshade->skills[2] = skill_11;
-    free(skill_11);
-
     Skill *skill_12 = init_evasive_maneuver();
     deadly_nightshade->skills[3] = skill_12;
-    free(skill_12);
 }
 
 void init_scenario4(Scenario *final_battle){
@@ -425,19 +363,12 @@ void init_scenario4(Scenario *final_battle){
 
     Skill *skill_1 = init_evasive_maneuver();
     time_guardian->skills[0] = skill_1;
-    free(skill_1);
-
     Skill *skill_2 = init_flame_burst();
     time_guardian->skills[1] = skill_2;
-    free(skill_2);
-
     Skill *skill_3 = init_healing_wave();
     time_guardian->skills[2] = skill_3;
-    free(skill_3);
-
     Skill *skill_4 = init_cutlass_slash();
     time_guardian->skills[3] = skill_4;
-    free(skill_4);
 
     // The second enemy is associated with space:
     enter_final_battle->enemies[1] = (Enemy*)malloc(sizeof(Enemy));
@@ -450,19 +381,12 @@ void init_scenario4(Scenario *final_battle){
     //Skills
     Skill *skill_5 = init_cutlass_slash();
     space_guardian->skills[0] = skill_5;
-    free(skill_5);
-
     Skill *skill_6 = init_thorny_veil();
     space_guardian->skills[1] = skill_6;
-    free(skill_6);
-
     Skill *skill_7 = init_vine_bind();
     space_guardian->skills[2] = skill_7;
-    free(skill_7);
-
     Skill *skill_8 = init_shadow_strike();
     space_guardian->skills[3] = skill_8;
-    free(skill_8);
 
     // The third enemy is associated with spirituality:
     enter_final_battle->enemies[2] = (Enemy*)malloc(sizeof(Enemy));
@@ -475,17 +399,10 @@ void init_scenario4(Scenario *final_battle){
     //Skills
     Skill *skill_9 = init_healing_wave();
     spirituality_guardian->skills[0] = skill_9;
-    free(skill_9);
-
     Skill *skill_10 = init_evasive_maneuver();
     spirituality_guardian->skills[1] = skill_10;
-    free(skill_10);
-
     Skill *skill_11 = init_shadow_strike();
     spirituality_guardian->skills[2] = skill_11;
-    free(skill_11);
-
     Skill *skill_12 = init_arcane_blast();
     spirituality_guardian->skills[3] = skill_12;
-    free(skill_12);
 }

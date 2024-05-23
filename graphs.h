@@ -14,8 +14,10 @@ typedef struct {
 } Graph;
 
 Graph* create_graph(int num_scenarios);
-void add_edge(Graph *graph, Scenario *src, Scenario *dest); // Updated to use Scenario pointers
-void print_graph(Graph *graph);
+GraphNode* create_graph_node(Scenario *scenario);
+void add_scenario(Graph *graph, Scenario *new_scenario);
+void add_edge(Graph *graph, Scenario *scenario, Scenario *destination);
+void printGraph(Graph *graph);
 
 #endif // GRAPH_H
 
