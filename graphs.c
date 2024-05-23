@@ -140,7 +140,7 @@ void printGraph(Graph *graph) {
             //while there are edges
             while (current != NULL) {
                 //print the edges, hence, the scenarios we can travel to
-                printf(" %d, ", current->scenario->name);
+                printf("%d, ", current->scenario->name);
                 current = current->next;
             }
             printf("\n");
