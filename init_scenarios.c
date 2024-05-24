@@ -475,7 +475,7 @@ void init_scenario4(Scenario *final_battle){
     spirituality_guardian->points[1] = 25; // ATK (an attack reduces the player's HP by 10)
     spirituality_guardian->points[2] = 20; // DEF (blocks 5 ATK)
     
-    //Skills
+    // Skills
     spirituality_guardian->skills[0] = (Skill*)malloc(sizeof(Skill));
     Skill *healing_wave_spir_guardian = spirituality_guardian->skills[0];
     init_healing_wave(healing_wave_spir_guardian);
