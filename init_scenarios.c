@@ -452,20 +452,20 @@ void init_scenario4(Scenario *final_battle){
 
     //Skills
     space_guardian->skills[0] = (Skill*)malloc(sizeof(Skill));
-    Skill *cutlass_slash_guardian = space_guardian->skills[0];
-    init_cutlass_slash(cutlass_slash_guardian);
+    Skill *cutlass_slash_space_guardian = space_guardian->skills[0];
+    init_cutlass_slash(cutlass_slash_space_guardian);
 
     space_guardian->skills[1] = (Skill*)malloc(sizeof(Skill));
-    Skill *thorny_veil_guardian = space_guardian->skills[1];
-    init_thorny_veil(thorny_veil_guardian);
+    Skill *thorny_veil_space_guardian = space_guardian->skills[1];
+    init_thorny_veil(thorny_veil_space_guardian);
 
     space_guardian->skills[2] = (Skill*)malloc(sizeof(Skill));
-    Skill *vine_bind_guardian = space_guardian->skills[2];
-    init_vine_bind(vine_bind_guardian);
+    Skill *vine_bind_space_guardian = space_guardian->skills[2];
+    init_vine_bind(vine_bind_space_guardian);
 
     space_guardian->skills[3] = (Skill*)malloc(sizeof(Skill));
-    Skill *shadow_strike_guardian = space_guardian->skills[3];
-    init_shadow_strike(shadow_strike_guardian);
+    Skill *shadow_strike_space_guardian = space_guardian->skills[3];
+    init_shadow_strike(shadow_strike_space_guardian);
 
     // The third enemy is associated with spirituality:
     enter_final_battle->enemies[2] = (Enemy*)malloc(sizeof(Enemy));
@@ -477,18 +477,18 @@ void init_scenario4(Scenario *final_battle){
     
     //Skills
     spirituality_guardian->skills[0] = (Skill*)malloc(sizeof(Skill));
-    Skill *healing_wave_guardian = spirituality_guardian->skills[0];
-    init_healing_wave(healing_wave_guardian);
+    Skill *healing_wave_spir_guardian = spirituality_guardian->skills[0];
+    init_healing_wave(healing_wave_spir_guardian);
 
     spirituality_guardian->skills[1] = (Skill*)malloc(sizeof(Skill));
-    Skill *evasive_maneuver_guardian = spirituality_guardian->skills[1];
-    init_evasive_maneuver(evasive_maneuver_guardian);
+    Skill *evasive_maneuver_spir_guardian = spirituality_guardian->skills[1];
+    init_evasive_maneuver(evasive_maneuver_spir_guardian);
 
     spirituality_guardian->skills[2] = (Skill*)malloc(sizeof(Skill));
-    Skill *shadow_strike_guardian = spirituality_guardian->skills[2];
-    init_shadow_strike(shadow_strike_guardian);
+    Skill *shadow_strike_spir_guardian = spirituality_guardian->skills[2];
+    init_shadow_strike(shadow_strike_spir_guardian);
 
     spirituality_guardian->skills[3] = (Skill*)malloc(sizeof(Skill));
-    Skill *arcane_blast_guardian = spirituality_guardian->skills[3];
-    init_arcane_blast(arcane_blast_guardian);
+    Skill *arcane_blast_spir_guardian = spirituality_guardian->skills[3];
+    init_arcane_blast(arcane_blast_spir_guardian);
 }
