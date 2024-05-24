@@ -30,9 +30,9 @@ Skill *init_cutlass_slash(Skill *cutlass_slash){
     strcpy(cutlass_slash->description, "Swings cutlass at the player, increasing enemy's attack for two turns.");
     cutlass_slash->type = 0; // temporary modifier
     cutlass_slash->modifier[0] = 1; // 
-    cutlass_slash->modifier[1] = 1.3; // ATK 
+    cutlass_slash->modifier[1] = 1.3; // ATK increases 30%
     cutlass_slash->modifier[2] = 1; // DEF is unchanged
-    cutlass_slash->duration_turn = 2; // modifies HP points for that turn and the next
+    cutlass_slash->duration_turn = 2; // modifies ATK points for that turn and the next
     return cutlass_slash;
 }
 
@@ -55,7 +55,7 @@ Skill *init_thorny_veil(Skill *thorny_veil){
     thorny_veil->modifier[0] = 1; // HP is unchanged
     thorny_veil->modifier[1] = 1; // ATK is unchanged
     thorny_veil->modifier[2] = 1.3; // increases evasion
-    thorny_veil->duration_turn = 1; // modifies DEF points for the next turn
+    thorny_veil->duration_turn = 2; // modifies DEF for the next turn, hence 2 (the current turn + next turn)
     return thorny_veil;
 }
 
@@ -66,7 +66,7 @@ Skill *init_vine_bind(Skill *vine_bind ){
     vine_bind->type = 0; // temporal modifier
     vine_bind->modifier[0] = 1; // HP is unchanged
     vine_bind->modifier[1] = 1.5; // makes player slower == make enemy faster
-    vine_bind->modifier[2] = -0.9; // DEF of char is changed
+    vine_bind->modifier[2] = -0.9; // DEF of player decreases by 10%
     vine_bind->duration_turn = 1; // modifies speed for only that turn
     return vine_bind;
 }

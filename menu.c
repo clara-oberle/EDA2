@@ -129,7 +129,8 @@ int main(){
         // Game loop for navigating scenarios
         //While the fourth scenario is not completed
         while (completed_scenarios[3] != true) {
-            printf("\nYou are now in: %s\n", current_scenario->name);
+            printf("You are now in: %s\n", current_scenario->name);
+            printf("-----------------------------------------\n");
             printf("%s\n", current_scenario->description);
 
             Decision *decision = current_scenario->decision;
@@ -164,6 +165,7 @@ int main(){
 
                 // Call a battle for each enemy in the chosen option here
                 bool win;
+                printf_battle_specifications(); // print useful information about the battles;
                 for(int i=0; i<chosen_option->num_enemies; i++){
                     // initialise the queue to decide the turns, the queue for skills with duration > 1, and the stack to store player's used skills
                     FightQueue *fight_queue = create_queue(new_character, chosen_option->enemies[i]);
@@ -176,6 +178,7 @@ int main(){
                         free(fight_queue);
                         free(overlap_queue);
                         free(player_used_skills);
+                        reset_player_points(new_character); // reset the player's points ready for the next fight
                         won = false;
                         break; // exit the for loop 
                     } else{
@@ -183,14 +186,15 @@ int main(){
                         free(fight_queue);
                         free(overlap_queue);
                         free(player_used_skills);
+                        reset_player_points(new_character); // reset the player's points ready for the next fight
                     }
                 }
                 if(win == false){
-                    printf("Do you wish o end the game (1) or restart the scenario (2)?\n");
+                    printf("Do you wish to end the game (1) or restart the scenario (2)?: ");
                     int restart;
                     scanf("%d", &restart);
                     while(1 > restart && restart > 2){
-                        printf("Invalid input, either 1 or 2:\n");
+                        printf("Invalid input, either 1 or 2: ");
                         scanf("%d", &restart);
                     }
                     if(restart == 1){

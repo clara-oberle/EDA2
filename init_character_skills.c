@@ -62,7 +62,7 @@ void init_healing_aura(Skill *healing_aura){
     healing_aura->type = 0; // direct attack
     healing_aura->modifier[0] = 1; // HP is unchanged
     healing_aura->modifier[1] = 1; // ATK is unchanged ATK = ATK*1
-    healing_aura->modifier[2] = 1; // DEF = DEF*1.3
+    healing_aura->modifier[2] = 1.3; // DEF = DEF*1.3
     healing_aura->duration_turn = 2; // modifies DEF for the next turn, hence 2 (the current turn + next turn)
 }
 
@@ -91,16 +91,34 @@ void init_time_warp(Skill *time_warp){
     time_warp->duration_turn = 0; // modifies HP points "forever"
 }
 
+// Function to check that the user has entered an integer between 1 and 7
+// This function was made with the help of ChatGPT 3
+int enter_valid_input() {
+    int selection;
+    int scanf_result;
+    // Attempt to read an integer
+    scanf_result = scanf("%d", &selection);
+    // Check if scanf failed or the input is out of range
+    while (scanf_result != 1 || (selection != -1 && (selection < 1 || selection > 7))) {
+        // Clear the input buffer
+        while (getchar() != '\n');
+        // Print error message and prompt for input again
+        printf("Invalid input. Enter the number of the skill (from 1 to 7), or -1 to finish: ");
+        // Attempt to read an integer again
+        scanf_result = scanf("%d", &selection);
+    }
+    return selection;
+}
+
 // Function that allows player to select 4 skills:
 void init_character_skills(Character *new_character, Skill *shadow_blade, Skill *frostbite, Skill *health_exchange, 
                            Skill *fireball, Skill *healing_aura, Skill *thunderbolt, Skill *time_warp){
     // Let the player preview the skills (see a description of each before choosing)
     printf("\nIt is time to select the four skills that will help you battle your way through this quest. Choose "
     "wisely for your fate relies on them. You can view a description of each skill before selecting it using the menu below:\n"
-    "1. Shadowblade strike\n2. Frostbite\n3. Health exchange\n4. Fireball\n5. Healing Aura\n6. ThunderBolt\n7. Time Warp\n");
+    "1. Shadowblade strike\n2. Frostbite\n3. Health exchange\n4. Fireball\n5. Healing Aura\n6. Thunder Bolt\n7. Time Warp\n");
     printf("\nEnter the number of the skill you wish to preview. When you are done previewing them enter -1: ");
-    int skill_preview;
-    scanf("%d", &skill_preview);
+    int skill_preview = enter_valid_input(); // make sure the user enters a correct integer corresponding to a skill
     while(skill_preview != -1){
         switch(skill_preview){
         case 1:
@@ -128,21 +146,16 @@ void init_character_skills(Character *new_character, Skill *shadow_blade, Skill 
             printf("Invalid input\n");
         }
         printf("\nEnter the number of the skill you wish to preview. When you are done previewing them enter -1: ");
-        scanf("%d", &skill_preview);
+        skill_preview = enter_valid_input(); // make sure the user enters a correct integer corresponding to a skill
     }
 
     // Assigning the skills of the character:
     printf("\nNow that you have become familiar with the available skills. Enter the number of the skill that "
     "you wish to have:\n");
-    for(int i=0; i<4; ++i){
-        int selected_skill;
+    for(int i = 0; i < 4; ++i){
         printf("Skill %d: ", i+1);
-        scanf("%d", &selected_skill);
-        while(selected_skill < 1 || selected_skill > 7){
-            //while the selected skill is not a number from 1 to 7, print error
-            printf("Invalid input. Enter the number of the skill (from 1 to 7)");
-            scanf("%d", &selected_skill);
-        }
+        int selected_skill = enter_valid_input(); // make sure the user enters a correct integer corresponding to a skill
+        // set the chosen skill:
         switch(selected_skill){
             case 1:
                 new_character->skills[i] = shadow_blade;
@@ -167,9 +180,10 @@ void init_character_skills(Character *new_character, Skill *shadow_blade, Skill 
                 break;
         }
     }
+    // Let the player know the skills they have chosen: 
     printf("\nThe skills you have chosen are:\n");
     for(int i=0; i<4; i++){
         printf("- %s\n", new_character->skills[i]->name);
     }
-    printf("Good Luck!\n");
+    printf("Good Luck!\n\n");
 }
