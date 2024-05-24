@@ -49,31 +49,46 @@ void init_scenario1(Scenario *race_of_shadows ){
     //initialize enemy skills of shadow stalker
     //We create a pointer to the skill that it's initialized and then, we add this skill to the array.
     //Lastly, we free the pointer. This is done for every skill of every enemy
-    Skill *skill_1 = init_shadow_strike();
-    shadow_stalker->skills[0] = skill_1;
-    Skill *skill_2 = init_evasive_maneuver();
-    shadow_stalker->skills[1] = skill_2;
-    Skill *skill_3 = init_flame_burst();
-    shadow_stalker->skills[2] = skill_3;
-    Skill *skill_4 = init_arcane_blast();
-    shadow_stalker->skills[3] = skill_4;
+    shadow_stalker->skills[0] = (Skill*)malloc(sizeof(Skill));
+    Skill *shadow_strike = shadow_stalker->skills[0];
+    init_shadow_strike(shadow_strike);
 
+    shadow_stalker->skills[1] = (Skill*)malloc(sizeof(Skill));
+    Skill *evasive_maneuver = shadow_stalker->skills[1];
+    init_evasive_maneuver(evasive_maneuver);
+
+    shadow_stalker->skills[2] = (Skill*)malloc(sizeof(Skill));
+    Skill *flame_burst = shadow_stalker->skills[2];
+    init_flame_burst(flame_burst);
+
+    shadow_stalker->skills[3] = (Skill*)malloc(sizeof(Skill));
+    Skill *arcane_blast = shadow_stalker->skills[3];
+    init_arcane_blast(arcane_blast);
+
+    // next enemy in the veil of obscruity
     veil_of_obscurity->enemies[1] = (Enemy*)malloc(sizeof(Enemy));
-    Enemy *thorn_strangle = veil_of_obscurity->enemies[0];
+    Enemy *thorn_strangle = veil_of_obscurity->enemies[1];
     strcpy(thorn_strangle->name, "Thorn Strangle");
     thorn_strangle->points[0] = 200; // HP
     thorn_strangle->points[1] = 20; // ATK
     thorn_strangle->points[2] = 5; // DEF
 
-    //initialize skills of thorn_strangler
-    Skill *skill_5 = init_cutlass_slash();
-    thorn_strangle->skills[0] = skill_5;
-    Skill *skill_6 = init_thorny_veil();
-    thorn_strangle->skills[1] = skill_6;
-    Skill *skill_7 = init_vine_bind();
-    thorn_strangle->skills[2] = skill_7;
-    Skill *skill_8 = init_healing_wave();
-    thorn_strangle->skills[3] = skill_8;
+    // Initialize skills of thorn strangle
+    thorn_strangle->skills[0] = (Skill*)malloc(sizeof(Skill));
+    Skill *cutlass_slash = thorn_strangle->skills[0];
+    init_cutlass_slash(cutlass_slash);
+
+    thorn_strangle->skills[1] = (Skill*)malloc(sizeof(Skill));
+    Skill *thorny_veil = thorn_strangle->skills[1];
+    init_thorny_veil(thorny_veil);
+
+    thorn_strangle->skills[2] = (Skill*)malloc(sizeof(Skill));
+    Skill *vine_bind = thorn_strangle->skills[2];
+    init_vine_bind(vine_bind);
+
+    thorn_strangle->skills[3] = (Skill*)malloc(sizeof(Skill));
+    Skill *healing_wave = thorn_strangle->skills[3];
+    init_healing_wave(healing_wave);
 
     // The right path takes the player to the Gauntlet of Peril:
     choose_path_race->options_list[1] = (Option*)malloc(sizeof(Option));
@@ -99,15 +114,22 @@ void init_scenario1(Scenario *race_of_shadows ){
     inferno_fiend->points[1] = 25; // ATK
     inferno_fiend->points[2] = 15; // DEF
 
-    //initialize skills of inferno fiend
-    Skill *skill_9 = init_shadow_strike();
-    inferno_fiend->skills[0] = skill_9;
-    Skill *skill_10 = init_healing_wave();
-    inferno_fiend->skills[1] = skill_10;
-    Skill *skill_11 = init_vine_bind();
-    inferno_fiend->skills[2] = skill_11;
-    Skill *skill_12 = init_evasive_maneuver();
-    inferno_fiend->skills[3] = skill_12;
+    // Initialize skills of inferno fiend
+    inferno_fiend->skills[0] = (Skill*)malloc(sizeof(Skill));
+    Skill *shadow_strike_fiend = inferno_fiend->skills[0];
+    init_shadow_strike(shadow_strike_fiend);
+
+    inferno_fiend->skills[1] = (Skill*)malloc(sizeof(Skill));
+    Skill *healing_wave_fiend = inferno_fiend->skills[1];
+    init_healing_wave(healing_wave_fiend);
+
+    inferno_fiend->skills[2] = (Skill*)malloc(sizeof(Skill));
+    Skill *vine_bind_fiend = inferno_fiend->skills[2];
+    init_vine_bind(vine_bind_fiend);
+
+    inferno_fiend->skills[3] = (Skill*)malloc(sizeof(Skill));
+    Skill *evasive_maneuver_fiend = inferno_fiend->skills[3];
+    init_evasive_maneuver(evasive_maneuver_fiend);
 }
 
 void init_scenario2(Scenario *crossroads_of_destiny){
@@ -137,9 +159,9 @@ void init_scenario2(Scenario *crossroads_of_destiny){
     "depths of the Forgotten Ruins. The crumbling structures and overgrown foliage create an eerie atmosphere as "
     "you navigate the winding path.");
     strcpy(forgotten_ruins->narrative_text_after, "With triumph coursing through your veins, you survey the "
-    "aftermath of the battle. Among the debris, a weathered stone altar catches your eye, bearing the second "
+    "aftermath of the battle. Among the debris, a weathered stone altar catches your eye, bearing another "
     "fragment of the riddle. Anticipation grips you as you approach, the ancient symbols beckoning you closer. "
-    "With a steady hand, you claim the stone fragment etched with ancient words - only one more fragment stands "
+    "With a steady hand, you claim the stone fragment etched with ancient words - one less fragment stands "
     "between you and the complete riddle. ");
     forgotten_ruins->num_enemies = 1;
 
@@ -152,14 +174,21 @@ void init_scenario2(Scenario *crossroads_of_destiny){
     guardian_ruins->points[2] = 25; // DEF
 
     //Skills
-    Skill *skill_1 = init_evasive_maneuver();
-    guardian_ruins->skills[0] = skill_1;
-    Skill *skill_2 = init_flame_burst();
-    guardian_ruins->skills[1] = skill_2;
-    Skill *skill_3 = init_arcane_blast();
-    guardian_ruins->skills[2] = skill_3;
-    Skill *skill_4 = init_cutlass_slash();
-    guardian_ruins->skills[3] = skill_4;
+    guardian_ruins->skills[0] = (Skill*)malloc(sizeof(Skill));
+    Skill *evasive_maneuver_guardian = guardian_ruins->skills[0];
+    init_evasive_maneuver(evasive_maneuver_guardian);
+
+    guardian_ruins->skills[1] = (Skill*)malloc(sizeof(Skill));
+    Skill *flame_burst_guardian = guardian_ruins->skills[1];
+    init_flame_burst(flame_burst_guardian);
+
+    guardian_ruins->skills[2] = (Skill*)malloc(sizeof(Skill));
+    Skill *arcane_blast_guardian = guardian_ruins->skills[2];
+    init_arcane_blast(arcane_blast_guardian);
+
+    guardian_ruins->skills[3] = (Skill*)malloc(sizeof(Skill));
+    Skill *cutlass_slash_guardian = guardian_ruins->skills[3];
+    init_cutlass_slash(cutlass_slash_guardian);
 
     // Option B: The Stormy Seas
     choose_path_crossroads->options_list[1] = (Option*)malloc(sizeof(Option));
@@ -172,9 +201,9 @@ void init_scenario2(Scenario *crossroads_of_destiny){
     "rocky coastline.");
     strcpy(stormy_seas->narrative_text_after, "With victory coursing through your veins, you stand amidst the "
     "aftermath of the battle, the Stormy Seas raging beside you. Along the rugged coastline, where waves crash "
-    "against the cliffs with relentless fury, the second fragment of the riddle lies half-buried in the sand. "
+    "against the cliffs with relentless fury, another fragment of the riddle lies half-buried in the sand. "
     "Anticipation grips you as you approach the weathered stone, its ancient markings illuminated by the glow of "
-    "your car lights - only one more fragment stands between you and the complete riddle. ");
+    "your car lights - one less fragment stands between you and the complete riddle. ");
     stormy_seas->num_enemies = 2;
 
     // Enemies in the Stormy Seas:
@@ -186,14 +215,21 @@ void init_scenario2(Scenario *crossroads_of_destiny){
     sea_marauders->points[2] = 20; // DEF
 
     //skills:
-    Skill *skill_5 = init_cutlass_slash();
-    sea_marauders->skills[0] = skill_5;
-    Skill *skill_6 = init_thorny_veil();
-    sea_marauders->skills[1] = skill_6;
-    Skill *skill_7 = init_vine_bind();
-    sea_marauders->skills[2] = skill_7;
-    Skill *skill_8 = init_healing_wave();
-    sea_marauders->skills[3] = skill_8;
+    sea_marauders->skills[0] = (Skill*)malloc(sizeof(Skill));
+    Skill *cutlass_slash_marauder = sea_marauders->skills[0];
+    init_cutlass_slash(cutlass_slash_marauder);
+
+    sea_marauders->skills[1] = (Skill*)malloc(sizeof(Skill));
+    Skill *thorny_veil_marauder = sea_marauders->skills[1];
+    init_thorny_veil(thorny_veil_marauder);
+
+    sea_marauders->skills[2] = (Skill*)malloc(sizeof(Skill));
+    Skill *vine_bind_marauder = sea_marauders->skills[2];
+    init_vine_bind(vine_bind_marauder);
+
+    sea_marauders->skills[3] = (Skill*)malloc(sizeof(Skill));
+    Skill *healing_wave_marauder = sea_marauders->skills[3];
+    init_healing_wave(healing_wave_marauder);
 
     stormy_seas->enemies[1] = (Enemy*)malloc(sizeof(Enemy));
     Enemy *siren_sorceress = stormy_seas->enemies[0];
@@ -203,14 +239,21 @@ void init_scenario2(Scenario *crossroads_of_destiny){
     siren_sorceress->points[2] = 15; // DEF
     
     //Skills
-    Skill *skill_9 = init_healing_wave();
-    siren_sorceress->skills[0] = skill_9;
-    Skill *skill_10 = init_evasive_maneuver();
-    siren_sorceress->skills[1] = skill_10;
-    Skill *skill_11 = init_shadow_strike();
-    siren_sorceress->skills[2] = skill_11;
-    Skill *skill_12 = init_arcane_blast();
-    siren_sorceress->skills[3] = skill_12;
+    siren_sorceress->skills[0] = (Skill*)malloc(sizeof(Skill));
+    Skill *healing_wave_sorceress = siren_sorceress->skills[0];
+    init_healing_wave(healing_wave_sorceress);
+
+    siren_sorceress->skills[1] = (Skill*)malloc(sizeof(Skill));
+    Skill *evasive_maneuver_sorceress = siren_sorceress->skills[1];
+    init_evasive_maneuver(evasive_maneuver_sorceress);
+
+    siren_sorceress->skills[2] = (Skill*)malloc(sizeof(Skill));
+    Skill *shadow_strike_sorceress = siren_sorceress->skills[2];
+    init_shadow_strike(shadow_strike_sorceress);
+
+    siren_sorceress->skills[3] = (Skill*)malloc(sizeof(Skill));
+    Skill *arcane_blast_sorceress = siren_sorceress->skills[3];
+    init_arcane_blast(arcane_blast_sorceress);
 }
 
 void init_scenario3(Scenario *castle){
@@ -237,9 +280,9 @@ void init_scenario3(Scenario *castle){
     "emerges from the darkness - a Ghoul. This undead being lurks in the shadows of the crypt, "
     "agile and relentless, it is capable of leaping from the darkness to attack unsuspecting prey.");
     strcpy(crypt->narrative_text_after, "With victory pulsing through your veins, you survey the aftermath "
-    "of the battle. Among the debris of the crypt you see a pedestal, atop it lies the last fragment of the "
+    "of the battle. Among the debris of the crypt you see a pedestal, atop it lies another fragment of the "
     "riddle. Anticipation grips you as you draw near, your hand reaches out to claim the ancient stone etched "
-    "with the final words of the riddle.");
+    "with the next words of the riddle.");
     crypt->num_enemies = 1;
 
     // The enemy of the crypt is a ghoul:
@@ -251,14 +294,21 @@ void init_scenario3(Scenario *castle){
     ghoul->points[2] = 15; // DEF (blocks 15 ATK)
 
     //Skill
-    Skill *skill_1 = init_shadow_strike();
-    ghoul->skills[0] = skill_1;
-    Skill *skill_2 = init_evasive_maneuver();
-    ghoul->skills[1] = skill_2;
-    Skill *skill_3 = init_flame_burst();
-    ghoul->skills[2] = skill_3;
-    Skill *skill_4 = init_arcane_blast();
-    ghoul->skills[3] = skill_4;
+    ghoul->skills[0] = (Skill*)malloc(sizeof(Skill));
+    Skill *shadow_strike_ghoul = ghoul->skills[0];
+    init_shadow_strike(shadow_strike_ghoul);
+
+    ghoul->skills[1] = (Skill*)malloc(sizeof(Skill));
+    Skill *evasive_maneuver_ghoul = ghoul->skills[1];
+    init_evasive_maneuver(evasive_maneuver_ghoul);
+
+    ghoul->skills[2] = (Skill*)malloc(sizeof(Skill));
+    Skill *flame_burst_ghoul = ghoul->skills[2];
+    init_flame_burst(flame_burst_ghoul);
+
+    ghoul->skills[3] = (Skill*)malloc(sizeof(Skill));
+    Skill *arcane_blast_ghoul = ghoul->skills[3];
+    init_arcane_blast(arcane_blast_ghoul);
 
     // The right path takes the player to a courtyard:
     choose_path->options_list[1] = (Option*)malloc(sizeof(Option));
@@ -276,7 +326,7 @@ void init_scenario3(Scenario *castle){
     "accomplishment washes over you. Suddently, a shimmer of light from the fountain catches your "
     "eye. Drawing closer, you discover a hidden compartment within the weathered stone. With trembling "
     "hands, you retrieve the ancient artifact concealed within - a fragment of a runestone etched with "
-    "the final words of the riddle.");
+    "the next words of the riddle.");
     courtyard->num_enemies = 2;
 
     // The first enemy of the courtyard is a stone guardian:
@@ -286,15 +336,23 @@ void init_scenario3(Scenario *castle){
     stone_guardian->points[0] = 150; // HP (when this reaches 0 the enemy is defeated)
     stone_guardian->points[1] = 15; // ATK (an attack reduces the player's HP by 15)
     stone_guardian->points[2] = 10; // DEF (blocks 10 ATK)
+    
     //Skills
-    Skill *skill_5 = init_evasive_maneuver();
-    stone_guardian->skills[0] = skill_5;
-    Skill *skill_6 = init_flame_burst();
-    stone_guardian->skills[1] = skill_6;
-    Skill *skill_7 = init_arcane_blast();
-    stone_guardian->skills[2] = skill_7;
-    Skill *skill_8 = init_cutlass_slash();
-    stone_guardian->skills[3] = skill_8;
+    stone_guardian->skills[0] = (Skill*)malloc(sizeof(Skill));
+    Skill *evasive_maneuver_stone_guardian = stone_guardian->skills[0];
+    init_evasive_maneuver(evasive_maneuver_stone_guardian);
+
+    stone_guardian->skills[1] = (Skill*)malloc(sizeof(Skill));
+    Skill *flame_burst_stone_guardian = stone_guardian->skills[1];
+    init_flame_burst(flame_burst_stone_guardian);
+
+    stone_guardian->skills[2] = (Skill*)malloc(sizeof(Skill));
+    Skill *arcane_blast_stone_guardian = stone_guardian->skills[2];
+    init_arcane_blast(arcane_blast_stone_guardian);
+
+    stone_guardian->skills[3] = (Skill*)malloc(sizeof(Skill));
+    Skill *cutlass_slash_stone_guardian = stone_guardian->skills[3];
+    init_cutlass_slash(cutlass_slash_stone_guardian);
 
     // The second enemy of the courtyard is deadly nightshade:
     courtyard->enemies[1] = (Enemy*)malloc(sizeof(Enemy));
@@ -305,14 +363,21 @@ void init_scenario3(Scenario *castle){
     deadly_nightshade->points[2] = 5; // DEF (blocks 5 ATK)
 
     //Skills
-    Skill *skill_9 = init_shadow_strike();
-    deadly_nightshade->skills[0] = skill_9;
-    Skill *skill_10 = init_healing_wave();
-    deadly_nightshade->skills[1] = skill_10;
-    Skill *skill_11 = init_vine_bind();
-    deadly_nightshade->skills[2] = skill_11;
-    Skill *skill_12 = init_evasive_maneuver();
-    deadly_nightshade->skills[3] = skill_12;
+    deadly_nightshade->skills[0] = (Skill*)malloc(sizeof(Skill));
+    Skill *shadow_strike_nightshade = deadly_nightshade->skills[0];
+    init_shadow_strike(shadow_strike_nightshade);
+
+    deadly_nightshade->skills[1] = (Skill*)malloc(sizeof(Skill));
+    Skill *healing_wave_nightshade = deadly_nightshade->skills[1];
+    init_healing_wave(healing_wave_nightshade);
+
+    deadly_nightshade->skills[2] = (Skill*)malloc(sizeof(Skill));
+    Skill *vine_bind_nightshade = deadly_nightshade->skills[2];
+    init_vine_bind(vine_bind_nightshade);
+
+    deadly_nightshade->skills[3] = (Skill*)malloc(sizeof(Skill));
+    Skill *evasive_maneuver_nightshade = deadly_nightshade->skills[3];
+    init_evasive_maneuver(evasive_maneuver_nightshade);
 }
 
 void init_scenario4(Scenario *final_battle){
@@ -337,7 +402,7 @@ void init_scenario4(Scenario *final_battle){
     solve_riddle->options_list[0] = (Option*)malloc(sizeof(Option));
     Option *enter_final_battle = solve_riddle->options_list[0];
     strcpy(enter_final_battle->response_text, "Congratulations! You've successfully solved the riddle! "
-    "The answer is indeed the letter E.");
+    "The answer is indeed the letter e.");
     strcpy(enter_final_battle->narrative_text_before, "In a flash, you find yourself transported to the location "
     "of the Sacred Gemstones. Their radiant glow captivates you, but a dangerous presence lurks nearby. Three adversaries "
     "stand guard, each embodying the essence of the gemstone they protect: time, space, and spirituality.\nThe Guardian of "
@@ -361,14 +426,21 @@ void init_scenario4(Scenario *final_battle){
     time_guardian->points[1] = 30; // ATK (an attack reduces the player's HP by 20)
     time_guardian->points[2] = 20; // DEF (blocks 15 ATK)
 
-    Skill *skill_1 = init_evasive_maneuver();
-    time_guardian->skills[0] = skill_1;
-    Skill *skill_2 = init_flame_burst();
-    time_guardian->skills[1] = skill_2;
-    Skill *skill_3 = init_healing_wave();
-    time_guardian->skills[2] = skill_3;
-    Skill *skill_4 = init_cutlass_slash();
-    time_guardian->skills[3] = skill_4;
+    time_guardian->skills[0] = (Skill*)malloc(sizeof(Skill));
+    Skill *evasive_maneuver_time_guardian = time_guardian->skills[0];
+    init_evasive_maneuver(evasive_maneuver_time_guardian);
+
+    time_guardian->skills[1] = (Skill*)malloc(sizeof(Skill));
+    Skill *flame_burst_time_guardian = time_guardian->skills[1];
+    init_flame_burst(flame_burst_time_guardian);
+
+    time_guardian->skills[2] = (Skill*)malloc(sizeof(Skill));
+    Skill *healing_wave_time_guardian = time_guardian->skills[2];
+    init_healing_wave(healing_wave_time_guardian);
+
+    time_guardian->skills[3] = (Skill*)malloc(sizeof(Skill));
+    Skill *cutlass_slash_time_guardian = time_guardian->skills[3];
+    init_cutlass_slash(cutlass_slash_time_guardian);
 
     // The second enemy is associated with space:
     enter_final_battle->enemies[1] = (Enemy*)malloc(sizeof(Enemy));
@@ -379,14 +451,21 @@ void init_scenario4(Scenario *final_battle){
     space_guardian->points[2] = 15; // DEF (blocks 10 ATK)
 
     //Skills
-    Skill *skill_5 = init_cutlass_slash();
-    space_guardian->skills[0] = skill_5;
-    Skill *skill_6 = init_thorny_veil();
-    space_guardian->skills[1] = skill_6;
-    Skill *skill_7 = init_vine_bind();
-    space_guardian->skills[2] = skill_7;
-    Skill *skill_8 = init_shadow_strike();
-    space_guardian->skills[3] = skill_8;
+    space_guardian->skills[0] = (Skill*)malloc(sizeof(Skill));
+    Skill *cutlass_slash_guardian = space_guardian->skills[0];
+    init_cutlass_slash(cutlass_slash_guardian);
+
+    space_guardian->skills[1] = (Skill*)malloc(sizeof(Skill));
+    Skill *thorny_veil_guardian = space_guardian->skills[1];
+    init_thorny_veil(thorny_veil_guardian);
+
+    space_guardian->skills[2] = (Skill*)malloc(sizeof(Skill));
+    Skill *vine_bind_guardian = space_guardian->skills[2];
+    init_vine_bind(vine_bind_guardian);
+
+    space_guardian->skills[3] = (Skill*)malloc(sizeof(Skill));
+    Skill *shadow_strike_guardian = space_guardian->skills[3];
+    init_shadow_strike(shadow_strike_guardian);
 
     // The third enemy is associated with spirituality:
     enter_final_battle->enemies[2] = (Enemy*)malloc(sizeof(Enemy));
@@ -397,12 +476,19 @@ void init_scenario4(Scenario *final_battle){
     spirituality_guardian->points[2] = 20; // DEF (blocks 5 ATK)
     
     //Skills
-    Skill *skill_9 = init_healing_wave();
-    spirituality_guardian->skills[0] = skill_9;
-    Skill *skill_10 = init_evasive_maneuver();
-    spirituality_guardian->skills[1] = skill_10;
-    Skill *skill_11 = init_shadow_strike();
-    spirituality_guardian->skills[2] = skill_11;
-    Skill *skill_12 = init_arcane_blast();
-    spirituality_guardian->skills[3] = skill_12;
+    spirituality_guardian->skills[0] = (Skill*)malloc(sizeof(Skill));
+    Skill *healing_wave_guardian = spirituality_guardian->skills[0];
+    init_healing_wave(healing_wave_guardian);
+
+    spirituality_guardian->skills[1] = (Skill*)malloc(sizeof(Skill));
+    Skill *evasive_maneuver_guardian = spirituality_guardian->skills[1];
+    init_evasive_maneuver(evasive_maneuver_guardian);
+
+    spirituality_guardian->skills[2] = (Skill*)malloc(sizeof(Skill));
+    Skill *shadow_strike_guardian = spirituality_guardian->skills[2];
+    init_shadow_strike(shadow_strike_guardian);
+
+    spirituality_guardian->skills[3] = (Skill*)malloc(sizeof(Skill));
+    Skill *arcane_blast_guardian = spirituality_guardian->skills[3];
+    init_arcane_blast(arcane_blast_guardian);
 }
