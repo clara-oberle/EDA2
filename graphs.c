@@ -41,7 +41,7 @@ void add_scenario(Graph *graph, Scenario *new_scenario) {
     //to find an empty spot in the adjacency list
     for (int i = 0; i < graph->num_scenarios; i++) {
         if (graph->adj_list[i] == NULL){
-            graph->adj_list[i] = create_graph_node;
+            graph->adj_list[i] = create_graph_node(new_scenario);
             return;
         }
     }
@@ -73,7 +73,7 @@ void add_edge(Graph *graph, Scenario *scenario, Scenario *destination) {
     }
 
     //create a new node for the destination scenario and add it to the adjacency list of the source scenario
-    GraphNode *new_node = createGraphNode(destination);
+    GraphNode *new_node = create_graph_node(destination);
     //we make the new node point to the same next node as the source node
     new_node->next = source_node->next;
     //we update the source next to the new node

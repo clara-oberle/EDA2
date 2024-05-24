@@ -1,4 +1,5 @@
 #include "init_enemy_skills.h"
+#include "string.h"
 
 //Attack
 Skill *init_shadow_strike(Skill *shadow_strike){

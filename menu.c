@@ -93,10 +93,10 @@ int main(){
         // Initialize graph
         Graph *graph = create_graph(4);
         //add the four scenarios as nodes
-        add_scenario(&graph, &scenario1);
-        add_scenario(&graph, &scenario2);
-        add_scenario(&graph, &scenario3);
-        add_scenario(&graph, &scenario4);
+        add_scenario(graph, scenario1);
+        add_scenario(graph, scenario2);
+        add_scenario(graph, scenario3);
+        add_scenario(graph, scenario4);
 
         //add edges between the nodes. You can travel from:
         /*Scenario 1 to scenario 2 or 3
@@ -104,12 +104,12 @@ int main(){
         Scenario 3 to scenario 2 and 4 (only if comleted 2)
         Scenario 4 nowhere
         */
-        add_edge(&graph, &scenario1, &scenario2);
-        add_edge(&graph, &scenario1, &scenario3);
-        add_edge(&graph, &scenario2, &scenario3);
-        add_edge(&graph, &scenario2, &scenario4);
-        add_edge(&graph, &scenario3, &scenario2);
-        add_edge(&graph, &scenario3, &scenario4);
+        add_edge(graph, scenario1, scenario2);
+        add_edge(graph, scenario1, scenario3);
+        add_edge(graph, scenario2, scenario3);
+        add_edge(graph, scenario2, scenario4);
+        add_edge(graph, scenario3, scenario2);
+        add_edge(graph, scenario3, scenario4);
 
         // Track completed scenarios
         bool completed_scenarios[4] = {false, false, false, false};
@@ -236,9 +236,10 @@ int main(){
             }
             */
             }
-        if(completed_scenarios[3] == true && win == false)
-        }
+        //if(completed_scenarios[3] == true && win == false)
+        //}
         //once the fourth scenario has been completed, you win
         //remember we can only reach the fourth scenario if we have won the other 3
         printf("\nCongratulations! You have completed the game.\n");
     }
+}
