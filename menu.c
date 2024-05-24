@@ -111,6 +111,10 @@ int main(){
         add_edge(graph, scenario3, scenario2);
         add_edge(graph, scenario3, scenario4);
 
+        //inform the player the possible routes
+        printGraph(graph);
+        printf("\n");
+
         // Track completed scenarios
         bool completed_scenarios[4] = {false, false, false, false};
         //completed_scenarios[0] = true; // First scenario is always completed first
@@ -118,6 +122,10 @@ int main(){
         // Current scenario pointer
         Scenario *current_scenario = scenario1;
 
+
+        //we'll assume the player has won, when they lose, this variable will be false
+        bool won = true; // variable used to know if player has won or lost
+       
         // Game loop for navigating scenarios
         //While the fourth scenario is not completed
         while (completed_scenarios[3] != true) {
@@ -168,12 +176,25 @@ int main(){
                         free(fight_queue);
                         free(overlap_queue);
                         free(player_used_skills);
+                        won = false;
                         break; // exit the for loop 
                     } else{
                         // free fight memory allocations ready for the next fight
                         free(fight_queue);
                         free(overlap_queue);
                         free(player_used_skills);
+                    }
+                }
+                if(win == false){
+                    printf("Do you wish o end the game (1) or restart the scenario (2)?\n");
+                    int restart;
+                    scanf("%d", &restart);
+                    while(1 > restart && restart > 2){
+                        printf("Invalid input, either 1 or 2:\n");
+                        scanf("%d", &restart);
+                    }
+                    if(restart == 1){
+                        completed_scenarios[3] = true; //this breaks the while loop
                     }
                 }
 
@@ -184,12 +205,13 @@ int main(){
                 */
 
                 //assuming win == true
-                if(win == false){
-                    completed_scenarios[3] == true; //this breaks the loop
-                    break;
+                if(won == true){
+                    printf("\n%s\n", chosen_option->narrative_text_after);
                 }
-                printf("\n%s\n", chosen_option->narrative_text_after);
-                }
+            }
+            //print possible option
+            printScenariosWithEdgeTo(graph, current_scenario);
+            
                 //switch(curre)
                 
             
@@ -236,10 +258,30 @@ int main(){
             }
             */
             }
+        if(won == false){
+            printf("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀             ⣀⣠⡀⠀"
+            "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⣤⠀⠀⠀⢀⣴⣿⡶⠀⣾⣿⣿⡿⠟⠛⠁"
+            "⠀⠀⠀⠀⠀⠀⣀⣀⣄⣀⠀⠀⠀⠀⣶⣶⣦⠀⠀⠀⠀⣼⣿⣿⡇⠀⣠⣿⣿⣿⠇⣸⣿⣿⣧⣤⠀⠀⠀"
+            "⠀⠀⢀⣴⣾⣿⡿⠿⠿⠿⠇⠀⠀⣸⣿⣿⣿⡆⠀⠀⢰⣿⣿⣿⣷⣼⣿⣿⣿⡿⢀⣿⣿⡿⠟⠛⠁⠀⠀"
+            "⠀⣴⣿⡿⠋⠁⠀⠀⠀⠀⠀⠀⢠⣿⣿⣹⣿⣿⣿⣿⣿⣿⡏⢻⣿⣿⢿⣿⣿⠃⣼⣿⣯⣤⣴⣶⣿⡤⠀"
+            "⣼⣿⠏⠀⣀⣠⣤⣶⣾⣷⠄⣰⣿⣿⡿⠿⠻⣿⣯⣸⣿⡿⠀⠀⠀⠁⣾⣿⡏⢠⣿⣿⠿⠛⠋⠉⠀⠀⠀"
+            "⣿⣿⠲⢿⣿⣿⣿⣿⡿⠋⢰⣿⣿⠋⠀⠀⠀⢻⣿⣿⣿⠇⠀⠀⠀⠀⠙⠛⠀⠀⠉⠁⠀⠀⠀⠀⠀⠀⠀"
+            "⠹⢿⣷⣶⣿⣿⠿⠋⠀⠀⠈⠙⠃⠀⠀⠀⠀⠀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
+            "⠀⠀⠈⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣤⣤⣴⣶⣦⣤⡀⠀"
+            "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⡀⠀⠀⠀⠀⠀⠀⠀⣠⡇⢰⣶⣶⣾⡿⠷⣿⣿⣿⡟⠛⣉⣿⣿⣿⠆"
+            "⠀⠀⠀⠀⠀⠀⢀⣤⣶⣿⣿⡎⣿⣿⣦⠀⠀⠀⢀⣤⣾⠟⢀⣿⣿⡟⣁⠀⠀⣸⣿⣿⣤⣾⣿⡿⠛⠁⠀"
+            "⠀⠀⠀⠀⣠⣾⣿⡿⠛⠉⢿⣦⠘⣿⣿⡆⠀⢠⣾⣿⠋⠀⣼⣿⣿⣿⠿⠷⢠⣿⣿⣿⠿⢻⣿⣧⠀⠀⠀"
+            "⠀⠀⠀⣴⣿⣿⠋⠀⠀⠀⢸⣿⣇⢹⣿⣷⣰⣿⣿⠃⠀⢠⣿⣿⢃⣀⣤⣤⣾⣿⡟⠀⠀⠀⢻⣿⣆⠀⠀"
+            "⠀⠀⠀⣿⣿⡇⠀⠀⢀⣴⣿⣿⡟⠀⣿⣿⣿⣿⠃⠀⠀⣾⣿⣿⡿⠿⠛⢛⣿⡟⠀⠀⠀⠀⠀⠻⠿⠀⠀"
+            "⠀⠀⠀⠹⣿⣿⣶⣾⣿⣿⣿⠟⠁⠀⠸⢿⣿⠇⠀⠀⠀⠛⠛⠁⠀⠀⠀⠀⠀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀"
+            "⠀⠀⠀⠀⠈⠙⠛⠛⠛⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀");
+        }
+        else{
+            printf("\nCongratulations! You have completed the game.\n");
+        }
         //if(completed_scenarios[3] == true && win == false)
         //}
         //once the fourth scenario has been completed, you win
         //remember we can only reach the fourth scenario if we have won the other 3
-        printf("\nCongratulations! You have completed the game.\n");
     }
 }

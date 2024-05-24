@@ -60,7 +60,7 @@ void add_edge(Graph *graph, Scenario *scenario, Scenario *destination) {
     for (int i = 0; i < graph->num_scenarios; i++) {
         //when we find the adj list element that it's not null and it's the scenarion we are looking for
         if (graph->adj_list[i] != NULL && graph->adj_list[i]->scenario == scenario) {
-            //we update the cource node
+            //we update the source node
             source_node = graph->adj_list[i];
             break;
         }
@@ -136,11 +136,12 @@ void printGraph(Graph *graph) {
         GraphNode *current = graph->adj_list[i];
         if (current == NULL) {
             printf("No outgoing edges.\n");
-        } else {
+        }else {
             //while there are edges
             while (current != NULL) {
                 //print the edges, hence, the scenarios we can travel to
-                printf("%d, ", current->scenario->name);
+                
+                printf("%s, ", current->scenario->name);
                 current = current->next;
             }
             printf("\n");
@@ -148,3 +149,19 @@ void printGraph(Graph *graph) {
     }
 
 }
+
+
+void printScenariosWithEdgeTo(Graph *graph, Scenario *target) {
+    for (int i = 0; i < graph->num_scenarios; i++) {
+        //when we find the adj list element that it's not null and it's the scenarion we are looking for
+        if (graph->adj_list[i] != NULL && graph->adj_list[i]->scenario == target) {
+            printf("Can travel from scenario %d to:", i+1);
+            GraphNode *current = graph->adj_list[i];
+            while(current != NULL){
+                printf("%s", current->scenario);
+                current = current->next;
+            }
+        }
+    }
+}
+
