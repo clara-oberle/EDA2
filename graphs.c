@@ -201,7 +201,7 @@ void navigate_scenarios(Graph *graph, Scenario **current_scenario) {
 
     //while loop to print the possible scenarios
     int found = 0; //not found yet
-    while (found == 0) {
+    while (found != 1) {
         //we create a pointer to point at the current scenario
         GraphNode *node = graph->adj_list[current_index];
         if (node == NULL) {
@@ -238,15 +238,17 @@ void navigate_scenarios(Graph *graph, Scenario **current_scenario) {
 
         //move to the chosen scenario
         temp = node->next;
-        for (int i = 0; i < choice; i++) {
+        for (int i = 1; i < choice; i++) {
             temp = temp->next;
         }
 
         //to find the index of the chosen scenario
         for (int i = 0; i < graph->num_scenarios; i++) {
             if (graph->adj_list[i] != NULL && graph->adj_list[i]->scenario == temp->scenario) {
+                current_index = i;
                 *current_scenario = temp->scenario;
-                found = 1; //next scenario
+                found = 1;
+                break;
             }
         }
     }
