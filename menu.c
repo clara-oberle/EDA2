@@ -124,12 +124,12 @@ int main(){
 
 
         //we'll assume the player has won, when they lose, this variable will be false
-        bool won = true; // variable used to know if player has won or lost
-       
+        bool won = true; // variable used to know if player has won or lost, after the while loop
+
         // Game loop for navigating scenarios
         //While the fourth scenario is not completed
         while (completed_scenarios[3] != true) {
-            printf("You are now in: %s\n", current_scenario->name);
+            printf("\n\nYou are now in: %s\n", current_scenario->name);
             printf("-----------------------------------------\n");
             printf("%s\n", current_scenario->description);
 
@@ -173,7 +173,8 @@ int main(){
                     init_overlap_queue(overlap_queue);
                     SkillStack *player_used_skills = (SkillStack*)malloc(sizeof(SkillStack));
                     player_used_skills->top = -1;
-                    bool win = battle(new_character, chosen_option->enemies[i], fight_queue, overlap_queue, player_used_skills);
+                    win = battle(new_character, chosen_option->enemies[i], fight_queue, overlap_queue, player_used_skills);
+
                     if(win == false){ // if the player looses a fight with one of the enemies they cannot continue to fight the next enemy
                         free(fight_queue);
                         free(overlap_queue);
@@ -189,6 +190,11 @@ int main(){
                         reset_player_points(new_character); // reset the player's points ready for the next fight
                     }
                 }
+                /*
+                When fights end, in case of victory, the player is prompted with the next scene and its narrative. 
+                On the contrary, in case of defeat, the player is prompted with the ability to restart the game or 
+                restart the scenario.
+                */
                 if(win == false){
                     printf("Do you wish to end the game (1) or restart the scenario (2)?: ");
                     int restart;
@@ -200,25 +206,27 @@ int main(){
                     if(restart == 1){
                         completed_scenarios[3] = true; //this breaks the while loop
                     }
+                    else{
+                        //wants to restart scenario, hence, we leave current scenario as it is
+                        continue;
+                    }
                 }
-
-                /*
-                When fights end, in case of victory, the player is prompted with the next scene and its narrative. 
-                On the contrary, in case of defeat, the player is prompted with the ability to restart the game or 
-                restart the scenario.
-                */
-
-                //assuming win == true
-                if(won == true){
+                else{
                     printf("\n%s\n", chosen_option->narrative_text_after);
+
+                    //to update the completed scenarios
+                    for(int i = 0; i < graph->num_scenarios; i++){
+                        if(completed_scenarios[i] == false){
+                            completed_scenarios[i] = true;
+                            break;
+                        }
+                    }
+                    //if the last scenario has been completed, the while loop will stop
+                    //if not, navigate to the next scenario
+                    navigate_scenarios(graph, &current_scenario); 
+                    
                 }
             }
-            //print possible option
-            printScenariosWithEdgeTo(graph, current_scenario);
-            
-                //switch(curre)
-                
-            
             /*
             // Move to the next scenario
             free(current_scenario); // Free the memory of the current scenario before moving to the next
@@ -283,9 +291,5 @@ int main(){
         else{
             printf("\nCongratulations! You have completed the game.\n");
         }
-        //if(completed_scenarios[3] == true && win == false)
-        //}
-        //once the fourth scenario has been completed, you win
-        //remember we can only reach the fourth scenario if we have won the other 3
     }
 }
