@@ -321,7 +321,7 @@ void implement_player_skill(Skill *chosen_skill, Character *player, Enemy *enemy
         enemy_DEF *= DEF_modifier;
         // Let the player know if the enemy has previously selected a defence skill that partially protects them from this attack:
         if(DEF_modifier > 1){
-            printf("-> The enemy chose a defence skill before this attack. Their DEF has increased to: %.2f\n", enemy_DEF);
+            printf("-> The enemy chose a defence skill before this attack, so their DEF increase.\n");
         }
 
         // check if the player's chosen skill also modifies the enemy's DEF:
@@ -398,7 +398,7 @@ void implement_enemy_skill(Skill *chosen_skill, Character *player, Enemy *enemy,
         player_DEF *= DEF_modifier;
         // Let the player know if the enemy has previously selected a defence skill that partially protects them from this attack:
         if(DEF_modifier > 1){
-            printf("-> You chose a defence skill before this attack. This increases your DEF to: %.2f\n", player_DEF);
+            printf("-> You chose a defence skill before this attack, so your DEF points increase.\n");
         }
         // check if the enemy's chosen skill also modifies the player's DEF:
         if(chosen_skill->modifier[2] < 0){
