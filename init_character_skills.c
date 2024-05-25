@@ -91,9 +91,9 @@ void init_time_warp(Skill *time_warp){
     time_warp->duration_turn = 0; // modifies HP points "forever"
 }
 
-// Function to check that the user has entered an integer between 1 and 7
+// Function to check that the user has entered an integer between 1 and 7 or a -1 when previewing skills
 // This function was made with the help of ChatGPT 3
-int enter_valid_input() {
+int enter_valid_input_previewing() {
     int selection;
     int scanf_result;
     // Attempt to read an integer
@@ -103,7 +103,25 @@ int enter_valid_input() {
         // Clear the input buffer
         while (getchar() != '\n');
         // Print error message and prompt for input again
-        printf("Invalid input. Enter the number of the skill (from 1 to 7), or -1 to finish: ");
+        printf("Invalid input. Enter the number of the skill (from 1 to 7), or a -1 to finish: ");
+        // Attempt to read an integer again
+        scanf_result = scanf("%d", &selection);
+    }
+    return selection;
+}
+
+// Function to check that the user has entered an integer between 1 and 7 when choosing skills
+int enter_valid_input_choosing() {
+    int selection;
+    int scanf_result;
+    // Attempt to read an integer
+    scanf_result = scanf("%d", &selection);
+    // Check if scanf failed or the input is out of range
+    while (scanf_result != 1 || (selection < 1 || selection > 7)) {
+        // Clear the input buffer
+        while (getchar() != '\n');
+        // Print error message and prompt for input again
+        printf("Invalid input. Enter the number of the skill (from 1 to 7): ");
         // Attempt to read an integer again
         scanf_result = scanf("%d", &selection);
     }
@@ -118,7 +136,7 @@ void init_character_skills(Character *new_character, Skill *shadow_blade, Skill 
     "wisely for your fate relies on them. You can view a description of each skill before selecting it using the menu below:\n"
     "1. Shadowblade strike\n2. Frostbite\n3. Health exchange\n4. Fireball\n5. Healing Aura\n6. Thunder Bolt\n7. Time Warp\n");
     printf("\nEnter the number of the skill you wish to preview. When you are done previewing them enter -1: ");
-    int skill_preview = enter_valid_input(); // make sure the user enters a correct integer corresponding to a skill
+    int skill_preview = enter_valid_input_previewing(); // make sure the user enters a correct integer corresponding to a skill
     while(skill_preview != -1){
         switch(skill_preview){
         case 1:
@@ -146,7 +164,7 @@ void init_character_skills(Character *new_character, Skill *shadow_blade, Skill 
             printf("Invalid input\n");
         }
         printf("\nEnter the number of the skill you wish to preview. When you are done previewing them enter -1: ");
-        skill_preview = enter_valid_input(); // make sure the user enters a correct integer corresponding to a skill
+        skill_preview = enter_valid_input_previewing(); // make sure the user enters a correct integer corresponding to a skill
     }
 
     // Assigning the skills of the character:
@@ -154,7 +172,7 @@ void init_character_skills(Character *new_character, Skill *shadow_blade, Skill 
     "you wish to have:\n");
     for(int i = 0; i < 4; ++i){
         printf("Skill %d: ", i+1);
-        int selected_skill = enter_valid_input(); // make sure the user enters a correct integer corresponding to a skill
+        int selected_skill = enter_valid_input_choosing(); // make sure the user enters a correct integer corresponding to a skill
         // set the chosen skill:
         switch(selected_skill){
             case 1:

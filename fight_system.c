@@ -234,6 +234,19 @@ void add_to_stack(Skill *skill, SkillStack *stack){
     init_skill_copy(stack->skills[stack->top], skill);
 }
 
+void pop_stack(SkillStack *stack){
+    // check if the stack is empty:
+    if(stack->top == -1){
+        return;
+    }
+    // pointer to the skill at the top of the stack:
+    Skill *skill_to_free = stack->skills[stack->top];
+    // free the memory of the skill
+    free(skill_to_free);
+    // reduce the stack top by one
+    --stack->top;
+}
+
 float find_used_DEF_modifier(OverlapQueue *queue, int fighter_type){
     float DEF_modifier =  1; // variable to keep track of the DEF modifier, default is 1 because if there is no modifier DEF*1=DEF
     // Loop through the queue and find the skill that modifies the figther_type's DEF: (player -> 0, enemy -> 1)
@@ -415,7 +428,7 @@ void implement_enemy_skill(Skill *chosen_skill, Character *player, Enemy *enemy,
             printf("Total damage done: %.2f\n", damage);
             player->points[0] -= damage; // player HP = player HP - damage
             printf("\n>>> Your current HP: %.2f\n", player->points[0]);
-        } else{ // if the DEF overame the ATK points
+        } else{ // if the DEF overcame the ATK points
             printf("-> You have avoided your enemy's attack and emerge unharmed.");
         }
         // decrease the skill duration for the chosen_skill
@@ -442,7 +455,7 @@ int check_win(Character *player, Enemy *enemy){
 void printf_battle_specifications(){
     printf("\nUseful information about the battles:\n"
     "- Some of your attack skills last for more than one turn. This means that their corresponding modifiers "
-    "will be applied in each of your turns until the skill runs out of duration turns.\n- You cannot choose a skill that"
+    "will be applied in each of your turns until the skill runs out of duration turns.\n- You cannot choose a skill that "
     "has remaining duration turns left.\n- When you choose a defence skill, it will only be implemented if you are attacked "
     "by the enemy in the next turn. This means that if after choosing the defence it is your turn again, this defence will be "
     "lost.\n- You cannot choose a defence skill two times in a row (if you do so you will get a 'try again' message). If you loose "
@@ -540,10 +553,34 @@ bool battle(Character *character, Enemy *enemy, FightQueue *fight_queue, Overlap
     }
 }
 
-void time_strike(){ // Parameters are the stack and the enemy structure to modify
-    /*There must be a move called "Time Strike," or an equivalent representative name 
-    according to the narrative, which allows access to the history of moves executed by
-    the player (which is a stack) and randomly selects the k-th move executed counting 
-    from the last one, then executes it again with double power. This move can only be 
-    used once during the battle */
+/*Time Strike - allows access to the history of moves executed by
+the player (which is a stack) and randomly selects the k-th move executed counting 
+from the last one, then executes it again with double power. This move can only be 
+used once during the battle */
+void time_strike(SkillStack *stack, Character *player, Enemy *enemy, OverlapQueue *overlap_queue){
+    // generate a random index from 0 to the index of the stack top
+    int top = stack->top;
+    int index = rand() % top+1;
+    // create a copy of the chosen skill at the random index:
+    Skill *skill_copy = (Skill*)malloc(sizeof(Skill));
+    init_skill_copy(skill_copy, stack->skills[index]);
+    // double the power of the skill:
+    // if it is a special skill (Health Exchange or Time Warp) there is no way of 'doubling the power' so they stay the same
+    if(skill_copy->type == 0){ // if it is a temporal modifier
+        if(skill_copy->modifier[1] > 1){ // if there is an ATK modifier
+            skill_copy->modifier[1] *= 2; // double it
+        }
+        if(skill_copy->modifier[2] < 1){ // if there is a DEF modifier that affects the enemy's DEF (i.e. it is negative)
+            skill_copy->modifier[2] /= 2; // since it is a decimal (e.g. -0.85) to make it have double power it is divided by 2
+        }
+        if(skill_copy->modifier[2] > 1){ // if is is a defence skill
+            skill_copy->modifier[2] *= 2; // double the DEF points
+        }
+    }
+    // implement the skill that now has double power:
+    implement_player_skill(skill_copy, player, enemy, overlap_queue, stack);
+    // remove the skill from the stack since the implement_player_skill function adds it
+    pop_stack(stack);
+    // free the memory 
+    free(skill_copy);
 }
