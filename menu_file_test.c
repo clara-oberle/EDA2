@@ -181,13 +181,15 @@ int main(){
                         free(overlap_queue);
                         free(player_used_skills);
                         reset_player_points(new_character); // reset the player's points ready for the next fight
+                        free(current_scenario);
                         won = false;
                         break; // exit the for loop 
                     } else{
                         // free fight memory allocations ready for the next fight
                         free(fight_queue);
                         free(overlap_queue);
-                        free(player_used_skills);
+                        free(player_used_skills);                        
+                        free(current_scenario);
                         reset_player_points(new_character); // reset the player's points ready for the next fight
                     }
                 }

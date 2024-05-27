@@ -1,9 +1,54 @@
 #include "init_scenarios_test.h"
 #include "init_enemy_skills.h"
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdbool.h>
 #include <string.h>
+#include <stdlib.h>
 
+SkillType get_skill_type(const char *skill_name) {
+    if (strcmp(skill_name, "shadow_strike") == 0) return SHADOW_STRIKE;
+    if (strcmp(skill_name, "evasive_maneuver") == 0) return EVASIVE_MANEUVER;
+    if (strcmp(skill_name, "flame_burst") == 0) return FLAME_BURST;
+    if (strcmp(skill_name, "arcane_blast") == 0) return ARCANE_BLAST;
+    if (strcmp(skill_name, "cutlass_slash") == 0) return CUTLASS_SLASH;
+    if (strcmp(skill_name, "thorny_veil") == 0) return THORNY_VEIL;
+    if (strcmp(skill_name, "vine_bind") == 0) return VINE_BIND;
+    if (strcmp(skill_name, "healing_wave") == 0) return HEALING_WAVE;
+    return UNKNOWN_SKILL;
+}
+
+void get_skill(const char *name_skill, Skill *skill){
+    
+    SkillType type = get_skill_type(name_skill);
+
+    switch (type) {
+        case SHADOW_STRIKE:
+            init_shadow_strike(skill);
+            break;
+        case EVASIVE_MANEUVER:
+            init_evasive_maneuver(skill);
+            break;
+        case FLAME_BURST:
+            init_flame_burst(skill);
+            break;
+        case ARCANE_BLAST:
+            init_arcane_blast(skill);
+            break;
+        case CUTLASS_SLASH:
+            init_cutlass_slash(skill);
+            break;
+        case THORNY_VEIL:
+            init_thorny_veil(skill);
+            break;
+        case VINE_BIND:
+            init_vine_bind(skill);
+            break;
+        case HEALING_WAVE:
+            init_healing_wave(skill);
+            break;
+    }
+    return;
+}
 
 void initialize_scenario1_from_file(Scenario *scenario, const char *filename) {
     FILE *file = fopen(filename, "r");
@@ -21,7 +66,8 @@ void initialize_scenario1_from_file(Scenario *scenario, const char *filename) {
     scenario->description[strcspn(scenario->description, "\n")] = '\0';
 
     // Allocate memory for the Decision struct
-    Decision *scenario->decision = (Decision*)malloc(sizeof(Decision));
+    Decision *choose_path_race = (Decision *)malloc(sizeof(Decision));
+    scenario->decision = choose_path_race;
     if (scenario->decision == NULL) {
         perror("Failed to allocate memory for decision");
         fclose(file);
@@ -36,36 +82,99 @@ void initialize_scenario1_from_file(Scenario *scenario, const char *filename) {
     scenario->decision->question_text[strcspn(scenario->decision->question_text, "\n")] = '\0';
 
     // Read options
-    for (int i = 0; i < scenario->decision->num_options; ++i) {
-        Option *scenario->decision->options_list[i] = (Option*)malloc(sizeof(Option));
+    choose_path_race->options_list[0] = (Option*)malloc(sizeof(Option));
+    Option *veil_of_obscurity = choose_path_race->options_list[0];
 
-        // Read response text
-        fgets(option->response_text, RESPONSE_SIZE, file);
-        option->response_text[strcspn(option->response_text, "\n")] = '\0';
+    // Read response text
+    fgets(veil_of_obscurity->response_text, RESPONSE_SIZE, file);
+    veil_of_obscurity->response_text[strcspn(veil_of_obscurity->response_text, "\n")] = '\0';
 
-        // Read narrative text before
-        fgets(option->narrative_text_before, NARRATIVE_SIZE, file);
-        option->narrative_text_before[strcspn(option->narrative_text_before, "\n")] = '\0';
+    // Read narrative text before
+    fgets(veil_of_obscurity->narrative_text_before, NARRATIVE_SIZE, file);
+    veil_of_obscurity->narrative_text_before[strcspn(veil_of_obscurity->narrative_text_before, "\n")] = '\0';
 
-        // Read narrative text after
-        fgets(option->narrative_text_after, NARRATIVE_SIZE, file);
-        option->narrative_text_after[strcspn(option->narrative_text_after, "\n")] = '\0';
+    // Read narrative text after
+    fgets(veil_of_obscurity->narrative_text_after, NARRATIVE_SIZE, file);
+    veil_of_obscurity->narrative_text_after[strcspn(veil_of_obscurity->narrative_text_after, "\n")] = '\0';
 
-        // Read number of enemies
-        fscanf(file, "%d\n", &option->num_enemies);
+    // Read number of enemies
+    fscanf(file, "%d\n", &veil_of_obscurity->num_enemies);
 
-        // Read enemies
-        for (int j = 0; j < option->num_enemies; ++j) {
-            Enemy *enemy = &option->enemies[j];
+    // Read enemies
+    veil_of_obscurity->enemies[0] = (Enemy*)malloc(sizeof(Enemy));
+    Enemy *shadow_stalker = veil_of_obscurity->enemies[0];
 
-            // Read enemy name
-            fgets(enemy->name, NAME_SIZE, file);
-            enemy->name[strcspn(enemy->name, "\n")] = '\0';
+    // Read enemy name
+    fgets(shadow_stalker->name, NAME_SIZE, file);
+    shadow_stalker->name[strcspn(shadow_stalker->name, "\n")] = '\0';
 
-            // Read enemy points (HP, ATK, DEF)
-            fscanf(file, "%d %d %d\n", &enemy->points[0], &enemy->points[1], &enemy->points[2]);
-            }
-    }
+    // Read enemy points (HP, ATK, DEF)
+    fscanf(file, "%f %f %f\n", &shadow_stalker->points[0], &shadow_stalker->points[1], &shadow_stalker->points[2]);
+    
+    //Skills
+    //Skill 0
+    char name[NAME_SIZE];
+    fgets(name, NAME_SIZE, file);
+    shadow_stalker->skills[0] = (Skill*)malloc(sizeof(Skill));
+    Skill *shadow_strike = shadow_stalker->skills[0];
+    get_skill(name, shadow_strike);
+
+    //Skill 1
+    fgets(name, NAME_SIZE, file);
+    shadow_stalker->skills[1] = (Skill*)malloc(sizeof(Skill));
+    Skill *evasive_maneuver = shadow_stalker->skills[1];
+    get_skill(name, evasive_maneuver);
+    
+    //Skill 2
+    fgets(name, NAME_SIZE, file);
+    shadow_stalker->skills[2] = (Skill*)malloc(sizeof(Skill));
+    Skill *flame_burst = shadow_stalker->skills[2];
+    get_skill(name, flame_burst);
+
+    //Skill 3
+    fgets(name, NAME_SIZE, file);
+    shadow_stalker->skills[3] = (Skill*)malloc(sizeof(Skill));
+    Skill *arcane_blast = shadow_stalker->skills[3];   
+    get_skill(name, flame_burst); 
+
+
+    // Read enemies Thorn Strangler
+    veil_of_obscurity->enemies[1] = (Enemy*)malloc(sizeof(Enemy));
+    Enemy *thorn_strangle = veil_of_obscurity->enemies[1];
+
+    // Read enemy name
+    fgets(thorn_strangle->name, NAME_SIZE, file);
+    thorn_strangle->name[strcspn(thorn_strangle->name, "\n")] = '\0';
+
+    // Read enemy points (HP, ATK, DEF)
+    fscanf(file, "%f %f %f\n", &thorn_strangle->points[0], &thorn_strangle->points[1], &thorn_strangle->points[2]);
+    
+    //Skills
+    //Skill 0
+    char name[NAME_SIZE];
+    fgets(name, NAME_SIZE, file);
+    thorn_strangle->skills[0] = (Skill*)malloc(sizeof(Skill));
+    Skill *cutlass_slash = thorn_strangle->skills[0];
+    get_skill(name, cutlass_slash);
+
+    //Skill 1
+    fgets(name, NAME_SIZE, file);
+    thorn_strangle->skills[1] = (Skill*)malloc(sizeof(Skill));
+    Skill *thorny_veil = thorn_strangle->skills[1];
+    get_skill(name, thorny_veil);
+    
+    //Skill 2
+    fgets(name, NAME_SIZE, file);
+    thorn_strangle->skills[2] = (Skill*)malloc(sizeof(Skill));
+    Skill *vine_bind = thorn_strangle->skills[2];
+    get_skill(name, vine_bind);
+
+    //Skill 3
+    fgets(name, NAME_SIZE, file);
+    thorn_strangle->skills[3] = (Skill*)malloc(sizeof(Skill));
+    Skill *healing_wave = thorn_strangle->skills[3];   
+    get_skill(name, healing_wave);      
+                
     fclose(file);   
 }
 

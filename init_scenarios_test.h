@@ -10,6 +10,18 @@
 #define NARRATIVE_SIZE 512
 #define MAX_SKILLS 4
 
+typedef enum {
+    SHADOW_STRIKE,
+    EVASIVE_MANEUVER,
+    FLAME_BURST,
+    ARCANE_BLAST,
+    CUTLASS_SLASH,
+    THORNY_VEIL,
+    VINE_BIND,
+    HEALING_WAVE,
+    UNKNOWN_SKILL
+} SkillType;
+
 void init_scenario1(Scenario *race_of_shadows);
 void init_scenario2(Scenario *crossroads_of_destiny);
 void init_scenario3(Scenario *castle);
