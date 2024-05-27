@@ -1,0 +1,36 @@
+The Race of Shadows
+As the screen fades from black, you find yourself in a sleek, futuristic vehicle, its engine's hum reverberating through your bones. Ahead lies the starting line, bathed in neon lights and echoing with the distant roar of an eager crowd. The Race of Shadows begins, and your fate hangs in the balance. As the countdown begins, you survey the winding track ahead, split into two diverging paths, both shrouded in uncertainty.
+2
+A decision must be made, a choice that will shape the course of destiny. Will they veer left (1), towards the path less traveled, or right (2), where the shadows writhe with hidden dangers? Enter the number corresponding to your choice:
+To the left, the Veil of Obscurity looms like a shadowy abyss, its depths shrouded in mystery. The path winds through a dense forest of gnarled trees and twisting vines, their branches reaching out like grasping fingers to ensnare the unwary.
+You steer your vehicle onto the left path, plunging into the dark and mysterious Veil of Obscurity. The shadows seem to close in around you as you navigate the winding track.
+With adrenaline still coursing through your veins, you navigate your car through the aftermath of the battle. As the dust settles, your eyes catch a glint among the wreckage. Half-buried beneath the rubble is the first fragment of the riddle, its aged inscription illuminated by the faint light. A surge of anticipation grips you as you trace the ancient words etched into the stone, the first piece of the puzzle that will lead you to the final prize.
+2
+Shadow Stalker
+250
+30
+10
+shadow_strike
+evasive_maneuver
+flame_burst
+arcane_blast
+Thorn Strangle
+200
+20
+5
+cutlass_slash
+thorny_veil
+vine_bind
+healing_wave
+To the right, the Gauntlet of Peril stretches out like a terrifying passage of fire and brimstone. The landscape is a desolate wasteland of jagged rocks and bubbling lava pits, their fiery glow casting flickering shadows across the treacherous terrain.
+You steer your vehicle onto the right path, facing the daunting challenges of the Gauntlet of Peril. The heat of the lava pits and the stench of sulfur assault your senses as you navigate the treacherous track.
+With adrenaline still coursing through your veins, you navigate your car through the aftermath of the battle. Your eyes catch a glint among the wreckage. Half-buried beneath the rubble is the first fragment of the riddle, its aged inscription illuminated by the glow of lava. A surge of anticipation grips you as you trace the ancient words etched into the stone, the first piece of the puzzle that will lead you to the final prize.
+1
+Inferno Fiend
+300
+25
+15
+shadow_strike
+healing_wave
+vine_bind
+evasive_maneuver
