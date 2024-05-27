@@ -1,0 +1,36 @@
+ Abandoned Castle
+The screen shifts to reveal an ancient castle enveloped in dense fog. Two paths diverge at the entrance, offering a crucial choice that will shape your journey ahead.
+2
+Seeker of Gemstones, will you take the left path (1) and venture deep into the castle's crypt, or will you explore the right trail (2) and wander into the courtyard? Enter the number corresponding to your choice:
+You descend into the depths of the crypt where secrets and unseen horrors await amongst the bones of past generations.
+As you reach the crypt, a fearsome creature emerges from the darkness - a Ghoul. This undead being lurks in the shadows of the crypt, agile and relentless, it is capable of leaping from the darkness to attack unsuspecting prey.
+With victory pulsing through your veins, you survey the aftermath of the battle. Among the debris of the crypt you see a pedestal, atop it lies another fragment of the riddle. Anticipation grips you as you draw near, your hand reaches out to claim the ancient stone etched with the next words of the riddle.
+1
+Ghoul
+200
+20
+15
+shadow_strike
+evasive_maneuver
+flame_burst
+arcane_blast
+You step into the wild courtyard, surrounded by towering hedges, crumbling statues, and at its heart, a weathered fountain. Mist rises from the overgrown algae, cloaking the scene in a mystical atmosphere.
+As you take in the eerie setting you suddenly sense a presence lurking amidst the overgrown greenery. Emerging from the shadows are two mighty adversaries.\nCarved from solid granite and brought to life by ancient sorcery, the Stone Guardian stands as the mighty protector of the courtyard. \nTaking a stance beside it is the Deadly Nightshade. This malevolent plant creature lurks among the wild foliage, with deadly vines and toxic flowers.
+Emerging victorious from the courtyard, a sense of accomplishment washes over you. Suddenly, a shimmer of light from the fountain catches your eye. Drawing closer, you discover a hidden compartment within the weathered stone. With trembling hands, you retrieve the ancient artifact concealed within - a fragment of a runestone etched with the next words of the riddle.
+2
+Stone Guardian
+150
+15
+10
+evasive_maneuver
+flame_burst
+arcane_blast
+cutlass_slash
+Deadly Nightshade
+100
+10
+5
+shadow_strike
+healing_wave
+vine_bind
+evasive_maneuver
