@@ -5,49 +5,28 @@
 #include <string.h>
 #include <stdlib.h>
 
-SkillType get_skill_type(const char *skill_name) {
-    if (strcmp(skill_name, "shadow_strike") == 0) return SHADOW_STRIKE;
-    if (strcmp(skill_name, "evasive_maneuver") == 0) return EVASIVE_MANEUVER;
-    if (strcmp(skill_name, "flame_burst") == 0) return FLAME_BURST;
-    if (strcmp(skill_name, "arcane_blast") == 0) return ARCANE_BLAST;
-    if (strcmp(skill_name, "cutlass_slash") == 0) return CUTLASS_SLASH;
-    if (strcmp(skill_name, "thorny_veil") == 0) return THORNY_VEIL;
-    if (strcmp(skill_name, "vine_bind") == 0) return VINE_BIND;
-    if (strcmp(skill_name, "healing_wave") == 0) return HEALING_WAVE;
-    return UNKNOWN_SKILL;
-}
-
-void get_skill(const char *name_skill, Skill *skill){
-    
-    SkillType type = get_skill_type(name_skill);
-
-    switch (type) {
-        case SHADOW_STRIKE:
-            init_shadow_strike(skill);
-            break;
-        case EVASIVE_MANEUVER:
-            init_evasive_maneuver(skill);
-            break;
-        case FLAME_BURST:
-            init_flame_burst(skill);
-            break;
-        case ARCANE_BLAST:
-            init_arcane_blast(skill);
-            break;
-        case CUTLASS_SLASH:
-            init_cutlass_slash(skill);
-            break;
-        case THORNY_VEIL:
-            init_thorny_veil(skill);
-            break;
-        case VINE_BIND:
-            init_vine_bind(skill);
-            break;
-        case HEALING_WAVE:
-            init_healing_wave(skill);
-            break;
+void get_skill(const char *skill_name, Skill *skill) {
+    // create a copy of the skill name and remove the \n at the end so it can be used in the strcmp function
+    char skill_name_copy[NAME_SIZE];
+    strcpy(skill_name_copy, skill_name);
+    skill_name_copy[strcspn(skill_name_copy, "\n")] = '\0';
+    if (strcmp(skill_name_copy, "shadow_strike") == 0){
+        init_shadow_strike(skill);
+    }else if (strcmp(skill_name_copy, "evasive_maneuver") == 0){
+        init_evasive_maneuver(skill);
+    }else if (strcmp(skill_name_copy, "flame_burst") == 0){
+        init_flame_burst(skill);
+    }else if (strcmp(skill_name_copy, "arcane_blast") == 0){
+        init_arcane_blast(skill);
+    } if (strcmp(skill_name_copy, "cutlass_slash") == 0){
+        init_cutlass_slash(skill);
+    } if (strcmp(skill_name_copy, "thorny_veil") == 0){
+        init_thorny_veil(skill);
+    } if (strcmp(skill_name_copy, "vine_bind") == 0){
+        init_vine_bind(skill);
+    }else if (strcmp(skill_name_copy, "healing_wave") == 0){
+        init_healing_wave(skill);
     }
-    return;
 }
 
 void initialize_scenario1_from_file(Scenario *scenario, const char *filename) {
@@ -152,7 +131,6 @@ void initialize_scenario1_from_file(Scenario *scenario, const char *filename) {
     
     //Skills
     //Skill 0
-    name[NAME_SIZE];
     fgets(name, NAME_SIZE, file);
     thorn_strangle->skills[0] = (Skill*)malloc(sizeof(Skill));
     Skill *cutlass_slash = thorn_strangle->skills[0];

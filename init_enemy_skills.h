@@ -3,14 +3,14 @@
 
 #include "struct_definitions.h"
 
-Skill *init_shadow_strike();
-Skill *init_arcane_blast();
-Skill *init_cutlass_slash();
-Skill *init_evasive_maneuver();
-Skill *init_thorny_veil();
-Skill *init_cloak_of_darkness();
-Skill *init_vine_bind();
-Skill *init_flame_burst();
-Skill *init_healing_wave();
+void init_shadow_strike();
+void init_arcane_blast();
+void init_cutlass_slash();
+void init_evasive_maneuver();
+void init_thorny_veil();
+void init_cloak_of_darkness();
+void init_vine_bind();
+void init_flame_burst();
+void init_healing_wave();
 
 #endif
