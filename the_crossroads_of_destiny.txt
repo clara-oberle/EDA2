@@ -1,0 +1,36 @@
+The Crossroads of Destiny
+As your vehicle hurtles down the track, you approach a fork in the road, each path shrouded in its own mystery and peril. The decision you make now will shape the course of your journey, determining not only the challenges you face but also the fate of those who stand in your way.
+2
+With the fate of your journey hanging in the balance, you must choose your path wisely. Do you venture into the depths of the Forgotten Ruins (1), where ancient mysteries await, or brave the tempestuous waters of the Stormy Seas (2), risking life and limb for the promise of untold rewards? Enter the number corresponding to your choice:
+To the left lies the path to the Forgotten Ruins, where ancient secrets lie buried beneath the crumbling stones. The air is heavy with the weight of history, and the ruins whisper tales of long-forgotten civilizations and untold treasures waiting to be discovered.
+You steer your vehicle towards the left, heading into the depths of the Forgotten Ruins. The crumbling structures and overgrown foliage create an eerie atmosphere as you navigate the winding path.
+With triumph coursing through your veins, you survey the aftermath of the battle. Among the debris, a weathered stone altar catches your eye, bearing another fragment of the riddle. Anticipation grips you as you approach, the ancient symbols beckoning you closer. With a steady hand, you claim the stone fragment etched with ancient words - one less fragment stands between you and the complete riddle.
+1
+Guardian of the Forgotten Ruins
+400
+35
+25
+evasive_maneuver
+flame_burst
+arcane_blast
+cutlass_slash
+To the right stretches the path to the Stormy Seas, where towering waves crash against rocky cliffs, and the wind howls like a vengeful spirit. The sea churns with hidden dangers, promising both riches and ruin to those brave enough to brave its wrath.
+You veer towards the right, facing the treacherous waters of the Stormy Seas. The crashing waves and howling winds create a tumultuous environment as you navigate the rocky coastline.
+With victory coursing through your veins, you stand amidst the aftermath of the battle, the Stormy Seas raging beside you. Along the rugged coastline, where waves crash against the cliffs with relentless fury, another fragment of the riddle lies half-buried in the sand. Anticipation grips you as you approach the weathered stone, its ancient markings illuminated by the glow of your car lights - one less fragment stands between you and the complete riddle.
+2
+Captain Blackbeard
+300
+30
+20
+cutlass_slash
+thorny_veil
+vine_bind
+healing_wave
+Siren the Sorceress
+250
+25
+15
+healing_wave
+evasive_maneuver
+shadow_strike
+arcane_blast

@@ -1,0 +1,32 @@
+The Battle for the Gemstones
+As you emerge victorious from the towering castle, clutching the final shard of the riddle, the air crackles with anticipation. The time has come to solve the riddle that will guide you to the Sacred Gemstones. You can now piece together all the fragments you've gathered over the last three challenges. And as you do so, the puzzle unfolds before you, revealing the entirety of the riddle.
+1
+Brave adventurer, your path has led you to this critical moment. Before you lies the final mystery to unravel before claiming the gems. Listen closely:\nIt is the beginning of eternity,\nthe end of time and space,\nthe beginning of the end,\nand the end of every space.\nWhat is it? (write your answer in lower case): 
+Congratulations! You've successfully solved the riddle! The answer is indeed the letter e.
+In a flash, you find yourself transported to the location of the Sacred Gemstones. Their radiant glow captivates you, but a dangerous presence lurks nearby. Three adversaries stand guard, each embodying the essence of the gemstone they protect: time, space, and spirituality.\nThe Guardian of Time, spectral and adorned with ancient timepieces, disorients its opponents by manipulating time.\nThe Guardian of Space, enveloped in swirling darkness, commands the environment to its advantage.\nThe Guardian of Spirituality, radiant and ethereal, draws upon otherworldly powers to weaken its prey.\nPrepare yourself for the final battle, as the fate of the Sacred Gemstones rests in your hands.
+With a final blow, you defeat the three adversaries, their forms disappearing into smoke. As the last guardian falls, a profound silence descends, broken only by the soft hum of the Sacred Gemstones in your grasp. The air shimmers with newfound energy as you feel the power coursing through you. Victorious, you hold the key to unlocking untold potential and shaping the destiny of the world. Then, before you, a final message appears in golden letters: 'Congratulations, adventurer! You have conquered the Trial of Ascension and emerged with the power of the Sacred Gemstones'.
+3
+Guardian of Time
+300
+30
+20
+evasive_maneuver
+flame_burst
+healing_wave
+cutlass_slash
+Guardian of Space
+300
+20
+15
+cutlass_slash
+thorny_veil
+vine_bind
+shadow_strike
+Guardian of Spirituality
+300
+25
+20
+healing_wave
+evasive_maneuver
+shadow_strike
+arcane_blast
