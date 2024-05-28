@@ -25,7 +25,7 @@ Graph* create_graph(int num_scenarios) {
 }
 
 //function that creates a new node
-GraphNode* create_graph_node(char scenario_name[N]) {
+GraphNode *create_graph_node(const char *scenario_name) {
     GraphNode *newNode = (GraphNode *)malloc(sizeof(GraphNode));
     strcpy(newNode->name, scenario_name);
     newNode->next = NULL;
@@ -183,7 +183,6 @@ void navigate_scenarios(Graph *graph, Scenario *current_scenario) {
     for (int i = 1; i < choice; i++) {
         temp = temp->next;
     }
-
+    free_scenario(current_scenario);
     update_current_scenario(temp, current_scenario);
 }
-
