@@ -453,7 +453,7 @@ int check_win(Character *player, Enemy *enemy){
 }
 
 void printf_battle_specifications(){
-    printf("\nUseful information about the battles:\n"
+    printf("Useful information about the battles:\n"
     "- Some of your attack skills last for more than one turn. This means that their corresponding modifiers "
     "will be applied in each of your turns until the skill runs out of duration turns.\n- You cannot choose a skill that "
     "has remaining duration turns left.\n- When you choose a defence skill, it will only be implemented if you are attacked "
@@ -507,7 +507,7 @@ bool battle(Character *character, Enemy *enemy, FightQueue *fight_queue, Overlap
                     Skill *chosen_skill = (Skill*)malloc(sizeof(Skill));
                     init_skill_copy(chosen_skill, character->skills[skill_number-1]);
                 }
-                printf("\nYou have chosen %s\n----------------------------------------\n", chosen_skill->name);
+                printf("\nYou have chosen %s\n---------------------------------------------\n", chosen_skill->name);
                 // implement the skill (modify ATK, HP and DEF accordingly):
                 implement_player_skill(chosen_skill, character, enemy, overlap_queue, player_used_skills);
                 // add the skill to the overlap queue if its duration turn was more than one:
@@ -527,7 +527,7 @@ bool battle(Character *character, Enemy *enemy, FightQueue *fight_queue, Overlap
                     int index = generate_random_index();
                     init_skill_copy(random_skill, enemy->skills[index]);
                 }
-                printf("\n%s has chosen %s\n----------------------------------------\n", enemy->name, random_skill->name);
+                printf("\n%s has chosen %s\n---------------------------------------------\n", enemy->name, random_skill->name);
                 // implement the skill (modify ATK, HP and DEF accordingly):
                 implement_enemy_skill(random_skill, character, enemy, overlap_queue);
                 // add the skill to the overlap queue if its duration turn was more than one:
