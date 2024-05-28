@@ -232,7 +232,7 @@ void init_scenario2(Scenario *crossroads_of_destiny){
     init_healing_wave(healing_wave_marauder);
 
     stormy_seas->enemies[1] = (Enemy*)malloc(sizeof(Enemy));
-    Enemy *siren_sorceress = stormy_seas->enemies[0];
+    Enemy *siren_sorceress = stormy_seas->enemies[1];
     strcpy(siren_sorceress->name, "Siren the Sorceress");
     siren_sorceress->points[0] = 250; // HP
     siren_sorceress->points[1] = 25; // ATK
