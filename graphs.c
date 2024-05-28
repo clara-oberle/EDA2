@@ -1,4 +1,5 @@
 #include "graphs.h"
+#include "init_scenarios_test.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -111,12 +112,30 @@ void printScenariosWithEdgeTo(Graph *graph, char target[N]) {
     }
 }
 
-void navigate_scenarios(Graph *graph, Scenario **current_scenario) {
+void update_current_scenario(GraphNode *destination_scenario, Scenario *current_scenario){
+    Scenario *new_scenario = (Scenario*)malloc(sizeof(Scenario));
+    current_scenario = new_scenario;
+    if(strcmp(destination_scenario->name, "The Race of Shadows") == 0){
+        initialize_scenario1_from_file(current_scenario, "race_of_shadows.txt");
+    }
+    else if(strcmp(destination_scenario->name, "The Crossroads of Destiny") == 0){
+        initialize_scenario2_from_file(current_scenario, "the_crossroads_of_destiny.txt");
+    }
+    else if(strcmp(destination_scenario->name, "Abandoned Castle") == 0){
+        initialize_scenario3_from_file(current_scenario, "abandoned_castle.txt");
+    }
+    else if(strcmp(destination_scenario->name, "The Battle for the Gemstones") == 0){
+        initialize_scenario4_from_file(current_scenario, "battle_gemstones.txt");
+    }
+}
+
+
+void navigate_scenarios(Graph *graph, Scenario *current_scenario) {
     int current_index = -1;
 
     // Find the index of the current scenario
     for (int i = 0; i < graph->num_scenarios; i++) {
-        if (graph->adj_list[i] != NULL && graph->adj_list[i]->scenario == *current_scenario) {
+        if (graph->adj_list[i] != NULL && strcmp(graph->adj_list[i]->name, current_scenario->name) == 0) {
             current_index = i;
             break;
         }
@@ -126,59 +145,45 @@ void navigate_scenarios(Graph *graph, Scenario **current_scenario) {
         printf("Error: Current scenario not found in the graph.\n");
         return;
     }
-
-    //while loop to print the possible scenarios
-    int found = 0; //not found yet
-    while (found != 1) {
-        //we create a pointer to point at the current scenario
-        GraphNode *node = graph->adj_list[current_index];
-        if (node == NULL) {
-            printf("Error: Scenario not found.\n");
-            break;
-        }
-
-        printf("Current Scenario: %s\n", node->scenario->name);
-        //in case it's the last scenario
-        if (current_index == 3) { // Assuming the 4th scenario index is 3
-            printf("You have reached the final scenario.\n");
-            break;
-        }
-
-        printf("Choose your next scenario:\n");
-        //create another pointer that points at the next node
-        GraphNode *temp = node->next;
-        int index = 1;
-        while (temp != NULL) {
-            printf("%d. %s\n", index, temp->scenario->name);
-            temp = temp->next;
-            index++;
-        }
-        //get the users input
-        printf("Enter the number of the next scenario: ");
-        int choice;
-        scanf("%d", &choice);
-
-        //to validate the choice
-        while(choice < 1 || choice >= index) {
-            printf("Invalid choice. Try again.\n");
-            scanf("%d", &choice);
-        }
-
-        //move to the chosen scenario
-        temp = node->next;
-        for (int i = 1; i < choice; i++) {
-            temp = temp->next;
-        }
-
-        //to find the index of the chosen scenario
-        for (int i = 0; i < graph->num_scenarios; i++) {
-            if (graph->adj_list[i] != NULL && graph->adj_list[i]->scenario == temp->scenario) {
-                current_index = i;
-                *current_scenario = temp->scenario;
-                found = 1;
-                break;
-            }
-        }
+    
+    //we create a pointer to point at the current scenario
+    GraphNode *node = graph->adj_list[current_index];
+    if (node == NULL) {
+        printf("Error: Scenario not found.\n");
     }
+
+    printf("Current Scenario: %s\n", node->name);
+    //in case it's the last scenario
+    if (current_index == 3) { // Assuming the 4th scenario index is 3
+        printf("You have reached the final scenario.\n");
+    }
+
+    printf("Choose your next scenario:\n");
+    //create another pointer that points at the next node
+    GraphNode *temp = node->next;
+    int index = 1;
+    while (temp != NULL) {
+        printf("%d. %s\n", index, temp->name);
+        temp = temp->next;
+        index++;
+    }
+    //get the users input
+    printf("Enter the number of the next scenario: ");
+    int choice;
+    scanf("%d", &choice);
+
+    //to validate the choice
+    while(choice < 1 || choice >= index) {
+        printf("Invalid choice. Try again.\n");
+        scanf("%d", &choice);
+    }
+
+    //move to the chosen scenario
+    temp = node->next;
+    for (int i = 1; i < choice; i++) {
+        temp = temp->next;
+    }
+
+    update_current_scenario(temp, current_scenario);
 }
 

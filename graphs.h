@@ -18,6 +18,6 @@ GraphNode* create_graph_node(Scenario *scenario);
 void add_scenario(Graph *graph, Scenario *new_scenario);
 void add_edge(Graph *graph, Scenario *scenario, Scenario *destination);
 void printGraph(Graph *graph);
-void navigate_scenarios(Graph *graph, Scenario **current_scenario);
+void navigate_scenarios(Graph *graph, Scenario *current_scenario);
 #endif // GRAPH_H
 

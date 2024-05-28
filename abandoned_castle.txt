@@ -1,4 +1,4 @@
- Abandoned Castle
+Abandoned Castle
 The screen shifts to reveal an ancient castle enveloped in dense fog. Two paths diverge at the entrance, offering a crucial choice that will shape your journey ahead.
 2
 Seeker of Gemstones, will you take the left path (1) and venture deep into the castle's crypt, or will you explore the right trail (2) and wander into the courtyard? Enter the number corresponding to your choice:
