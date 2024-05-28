@@ -203,5 +203,9 @@ void init_character_skills(Character *new_character, Skill *shadow_blade, Skill 
     for(int i=0; i<4; i++){
         printf("- %s\n", new_character->skills[i]->name);
     }
-    printf("Good Luck!");
+    printf("Apart from these skills you can also choose the Time Strike move in a battle:\n"
+    "- A random skill from your previously used skills will be chosen and implemented with double power\n"
+    "- If it is a special skill such as Health Exchange or Time Warp it will be implemeted as normal (doesn't have double power)\n"
+    "- You can only use Time Strike once in every battle\n");
+    printf("Good Luck!\n");
 }

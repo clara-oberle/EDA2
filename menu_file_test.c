@@ -14,7 +14,6 @@
 #include "graphs.h"
 #include "graphs.c"
 
-
 /*
 - finish errors init scenarios + comments 
 - change graphs (1 - 2 h) (data structures --> Names + last scenario check)
@@ -27,6 +26,22 @@
 /*unit test suite: to code a function to check if the functions of the code work
 end to end test suite: a function to test all the other unit tests suites
 */
+
+void print_intro(){
+    printf("\nThe screen fades from black to reveal a dimly lit chamber, ancient runes etched into the walls "
+        "flickering with an otherworldly glow. A haunting melody echoes in the background, sending shivers down "
+        "the spine of those who dare to listen. The words 'The Quest for the Sacred Gemstones' materialize in "
+        "ethereal script.\n\nWelcome, seeker of destiny, to The Quest for the Sacred Gemstones. In the realm of "
+        "shadows and whispers, where the fabric of reality bends to the will of the unknown, only the worthy shall "
+        "prevail.\n\nThe ultimate prize awaits the one who dares to embark on this journey: The Sacred Gemstones, three "
+        "ancient relics, each bestowing power over a unique aspect of existence - time, space, and spirituality. "
+        "Possession of these gems allows the bearer to navigate the flow of time, traverse the boundless expanse of "
+        "space, and commune with the depths of the spiritual realm. But to claim them, you must prove your worth by "
+        "conquering the four challenges that await within this ethereal realm.\n\nThe first three challenges will reveal "
+        "fragments of a riddle that you must solve to uncover the location of the gemstones, which you shall retrieve "
+        "in the final trial.\nEnter, brave soul, and heed the call of destiny. The Quest for the Sacred Gemstones awaits "
+        "those who dare to seek enlightenment amidst the shadow.\n\n");
+}
 
 int main(){
     // Menu:
@@ -42,19 +57,7 @@ int main(){
     // Start new game
     if(strcmp(new_game, "Y") == 0){
         // Storyline Intro
-        printf("\nThe screen fades from black to reveal a dimly lit chamber, ancient runes etched into the walls "
-        "flickering with an otherworldly glow. A haunting melody echoes in the background, sending shivers down "
-        "the spine of those who dare to listen. The words 'The Quest for the Sacred Gemstones' materialize in "
-        "ethereal script.\n\nWelcome, seeker of destiny, to The Quest for the Sacred Gemstones. In the realm of "
-        "shadows and whispers, where the fabric of reality bends to the will of the unknown, only the worthy shall "
-        "prevail.\n\nThe ultimate prize awaits the one who dares to embark on this journey: The Sacred Gemstones, three "
-        "ancient relics, each bestowing power over a unique aspect of existence - time, space, and spirituality. "
-        "Possession of these gems allows the bearer to navigate the flow of time, traverse the boundless expanse of "
-        "space, and commune with the depths of the spiritual realm. But to claim them, you must prove your worth by "
-        "conquering the four challenges that await within this ethereal realm.\n\nThe first three challenges will reveal "
-        "fragments of a riddle that you must solve to uncover the location of the gemstones, which you shall retrieve "
-        "in the final trial.\nEnter, brave soul, and heed the call of destiny. The Quest for the Sacred Gemstones awaits "
-        "those who dare to seek enlightenment amidst the shadow.\n\n");
+        print_intro();
 
         // Create character
         Character *new_character = (Character*)malloc(sizeof(Character)); // Dynamic memory allocation for character structure
@@ -89,6 +92,8 @@ int main(){
         init_character_skills(new_character, shadow_blade, frostbite, 
                               health_exchange, fireball, healing_aura, thunderbolt, time_warp);
 
+        printf_battle_specifications(); // print useful information about the battles;
+
         // Initialize scenarios
         Scenario *scenario1 = (Scenario*)malloc(sizeof(Scenario));
         initialize_scenario1_from_file(scenario1, "race_of_shadows.txt");
@@ -115,8 +120,8 @@ int main(){
         add_edge(graph, "Abandoned Castle", "The Battle for the Gemstones");
 
         //inform the player the possible routes
+        printf("Scenario Navigation:\n");
         printGraph(graph);
-        printf("\n");
 
         // Track completed scenarios
         bool completed_scenarios[4] = {false, false, false, false};
@@ -125,15 +130,14 @@ int main(){
         // Current scenario pointer
         Scenario *current_scenario = scenario1;
 
-
         //we'll assume the player has won, when they lose, this variable will be false
         bool won = true; // variable used to know if player has won or lost, after the while loop
 
         // Game loop for navigating scenarios
         //While the fourth scenario is not completed
         while (completed_scenarios[3] != true) {
-            printf("\n\nYou are now in: %s\n", current_scenario->name);
-            printf("-----------------------------------------\n");
+            printf("\nYou are now in: %s\n", current_scenario->name);
+            printf("----------------------------------------------\n");
             printf("%s\n", current_scenario->description);
 
             Decision *decision = current_scenario->decision;
@@ -167,8 +171,7 @@ int main(){
                 printf("\n%s\n", chosen_option->narrative_text_before);
 
                 // Call a battle for each enemy in the chosen option here
-                bool win;
-                printf_battle_specifications(); // print useful information about the battles;
+                bool win_battle;
                 for(int i=0; i<chosen_option->num_enemies; i++){
                     // initialise the queue to decide the turns, the queue for skills with duration > 1, and the stack to store player's used skills
                     FightQueue *fight_queue = create_queue(new_character, chosen_option->enemies[i]);
@@ -176,21 +179,14 @@ int main(){
                     init_overlap_queue(overlap_queue);
                     SkillStack *player_used_skills = (SkillStack*)malloc(sizeof(SkillStack));
                     player_used_skills->top = -1;
-                    win = battle(new_character, chosen_option->enemies[i], fight_queue, overlap_queue, player_used_skills);
-
-                    if(win == false){ // if the player looses a fight with one of the enemies they cannot continue to fight the next enemy
-                        free(fight_queue);
-                        free(overlap_queue);
-                        free(player_used_skills);
-                        reset_player_points(new_character); // reset the player's points ready for the next fight
+                    win_battle = battle(new_character, chosen_option->enemies[i], fight_queue, overlap_queue, player_used_skills);
+                    free(fight_queue);
+                    free(overlap_queue);
+                    free(player_used_skills);
+                    reset_player_points(new_character); // reset the player's points ready for the next fight
+                    if(win_battle == false){ // if the player looses a fight with one of the enemies they cannot continue to fight the next enemy
                         won = false;
                         break; // exit the for loop 
-                    } else{
-                        // free fight memory allocations ready for the next fight
-                        free(fight_queue);
-                        free(overlap_queue);
-                        free(player_used_skills);                    
-                        reset_player_points(new_character); // reset the player's points ready for the next fight
                     }
                 }
                 /*
@@ -198,7 +194,7 @@ int main(){
                 On the contrary, in case of defeat, the player is prompted with the ability to restart the game or 
                 restart the scenario.
                 */
-                if(win == false){
+                if(win_battle == false){
                     printf("Do you wish to end the game (1) or restart the scenario (2)?: ");
                     int restart;
                     scanf("%d", &restart);
@@ -208,49 +204,33 @@ int main(){
                     }
                     if(restart == 1){
                         free_scenario(current_scenario);
-                        completed_scenarios[3] = true; //this breaks the while loop
-                    }
-                    else{
+                        break;
+                    } else{
                         //wants to restart scenario, hence, we leave current scenario as it is
                         continue;
                     }
-                }
-                else{
+                } else if(win_battle == true){
                     printf("\n%s\n", chosen_option->narrative_text_after);
-
-                    //to update the completed scenarios
-                    for(int i = 0; i < graph->num_scenarios; i++){
-                        if(completed_scenarios[i] == false){
-                            completed_scenarios[i] = true;
+                    //to update the completed scenario
+                    //find the index of the scenario in the graph's adj_list:
+                    int index;
+                    for(int i=0; i<graph->num_scenarios; i++){
+                        if(strcmp(graph->adj_list[i]->name, current_scenario->name) == 0){
+                            index = i;
                             break;
                         }
                     }
+                    //update the completed_scenarios array using the index:
+                    completed_scenarios[index] = true;
                     //if the last scenario has been completed, the while loop will stop
                     //if not, navigate to the next scenario
-                    navigate_scenarios(graph, &current_scenario); 
-                    
+                    navigate_scenarios(graph, current_scenario); 
                 }
             }
-            }
-        if(won == false){
-            printf("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀             ⣀⣠⡀⠀"
-            "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⣤⠀⠀⠀⢀⣴⣿⡶⠀⣾⣿⣿⡿⠟⠛⠁"
-            "⠀⠀⠀⠀⠀⠀⣀⣀⣄⣀⠀⠀⠀⠀⣶⣶⣦⠀⠀⠀⠀⣼⣿⣿⡇⠀⣠⣿⣿⣿⠇⣸⣿⣿⣧⣤⠀⠀⠀"
-            "⠀⠀⢀⣴⣾⣿⡿⠿⠿⠿⠇⠀⠀⣸⣿⣿⣿⡆⠀⠀⢰⣿⣿⣿⣷⣼⣿⣿⣿⡿⢀⣿⣿⡿⠟⠛⠁⠀⠀"
-            "⠀⣴⣿⡿⠋⠁⠀⠀⠀⠀⠀⠀⢠⣿⣿⣹⣿⣿⣿⣿⣿⣿⡏⢻⣿⣿⢿⣿⣿⠃⣼⣿⣯⣤⣴⣶⣿⡤⠀"
-            "⣼⣿⠏⠀⣀⣠⣤⣶⣾⣷⠄⣰⣿⣿⡿⠿⠻⣿⣯⣸⣿⡿⠀⠀⠀⠁⣾⣿⡏⢠⣿⣿⠿⠛⠋⠉⠀⠀⠀"
-            "⣿⣿⠲⢿⣿⣿⣿⣿⡿⠋⢰⣿⣿⠋⠀⠀⠀⢻⣿⣿⣿⠇⠀⠀⠀⠀⠙⠛⠀⠀⠉⠁⠀⠀⠀⠀⠀⠀⠀"
-            "⠹⢿⣷⣶⣿⣿⠿⠋⠀⠀⠈⠙⠃⠀⠀⠀⠀⠀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
-            "⠀⠀⠈⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣤⣤⣴⣶⣦⣤⡀⠀"
-            "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⡀⠀⠀⠀⠀⠀⠀⠀⣠⡇⢰⣶⣶⣾⡿⠷⣿⣿⣿⡟⠛⣉⣿⣿⣿⠆"
-            "⠀⠀⠀⠀⠀⠀⢀⣤⣶⣿⣿⡎⣿⣿⣦⠀⠀⠀⢀⣤⣾⠟⢀⣿⣿⡟⣁⠀⠀⣸⣿⣿⣤⣾⣿⡿⠛⠁⠀"
-            "⠀⠀⠀⠀⣠⣾⣿⡿⠛⠉⢿⣦⠘⣿⣿⡆⠀⢠⣾⣿⠋⠀⣼⣿⣿⣿⠿⠷⢠⣿⣿⣿⠿⢻⣿⣧⠀⠀⠀"
-            "⠀⠀⠀⣴⣿⣿⠋⠀⠀⠀⢸⣿⣇⢹⣿⣷⣰⣿⣿⠃⠀⢠⣿⣿⢃⣀⣤⣤⣾⣿⡟⠀⠀⠀⢻⣿⣆⠀⠀"
-            "⠀⠀⠀⣿⣿⡇⠀⠀⢀⣴⣿⣿⡟⠀⣿⣿⣿⣿⠃⠀⠀⣾⣿⣿⡿⠿⠛⢛⣿⡟⠀⠀⠀⠀⠀⠻⠿⠀⠀"
-            "⠀⠀⠀⠹⣿⣿⣶⣾⣿⣿⣿⠟⠁⠀⠸⢿⣿⠇⠀⠀⠀⠛⠛⠁⠀⠀⠀⠀⠀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀"
-            "⠀⠀⠀⠀⠈⠙⠛⠛⠛⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀");
         }
-        else{
+        if(won == false){
+            printf("\nGame Over!\n");
+        } else{
             printf("\nCongratulations! You have completed the game.\n");
         }
     }

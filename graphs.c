@@ -32,7 +32,7 @@ GraphNode *create_graph_node(const char *scenario_name) {
     return newNode;
 }
 
-void add_scenario(Graph *graph, char scenario_name[N]) {
+void add_scenario(Graph *graph, const char *scenario_name) {
     //if there are no num of scenarios
     if (graph->num_scenarios == 0) {
         fprintf(stderr, "Graph has no scenarios.\n");
@@ -49,7 +49,7 @@ void add_scenario(Graph *graph, char scenario_name[N]) {
     return;
 }
 
-void add_edge(Graph *graph, char scenario[N], char destination[N]) {
+void add_edge(Graph *graph, const char *scenario, const char *destination) {
     if (graph->num_scenarios == 0) {
         fprintf(stderr, "Graph has no scenarios.\n");
         return;
@@ -86,11 +86,15 @@ void printGraph(Graph *graph) {
     for (int i = 0; i < graph->num_scenarios; i++) {
         GraphNode *node = graph->adj_list[i];
         if (node != NULL) {
-            printf("Scenario: %s\n", node->name);
+            printf(" - Scenario: %s\n", node->name);
+            if(strcmp(node->name, "The Battle for the Gemstones") == 0){
+                printf("Final scenario.\n");
+                break;
+            }
             printf("Leads to: ");
             GraphNode *temp = node->next;
             while (temp != NULL) {
-                printf("%s ", temp->name);
+                printf("%s. ", temp->name);
                 temp = temp->next;
             }
             printf("\n");
@@ -98,7 +102,7 @@ void printGraph(Graph *graph) {
     }
 }
 
-void printScenariosWithEdgeTo(Graph *graph, char target[N]) {
+void printScenariosWithEdgeTo(Graph *graph, const char *target) {
     for (int i = 0; i < graph->num_scenarios; i++) {
         //when we find the adj list element that it's not null and it's the scenarion we are looking for
         if (graph->adj_list[i] != NULL && strcmp(graph->adj_list[i]->name, target) == 0) {
@@ -129,7 +133,6 @@ void update_current_scenario(GraphNode *destination_scenario, Scenario *current_
     }
 }
 
-
 void navigate_scenarios(Graph *graph, Scenario *current_scenario) {
     int current_index = -1;
 
@@ -152,7 +155,7 @@ void navigate_scenarios(Graph *graph, Scenario *current_scenario) {
         printf("Error: Scenario not found.\n");
     }
 
-    printf("Current Scenario: %s\n", node->name);
+    printf("\nCurrent Scenario: %s\n", node->name);
     //in case it's the last scenario
     if (current_index == 3) { // Assuming the 4th scenario index is 3
         printf("You have reached the final scenario.\n");
