@@ -4,7 +4,7 @@
 #include "struct_definitions.h"
 
 typedef struct GraphNode {
-    Scenario *scenario;
+    char name[N];
     struct GraphNode *next;
 } GraphNode;
 

@@ -24,14 +24,14 @@ Graph* create_graph(int num_scenarios) {
 }
 
 //function that creates a new node
-GraphNode* create_graph_node(Scenario *scenario) {
+GraphNode* create_graph_node(char scenario_name[N]) {
     GraphNode *newNode = (GraphNode *)malloc(sizeof(GraphNode));
-    newNode->scenario = scenario;
+    strcpy(newNode->name, scenario_name);
     newNode->next = NULL;
     return newNode;
 }
 
-void add_scenario(Graph *graph, Scenario *new_scenario) {
+void add_scenario(Graph *graph, char scenario_name[N]) {
     //if there are no num of scenarios
     if (graph->num_scenarios == 0) {
         fprintf(stderr, "Graph has no scenarios.\n");
@@ -41,14 +41,14 @@ void add_scenario(Graph *graph, Scenario *new_scenario) {
     //to find an empty spot in the adjacency list
     for (int i = 0; i < graph->num_scenarios; i++) {
         if (graph->adj_list[i] == NULL){
-            graph->adj_list[i] = create_graph_node(new_scenario);
+            graph->adj_list[i] = create_graph_node(scenario_name);
             return;
         }
     }
     return;
 }
 
-void add_edge(Graph *graph, Scenario *scenario, Scenario *destination) {
+void add_edge(Graph *graph, char scenario[N], char destination[N]) {
     if (graph->num_scenarios == 0) {
         fprintf(stderr, "Graph has no scenarios.\n");
         return;
@@ -59,7 +59,7 @@ void add_edge(Graph *graph, Scenario *scenario, Scenario *destination) {
     //iterate through the different scenarios
     for (int i = 0; i < graph->num_scenarios; i++) {
         //when we find the adj list element that it's not null and it's the scenarion we are looking for
-        if (graph->adj_list[i] != NULL && graph->adj_list[i]->scenario == scenario) {
+        if (graph->adj_list[i] != NULL && strcmp(graph->adj_list[i]->name, scenario) == 0) {
             //we update the source node
             source_node = graph->adj_list[i];
             break;
@@ -81,102 +81,30 @@ void add_edge(Graph *graph, Scenario *scenario, Scenario *destination) {
     return;
 }
 
-/*
-// Helper function to add a new node to the adjacency list
-void add_node(Graph *graph, Scenario *src, Scenario *destination) {
-    GraphNode *new_node = (GraphNode*)malloc(sizeof(GraphNode));
-    if (new_node == NULL) {
-        fprintf(stderr, "Failed to allocate memory for a new graph node.\n");
-        exit(EXIT_FAILURE);
-    }
-    new_node->scenario = destination;
-    new_node->next = NULL;
-
-    for (int i = 0; i < graph->num_scenarios; i++) {
-        if (graph->adj_list[i] != NULL && graph->adj_list[i]->scenario == src) {
-            new_node->next = graph->adj_list[i]->next;
-            graph->adj_list[i]->next = new_node;
-            return;
-        }
-    }
-
-    for (int i = 0; i < graph->num_scenarios; i++) {
-        if (graph->adj_list[i] == NULL) {
-            graph->adj_list[i] = (GraphNode*)malloc(sizeof(GraphNode));
-            if (graph->adj_list[i] == NULL) {
-                fprintf(stderr, "Failed to allocate memory for a new graph node.\n");
-                exit(EXIT_FAILURE);
-            }
-            graph->adj_list[i]->scenario = src;
-            graph->adj_list[i]->next = new_node;
-            return;
-        }
-    }
-}
-
-// Function to add an edge between two scenarios in the graph
-void add_edge(Graph *graph, Scenario *src, Scenario *dest) {
-    add_node(graph, src, dest); // Add edge from src to dest
-    add_node(graph, dest, src); // Add edge from dest to src (since this is an undirected graph)
-}*/
-
-// Function to print the graph for debugging purposes
-/*
-void printGraph(Graph *graph) {
-    //if there are no scenarios
-    if (graph->num_scenarios == 0) {
-        printf("Graph is empty.\n");
-        return;
-    }
-
-    printf("You can travel from:\n");
-    for (int i = 0; i < graph->num_scenarios; ++i) {
-        //print each scenario
-        printf("Scenario %d to: ", i + 1);
-        //pointer to the current scenario
-        GraphNode *current = graph->adj_list[i];
-        if (current == NULL) {
-            printf("No outgoing edges.\n");
-        }else {
-            //while there are edges
-            while (current != NULL) {
-                //print the edges, hence, the scenarios we can travel to
-                
-                printf("%s, ", current->scenario->name);
-                current = current->next;
-            }
-            printf("\n");
-        }
-    }
-
-}
-
-*/
 void printGraph(Graph *graph) {
     for (int i = 0; i < graph->num_scenarios; i++) {
         GraphNode *node = graph->adj_list[i];
         if (node != NULL) {
-            printf("Scenario: %s\n", node->scenario->name);
-            printf("Description: %s\n", node->scenario->description);
+            printf("Scenario: %s\n", node->name);
             printf("Leads to: ");
             GraphNode *temp = node->next;
             while (temp != NULL) {
-                printf("%s ", temp->scenario->name);
+                printf("%s ", temp->name);
                 temp = temp->next;
             }
-            printf("\n\n");
+            printf("\n");
         }
     }
 }
 
-void printScenariosWithEdgeTo(Graph *graph, Scenario *target) {
+void printScenariosWithEdgeTo(Graph *graph, char target[N]) {
     for (int i = 0; i < graph->num_scenarios; i++) {
         //when we find the adj list element that it's not null and it's the scenarion we are looking for
-        if (graph->adj_list[i] != NULL && graph->adj_list[i]->scenario == target) {
+        if (graph->adj_list[i] != NULL && strcmp(graph->adj_list[i]->name, target) == 0) {
             printf("Can travel from scenario %d to:", i+1);
             GraphNode *current = graph->adj_list[i];
             while(current != NULL){
-                printf("%s", current->scenario);
+                printf("%s", current->name);
                 current = current->next;
             }
         }
