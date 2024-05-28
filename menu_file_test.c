@@ -15,6 +15,15 @@
 #include "graphs.c"
 
 
+/*
+- finish errors init scenarios + comments 
+- change graphs (1 - 2 h) (data structures --> Names + last scenario check)
+- function to know which scenario to initialize
+- adapt menu for graphs
+- MAYBE unit test suite
+- Time strike
+*/
+
 /*unit test suite: to code a function to check if the functions of the code work
 end to end test suite: a function to test all the other unit tests suites
 */
@@ -188,7 +197,7 @@ int main(){
                         // free fight memory allocations ready for the next fight
                         free(fight_queue);
                         free(overlap_queue);
-                        free(player_used_skills);                        
+                        free(player_used_skills);                    
                         free(current_scenario);
                         reset_player_points(new_character); // reset the player's points ready for the next fight
                     }
