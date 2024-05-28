@@ -1,7 +1,7 @@
 #ifndef STRUCTS_DEFINITIONS_H
 #define STRUCTS_DEFINITIONS_H
 
-#define N 20 // max number of letters in the name
+#define N 30 // max number of letters in the name
 #define M 700 //max number of letters for description
 #define S 4 //number of skills
 #define MAX_ENEMIES 3 //max number of enemies

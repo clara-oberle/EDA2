@@ -203,5 +203,5 @@ void init_character_skills(Character *new_character, Skill *shadow_blade, Skill 
     for(int i=0; i<4; i++){
         printf("- %s\n", new_character->skills[i]->name);
     }
-    printf("Good Luck!\n\n");
+    printf("Good Luck!");
 }

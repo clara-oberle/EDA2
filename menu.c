@@ -190,11 +190,13 @@ int main(){
                         reset_player_points(new_character); // reset the player's points ready for the next fight
                     }
                 }
+                
                 /*
                 When fights end, in case of victory, the player is prompted with the next scene and its narrative. 
                 On the contrary, in case of defeat, the player is prompted with the ability to restart the game or 
                 restart the scenario.
                 */
+
                 if(win == false){
                     printf("Do you wish to end the game (1) or restart the scenario (2)?: ");
                     int restart;
