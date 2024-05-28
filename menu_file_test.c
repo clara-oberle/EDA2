@@ -92,38 +92,31 @@ int main(){
         // Initialize scenarios
         Scenario *scenario1 = (Scenario*)malloc(sizeof(Scenario));
         initialize_scenario1_from_file(scenario1, "race_of_shadows.txt");
-        /*Scenario *scenario2 = (Scenario*)malloc(sizeof(Scenario));
-        init_scenario2(scenario2);
-        Scenario *scenario3 = (Scenario*)malloc(sizeof(Scenario));
-        init_scenario3(scenario3);
-        Scenario *scenario4 = (Scenario*)malloc(sizeof(Scenario));
-        init_scenario4(scenario4);
-        */
 
         // Initialize graph
-        /*Graph *graph = create_graph(4);
+        Graph *graph = create_graph(4);
         //add the four scenarios as nodes
-        add_scenario(graph, scenario1);
-        add_scenario(graph, scenario2);
-        add_scenario(graph, scenario3);
-        add_scenario(graph, scenario4);
+        add_scenario(graph, "The Race of Shadows");
+        add_scenario(graph, "The Crossroads of Destiny");
+        add_scenario(graph, "Abandoned Castle");
+        add_scenario(graph, "The Battle for the Gemstones");
 
         //add edges between the nodes. You can travel from:
         /*Scenario 1 to scenario 2 or 3
         Scenario 2 to scenario 3 and 4 (only if completed 3)
         Scenario 3 to scenario 2 and 4 (only if comleted 2)
-        Scenario 4 nowhere
+        Scenario 4 nowhere*/
         
-        add_edge(graph, scenario1, scenario2);
-        add_edge(graph, scenario1, scenario3);
-        add_edge(graph, scenario2, scenario3);
-        add_edge(graph, scenario2, scenario4);
-        add_edge(graph, scenario3, scenario2);
-        add_edge(graph, scenario3, scenario4);
+        add_edge(graph, "The Race of Shadows", "The Crossroads of Destiny");
+        add_edge(graph, "The Race of Shadows", "Abandoned Castle");
+        add_edge(graph, "The Crossroads of Destiny", "Abandoned Castle");
+        add_edge(graph, "The Crossroads of Destiny", "The Battle for the Gemstones");
+        add_edge(graph, "Abandoned Castle", "The Crossroads of Destiny");
+        add_edge(graph, "Abandoned Castle", "The Battle for the Gemstones");
 
         //inform the player the possible routes
         printGraph(graph);
-        printf("\n");*/
+        printf("\n");
 
         // Track completed scenarios
         bool completed_scenarios[4] = {false, false, false, false};
@@ -190,7 +183,6 @@ int main(){
                         free(overlap_queue);
                         free(player_used_skills);
                         reset_player_points(new_character); // reset the player's points ready for the next fight
-                        free(current_scenario);
                         won = false;
                         break; // exit the for loop 
                     } else{
@@ -198,7 +190,6 @@ int main(){
                         free(fight_queue);
                         free(overlap_queue);
                         free(player_used_skills);                    
-                        free(current_scenario);
                         reset_player_points(new_character); // reset the player's points ready for the next fight
                     }
                 }
@@ -228,60 +219,18 @@ int main(){
                     printf("\n%s\n", chosen_option->narrative_text_after);
 
                     //to update the completed scenarios
-                    /*for(int i = 0; i < graph->num_scenarios; i++){
+                    for(int i = 0; i < graph->num_scenarios; i++){
                         if(completed_scenarios[i] == false){
                             completed_scenarios[i] = true;
                             break;
                         }
-                    }*/
+                    }
                     //if the last scenario has been completed, the while loop will stop
                     //if not, navigate to the next scenario
-                    //navigate_scenarios(graph, &current_scenario); 
+                    navigate_scenarios(graph, &current_scenario); 
                     
                 }
             }
-            /*
-            // Move to the next scenario
-            free(current_scenario); // Free the memory of the current scenario before moving to the next
-
-            // Determine next scenario using the graph
-            if (current_scenario == scenario1) {
-                printf("\nChoose your next scenario:\n");
-                GraphNode *temp = graph->adj_list[1];
-                int count = 1;
-                while (temp != NULL) {
-                    printf("\n%d: %s\n", count, temp->scenario->name);
-                    temp = temp->next;
-                    count++;
-                }
-                int next_choice;
-                scanf("%d", &next_choice);
-
-                temp = graph->adj_list[1];
-                for (int i = 1; i < next_choice; i++) {
-                    if (temp != NULL) {
-                        temp = temp->next;
-                    }
-                }
-                if (temp != NULL) {
-                    current_scenario = temp->scenario;
-                } else {
-                    printf("Invalid choice. Try again.\n");
-                }
-            } else if (current_scenario == scenario2 || current_scenario == scenario3) {
-                if (completed_scenarios[1] && completed_scenarios[2]) {
-                    current_scenario = scenario4;
-                } else {
-                    if (!completed_scenarios[1]) {
-                        current_scenario = scenario2;
-                        completed_scenarios[1] = true;
-                    } else {
-                        current_scenario = scenario3;
-                        completed_scenarios[2] = true;
-                    } 
-                }
-            }
-            */
             }
         if(won == false){
             printf("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀             ⣀⣠⡀⠀"
