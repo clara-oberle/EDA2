@@ -13,16 +13,7 @@ typedef struct{
     int duration_turn; // how many turns the skill lasts
     float modifier[3]; // modifier[0] = life_points, modifier[1] = attack_points, modifier[2] = defense_points 
 } Skill;
-/*
---> Just to remember how it will have to be accessed and printed later on
-Assign values to the name and description members
-    strcpy(mySkill.name, "Vine Bind");
-    strcpy(mySkill.description, "Traps the player with twisting vines, making them slower and easier to hit for one turn.");
 
-Printing the name and description
-    printf("Skill Name: %s\n", mySkill.name);
-    printf("Description: %s\n", mySkill.description);
-*/
 //
 typedef struct{
     char name[N];
