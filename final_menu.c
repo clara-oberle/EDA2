@@ -141,8 +141,7 @@ int main(){
                         printf("Wrong answer! Try again (remember it has to be lowercase): ");
                         scanf("%s", answer);
                     }
-                }
-                else{
+                }else{
                     strcpy(answer, "e"); // since it is not the last scenario make the defualt for the answer the correct one
                     scanf("%d", &choice); // choose between left (1) or right (2)
                 }
@@ -152,14 +151,16 @@ int main(){
                     strcpy(answer, "e"); // since it is not the last scenario make the defualt for the answer the correct one
                     scanf("%d", &choice); // choose between left (1) or right (2)
                 }
-               
+                
                 Option *chosen_option = decision->options_list[choice-1];
                 printf("\n%s\n", chosen_option->response_text);
                 printf("\n%s\n", chosen_option->narrative_text_before);
 
                 // Call a battle for each enemy in the chosen option here
                 bool win_battle;
+                printf("\n\nBefore entering final battle\nEnemy 1: %s\n", chosen_option->enemies[0]->name);
                 for(int i=0; i<chosen_option->num_enemies; i++){
+                    printf("\n\n Inside final battle loop\n\n");
                     // initialise the queue to decide the turns, the queue for skills with duration > 1, and the stack to store player's used skills
                     FightQueue *fight_queue = create_queue(new_character, chosen_option->enemies[i]);
                     OverlapQueue *overlap_queue = (OverlapQueue*)malloc(sizeof(OverlapQueue));
