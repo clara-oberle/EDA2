@@ -19,7 +19,7 @@ You veer towards the right, facing the treacherous waters of the Stormy Seas. Th
 With victory coursing through your veins, you stand amidst the aftermath of the battle, the Stormy Seas raging beside you. Along the rugged coastline, where waves crash against the cliffs with relentless fury, another fragment of the riddle lies half-buried in the sand. Anticipation grips you as you approach the weathered stone, its ancient markings illuminated by the glow of your car lights - one less fragment stands between you and the complete riddle.
 2
 Captain Blackbeard
-300
+250
 30
 20
 cutlass_slash

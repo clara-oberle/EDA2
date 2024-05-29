@@ -158,9 +158,7 @@ int main(){
 
                 // Call a battle for each enemy in the chosen option here
                 bool win_battle;
-                printf("\n\nBefore entering final battle\nEnemy 1: %s\n", chosen_option->enemies[0]->name);
                 for(int i=0; i<chosen_option->num_enemies; i++){
-                    printf("\n\n Inside final battle loop\n\n");
                     // initialise the queue to decide the turns, the queue for skills with duration > 1, and the stack to store player's used skills
                     FightQueue *fight_queue = create_queue(new_character, chosen_option->enemies[i]);
                     OverlapQueue *overlap_queue = (OverlapQueue*)malloc(sizeof(OverlapQueue));
@@ -222,7 +220,11 @@ int main(){
                     completed_scenarios[index] = true;
                     //if the last scenario has been completed, the while loop will stop
                     //if not, navigate to the next scenario
-                    navigate_scenarios(graph, current_scenario, completed_scenarios); 
+                    if(completed_scenarios[3] == true){
+                        break;
+                    }else{
+                        navigate_scenarios(graph, current_scenario, completed_scenarios); 
+                    }
                 }
             }
         }

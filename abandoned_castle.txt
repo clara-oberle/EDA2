@@ -19,17 +19,17 @@ As you take in the eerie setting you suddenly sense a presence lurking amidst th
 Emerging victorious from the courtyard, a sense of accomplishment washes over you. Suddenly, a shimmer of light from the fountain catches your eye. Drawing closer, you discover a hidden compartment within the weathered stone. With trembling hands, you retrieve the ancient artifact concealed within - a fragment of a runestone etched with the next words of the riddle.
 2
 Stone Guardian
-150
-15
+200
+25
 10
 evasive_maneuver
 flame_burst
 arcane_blast
 cutlass_slash
 Deadly Nightshade
-100
+200
+15
 10
-5
 shadow_strike
 healing_wave
 vine_bind

@@ -8,24 +8,24 @@ With a final blow, you defeat the three adversaries, their forms disappearing in
 3
 Guardian of Time
 300
-30
-20
+25
+15
 evasive_maneuver
 flame_burst
 healing_wave
 cutlass_slash
 Guardian of Space
-300
+250
 20
-15
+10
 cutlass_slash
 thorny_veil
 vine_bind
 shadow_strike
 Guardian of Spirituality
 300
-25
 20
+15
 healing_wave
 evasive_maneuver
 shadow_strike
