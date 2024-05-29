@@ -136,7 +136,7 @@ int main(){
         // Game loop for navigating scenarios
         //While the fourth scenario is not completed
         while (completed_scenarios[3] != true) {
-            printf("\nYou are now in: %s\n", current_scenario->name);
+            printf("bleh\nYou are now in: %s\n", current_scenario->name);
             printf("----------------------------------------------\n");
             printf("%s\n", current_scenario->description);
 
@@ -204,12 +204,13 @@ int main(){
                     }
                     if(restart == 1){
                         free_scenario(current_scenario);
-                        break;
+                        completed_scenarios[3] = true;
                     } else{
                         //wants to restart scenario, hence, we leave current scenario as it is
                         continue;
                     }
-                } else if(win_battle == true){
+                }
+                else{
                     printf("\n%s\n", chosen_option->narrative_text_after);
                     //to update the completed scenario
                     //find the index of the scenario in the graph's adj_list:
@@ -225,6 +226,7 @@ int main(){
                     //if the last scenario has been completed, the while loop will stop
                     //if not, navigate to the next scenario
                     navigate_scenarios(graph, current_scenario); 
+                    printf("%s\n, hey\n", current_scenario->name);
                 }
             }
         }

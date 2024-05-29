@@ -2,6 +2,7 @@
 #include "init_scenarios_test.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 // Function to create a new graph with a specified number of scenarios
 Graph* create_graph(int num_scenarios) {
@@ -118,19 +119,25 @@ void printScenariosWithEdgeTo(Graph *graph, const char *target) {
 
 void update_current_scenario(GraphNode *destination_scenario, Scenario *current_scenario){
     Scenario *new_scenario = (Scenario*)malloc(sizeof(Scenario));
+    if (!new_scenario) {
+        perror("Failed to allocate memory for new scenario");
+        return;
+    }
+    
+    free_scenario(current_scenario);
+    //current_scenario = new_scenario;
+    
+    if (strcmp(destination_scenario->name, "The Race of Shadows") == 0) {
+        initialize_scenario1_from_file(new_scenario, "race_of_shadows.txt");
+    } else if (strcmp(destination_scenario->name, "The Crossroads of Destiny") == 0) {
+        initialize_scenario2_from_file(new_scenario, "the_crossroads_of_destiny.txt");
+    } else if (strcmp(destination_scenario->name, "Abandoned Castle") == 0) {
+        initialize_scenario3_from_file(new_scenario, "abandoned_castle.txt");
+    } else if (strcmp(destination_scenario->name, "The Battle for the Gemstones") == 0) {
+        initialize_scenario4_from_file(new_scenario, "battle_gemstones.txt");
+    }
     current_scenario = new_scenario;
-    if(strcmp(destination_scenario->name, "The Race of Shadows") == 0){
-        initialize_scenario1_from_file(current_scenario, "race_of_shadows.txt");
-    }
-    else if(strcmp(destination_scenario->name, "The Crossroads of Destiny") == 0){
-        initialize_scenario2_from_file(current_scenario, "the_crossroads_of_destiny.txt");
-    }
-    else if(strcmp(destination_scenario->name, "Abandoned Castle") == 0){
-        initialize_scenario3_from_file(current_scenario, "abandoned_castle.txt");
-    }
-    else if(strcmp(destination_scenario->name, "The Battle for the Gemstones") == 0){
-        initialize_scenario4_from_file(current_scenario, "battle_gemstones.txt");
-    }
+    return;
 }
 
 void navigate_scenarios(Graph *graph, Scenario *current_scenario) {
@@ -186,6 +193,6 @@ void navigate_scenarios(Graph *graph, Scenario *current_scenario) {
     for (int i = 1; i < choice; i++) {
         temp = temp->next;
     }
-    free_scenario(current_scenario);
     update_current_scenario(temp, current_scenario);
+    return;
 }
