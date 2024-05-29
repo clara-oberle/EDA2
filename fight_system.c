@@ -459,6 +459,12 @@ void reset_player_points(Character *player){
     player->points[2] = 20;
 }
 
+void reset_enemy_points(Enemy *enemy, float HP, float ATK, float DEF){
+    enemy->points[0] = HP;
+    enemy->points[1] = ATK;
+    enemy->points[2] = DEF;
+}
+
 // function for a battle - uses all the above functions:
 // (returns true if player has won batlle and false if not)
 bool battle(Character *character, Enemy *enemy, FightQueue *fight_queue, OverlapQueue *overlap_queue, SkillStack *player_used_skills) {

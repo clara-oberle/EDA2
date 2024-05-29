@@ -14,19 +14,6 @@
 #include "graphs.h"
 #include "graphs.c"
 
-/*
-- finish errors init scenarios + comments 
-- change graphs (1 - 2 h) (data structures --> Names + last scenario check)
-- function to know which scenario to initialize
-- adapt menu for graphs
-- MAYBE unit test suite
-- Time strike
-*/
-
-/*unit test suite: to code a function to check if the functions of the code work
-end to end test suite: a function to test all the other unit tests suites
-*/
-
 void print_intro(){
     printf("\nThe screen fades from black to reveal a dimly lit chamber, ancient runes etched into the walls "
         "flickering with an otherworldly glow. A haunting melody echoes in the background, sending shivers down "
@@ -179,11 +166,17 @@ int main(){
                     init_overlap_queue(overlap_queue);
                     SkillStack *player_used_skills = (SkillStack*)malloc(sizeof(SkillStack));
                     player_used_skills->top = -1;
+                    // Keep track of the current enemy's HP, ATK and DEF points so they can be restored at the end of a battle
+                    float enemy_HP = chosen_option->enemies[i]->points[0];
+                    float enemy_ATK = chosen_option->enemies[i]->points[1];
+                    float enemy_DEF = chosen_option->enemies[i]->points[2];
+                    // Do the battle
                     win_battle = battle(new_character, chosen_option->enemies[i], fight_queue, overlap_queue, player_used_skills);
                     free(fight_queue);
                     free(overlap_queue);
                     free(player_used_skills);
                     reset_player_points(new_character); // reset the player's points ready for the next fight
+                    reset_enemy_points(chosen_option->enemies[i], enemy_HP, enemy_ATK, enemy_DEF);
                     if(win_battle == false){ // if the player looses a fight with one of the enemies they cannot continue to fight the next enemy
                         won = false;
                         break; // exit the for loop 
