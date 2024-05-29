@@ -2,6 +2,8 @@
 #include "init_scenarios_test.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
 
 // Function to create a new graph with a specified number of scenarios
 Graph* create_graph(int num_scenarios) {
@@ -117,23 +119,28 @@ void printScenariosWithEdgeTo(Graph *graph, const char *target) {
 }
 
 void update_current_scenario(GraphNode *destination_scenario, Scenario *current_scenario){
-    Scenario *new_scenario = (Scenario*)malloc(sizeof(Scenario));
-    current_scenario = new_scenario;
-    if(strcmp(destination_scenario->name, "The Race of Shadows") == 0){
+    free_scenario(current_scenario);
+
+    current_scenario = (Scenario*)malloc(sizeof(Scenario));
+    if (!current_scenario) {
+        perror("Failed to allocate memory for new scenario");
+        return;
+    }
+    
+        
+    if (strcmp(destination_scenario->name, "The Race of Shadows") == 0) {
         initialize_scenario1_from_file(current_scenario, "race_of_shadows.txt");
-    }
-    else if(strcmp(destination_scenario->name, "The Crossroads of Destiny") == 0){
+    } else if (strcmp(destination_scenario->name, "The Crossroads of Destiny") == 0) {
         initialize_scenario2_from_file(current_scenario, "the_crossroads_of_destiny.txt");
-    }
-    else if(strcmp(destination_scenario->name, "Abandoned Castle") == 0){
+    } else if (strcmp(destination_scenario->name, "Abandoned Castle") == 0) {
         initialize_scenario3_from_file(current_scenario, "abandoned_castle.txt");
-    }
-    else if(strcmp(destination_scenario->name, "The Battle for the Gemstones") == 0){
+    } else if (strcmp(destination_scenario->name, "The Battle for the Gemstones") == 0) {
         initialize_scenario4_from_file(current_scenario, "battle_gemstones.txt");
     }
+    return;
 }
 
-void navigate_scenarios(Graph *graph, Scenario *current_scenario) {
+void navigate_scenarios(Graph *graph, Scenario *current_scenario, bool completed_scenarios[]) {
     int current_index = -1;
 
     // Find the index of the current scenario
@@ -157,9 +164,6 @@ void navigate_scenarios(Graph *graph, Scenario *current_scenario) {
 
     printf("\nCurrent Scenario: %s\n", node->name);
     //in case it's the last scenario
-    if (current_index == 3) { // Assuming the 4th scenario index is 3
-        printf("You have reached the final scenario.\n");
-    }
 
     printf("Choose your next scenario:\n");
     //create another pointer that points at the next node
@@ -170,22 +174,38 @@ void navigate_scenarios(Graph *graph, Scenario *current_scenario) {
         temp = temp->next;
         index++;
     }
-    //get the users input
-    printf("Enter the number of the next scenario: ");
-    int choice;
-    scanf("%d", &choice);
-
-    //to validate the choice
-    while(choice < 1 || choice >= index) {
-        printf("Invalid choice. Try again.\n");
+    int correct = 0;
+    while(correct == 0){
+        //get the users input
+        printf("Enter the number of the next scenario: ");
+        int choice;
         scanf("%d", &choice);
-    }
 
-    //move to the chosen scenario
-    temp = node->next;
-    for (int i = 1; i < choice; i++) {
-        temp = temp->next;
+        //to validate the choice
+        
+        while(choice < 1 || choice >= index){
+            printf("Invalid choice. Try again.\n");
+            scanf("%d", &choice);
+        }
+
+        //move to the chosen scenario
+        temp = node->next;
+        for (int i = 1; i < choice; i++) {
+            temp = temp->next;
+        }
+        int number = 0;
+        for(int m = 0; m < 4; m++){
+            if(completed_scenarios[m] == true){
+                number++;
+            }
+        }
+        if((strcmp(temp->name, "The Battle for the Gemstones") == 0) && number < 3){
+            printf("You can't navigate to the 4th scenario yet, chose another one\n");
+        }
+        else{
+            correct = 1;
+        }
     }
-    free_scenario(current_scenario);
     update_current_scenario(temp, current_scenario);
+    return;
 }

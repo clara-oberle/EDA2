@@ -31,11 +31,32 @@ void get_skill(const char *skill_name, Skill *skill) {
 }
 
 void free_scenario(Scenario *scenario) {
-    if (scenario->decision != NULL) {
-        free(scenario->decision);
-        scenario->decision = NULL;
+    if (scenario == NULL) {
+        return;
     }
+    
+    if (scenario->decision != NULL) {
+        for (int i = 0; i < scenario->decision->num_options; i++) {
+            Option *option = scenario->decision->options_list[i];
+            if (option != NULL) {
+                for (int j = 0; j < option->num_enemies; j++) {
+                    if (option->enemies[j] != NULL) {
+                        for (int k = 0; k < S; k++) {
+                            if (option->enemies[j]->skills[k] != NULL) {
+                                free(option->enemies[j]->skills[k]);
+                            }
+                        }
+                        free(option->enemies[j]);
+                    }
+                }
+                free(option);
+            }
+        }
+        free(scenario->decision);
+    }
+    free(scenario);
 }
+
 
 void initialize_scenario1_from_file(Scenario *scenario, const char *filename) {
     FILE *file = fopen(filename, "r");

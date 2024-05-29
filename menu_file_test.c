@@ -204,12 +204,13 @@ int main(){
                     }
                     if(restart == 1){
                         free_scenario(current_scenario);
-                        break;
+                        completed_scenarios[3] = true;
                     } else{
                         //wants to restart scenario, hence, we leave current scenario as it is
                         continue;
                     }
-                } else if(win_battle == true){
+                }
+                else{
                     printf("\n%s\n", chosen_option->narrative_text_after);
                     //to update the completed scenario
                     //find the index of the scenario in the graph's adj_list:
@@ -224,7 +225,7 @@ int main(){
                     completed_scenarios[index] = true;
                     //if the last scenario has been completed, the while loop will stop
                     //if not, navigate to the next scenario
-                    navigate_scenarios(graph, current_scenario); 
+                    navigate_scenarios(graph, current_scenario, completed_scenarios); 
                 }
             }
         }
