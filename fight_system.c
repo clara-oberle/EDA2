@@ -605,7 +605,7 @@ void time_strike(SkillStack *stack, Character *player, Enemy *enemy, OverlapQueu
     // generate a random index from 0 to the index of the stack top
     int top = stack->top;
     int index;
-    if(top == 0){
+    if(top == 0){ // if the top is 0 it means there is only one skill so no need to generate a random index
         index = 0;
     }else{
         index = rand() % top+1;
