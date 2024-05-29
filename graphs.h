@@ -2,6 +2,7 @@
 #define GRAPH_H
 
 #include "struct_definitions.h"
+#include <stdbool.h>
 
 typedef struct GraphNode {
     char name[N];
@@ -18,7 +19,7 @@ GraphNode* create_graph_node(const char *scenario_name);
 void add_scenario(Graph *graph, const char *scenario_name);
 void add_edge(Graph *graph, const char *scenario, const char *destination);
 void printGraph(Graph *graph);
-void navigate_scenarios(Graph *graph, Scenario *current_scenario);
+void navigate_scenarios(Graph *graph, Scenario *current_scenario, bool completed_scenarios[]);
 void printScenariosWithEdgeTo(Graph *graph, const char *target);
 void update_current_scenario(GraphNode *destination_scenario, Scenario *current_scenario);
 #endif // GRAPH_H

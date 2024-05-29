@@ -136,7 +136,7 @@ int main(){
         // Game loop for navigating scenarios
         //While the fourth scenario is not completed
         while (completed_scenarios[3] != true) {
-            printf("bleh\nYou are now in: %s\n", current_scenario->name);
+            printf("\nYou are now in: %s\n", current_scenario->name);
             printf("----------------------------------------------\n");
             printf("%s\n", current_scenario->description);
 
@@ -225,8 +225,7 @@ int main(){
                     completed_scenarios[index] = true;
                     //if the last scenario has been completed, the while loop will stop
                     //if not, navigate to the next scenario
-                    navigate_scenarios(graph, current_scenario); 
-                    printf("%s\n, hey\n", current_scenario->name);
+                    navigate_scenarios(graph, current_scenario, completed_scenarios); 
                 }
             }
         }

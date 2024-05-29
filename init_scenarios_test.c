@@ -248,7 +248,6 @@ void initialize_scenario2_from_file(Scenario *scenario, const char *filename) {
     // Read name
     fgets(scenario->name, NAME_SIZE, file);
     scenario->name[strcspn(scenario->name, "\n")] = '\0';
-    printf("%s", scenario->name);
 
     // Read description
     fgets(scenario->description, DESCRIPTION_SIZE, file);
