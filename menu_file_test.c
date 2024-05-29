@@ -181,6 +181,9 @@ int main(){
                         won = false;
                         break; // exit the for loop 
                     }
+                    else{
+                        won = true;
+                    }
                 }
                 /*
                 When fights end, in case of victory, the player is prompted with the next scene and its narrative. 
