@@ -15,7 +15,7 @@ evasive_maneuver
 flame_burst
 arcane_blast
 You step into the wild courtyard, surrounded by towering hedges, crumbling statues, and at its heart, a weathered fountain. Mist rises from the overgrown algae, cloaking the scene in a mystical atmosphere.
-As you take in the eerie setting you suddenly sense a presence lurking amidst the overgrown greenery. Emerging from the shadows are two mighty adversaries.\nCarved from solid granite and brought to life by ancient sorcery, the Stone Guardian stands as the mighty protector of the courtyard. \nTaking a stance beside it is the Deadly Nightshade. This malevolent plant creature lurks among the wild foliage, with deadly vines and toxic flowers.
+As you take in the eerie setting you suddenly sense a presence lurking amidst the overgrown greenery. Emerging from the shadows are two mighty adversaries. Carved from solid granite and brought to life by ancient sorcery, the Stone Guardian stands as the mighty protector of the courtyard. Taking a stance beside it is the Deadly Nightshade. This malevolent plant creature lurks among the wild foliage, with deadly vines and toxic flowers.
 Emerging victorious from the courtyard, a sense of accomplishment washes over you. Suddenly, a shimmer of light from the fountain catches your eye. Drawing closer, you discover a hidden compartment within the weathered stone. With trembling hands, you retrieve the ancient artifact concealed within - a fragment of a runestone etched with the next words of the riddle.
 2
 Stone Guardian

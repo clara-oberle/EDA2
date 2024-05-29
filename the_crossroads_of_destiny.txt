@@ -7,9 +7,9 @@ You steer your vehicle towards the left, heading into the depths of the Forgotte
 With triumph coursing through your veins, you survey the aftermath of the battle. Among the debris, a weathered stone altar catches your eye, bearing another fragment of the riddle. Anticipation grips you as you approach, the ancient symbols beckoning you closer. With a steady hand, you claim the stone fragment etched with ancient words - one less fragment stands between you and the complete riddle.
 1
 Guardian of the Forgotten Ruins
-400
-35
-25
+250
+30
+20
 evasive_maneuver
 flame_burst
 arcane_blast

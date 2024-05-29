@@ -470,35 +470,33 @@ void reset_enemy_points(Enemy *enemy, float HP, float ATK, float DEF){
 bool battle(Character *character, Enemy *enemy, FightQueue *fight_queue, OverlapQueue *overlap_queue, SkillStack *player_used_skills) {
     printf("\nPrepare yourself, for in this battle you will confront the formidable %s. Good luck!\n", enemy->name);
     bool used_time_strike = false; // Keep track of whether the time strike has been used or not
-
     while (fight_queue->size != 0) { // Check that the queue is not empty
         if (check_win(character, enemy) == -1) { // If they both still have HP
             if (fight_queue->first->type == 0) { // Character's turn
                 int skill_number;
-                printf("\nYour turn. Choose a skill:\n1- %s\n2- %s\n"
-                       "3- %s\n4- %s\n5- Time Strike\nEnter the number of the chosen skill: ",
-                       character->skills[0]->name,
-                       character->skills[1]->name, character->skills[2]->name, character->skills[3]->name);
+                printf("\nYour turn. Choose a skill:\n1- %s\n2- %s\n3- %s\n4- %s\n5- Time Strike\nEnter the number of the chosen skill: ",
+                       character->skills[0]->name, character->skills[1]->name, character->skills[2]->name, character->skills[3]->name);
                 scanf("%d", &skill_number); // Ask the player to choose a skill
-
                 // Check that the user's input is valid
-                while (skill_number > 5 || skill_number < 1) {
+                while (skill_number < 1 || skill_number > 5) {
                     printf("Invalid input. Try again: ");
                     scanf("%d", &skill_number);
                 }
-
-                // If the chosen skill is Time Strike and it has already been used or there are no skills in the stack, tell the user to choose another skill
-                while ((skill_number == 5 && used_time_strike == true) || (skill_number == 5 && player_used_skills->top == -1)) {
-                    printf("You can only use Time Strike once in a battle and if you have previously used other skills. Choose another skill: ");
+                // Validate Time Strike separately
+                while ((skill_number == 5 && used_time_strike) || (skill_number == 5 && player_used_skills->top == -1)) {
+                    if (used_time_strike) {
+                        printf("You can only use Time Strike once in a battle. Choose another skill: ");
+                    } else {
+                        printf("You need to have used other skills before using Time Strike. Choose another skill: ");
+                    }
                     scanf("%d", &skill_number);
-                    while (skill_number > 5 || skill_number < 1) {
+                    while (skill_number < 1 || skill_number > 5) {
                         printf("Invalid input. Try again: ");
                         scanf("%d", &skill_number);
                     }
                 }
-
                 // If the chosen skill is Time Strike and it has not been used, implement Time Strike
-                if (skill_number == 5 && used_time_strike == false) {
+                if (skill_number == 5 && !used_time_strike) {
                     used_time_strike = true; // Set the flag to true indicating Time Strike has been used
                     time_strike(player_used_skills, character, enemy, overlap_queue);
                 } else {
@@ -506,37 +504,54 @@ bool battle(Character *character, Enemy *enemy, FightQueue *fight_queue, Overlap
                     Skill *chosen_skill = (Skill *)malloc(sizeof(Skill));
                     init_skill_copy(chosen_skill, character->skills[skill_number - 1]);
 
-                    // Check if the skill is one that can only be used once (if so ask the player to choose a different skill)
-                    while (one_time_skill(chosen_skill, player_used_skills) == true) {
+                    // Validate if the skill can be used
+                    while (one_time_skill(chosen_skill, player_used_skills) || find_in_queue(chosen_skill, overlap_queue)) {
                         free(chosen_skill);
-                        printf("\nThis skill can only be used once during the battle and it has already been used. "
-                               "Choose a different skill: ");
+                        if (one_time_skill(chosen_skill, player_used_skills)) {
+                            printf("\nThis skill can only be used once during the battle and it has already been used. Choose a different skill: ");
+                        } else {
+                            printf("\nThis skill still has duration turns left. Choose a different skill: ");
+                        }
                         scanf("%d", &skill_number);
-                        chosen_skill = (Skill *)malloc(sizeof(Skill));
-                        init_skill_copy(chosen_skill, character->skills[skill_number - 1]);
+                        while (skill_number < 1 || skill_number > 5) {
+                            printf("Invalid input. Try again: ");
+                            scanf("%d", &skill_number);
+                        }
+                        // Check Time Strike conditions again if it is chosen
+                        while ((skill_number == 5 && used_time_strike) || (skill_number == 5 && player_used_skills->top == -1)) {
+                            if (used_time_strike) {
+                                printf("You can only use Time Strike once in a battle. Choose another skill: ");
+                            } else {
+                                printf("You need to have used other skills before using Time Strike. Choose another skill: ");
+                            }
+                            scanf("%d", &skill_number);
+                            while (skill_number < 1 || skill_number > 5) {
+                                printf("Invalid input. Try again: ");
+                                scanf("%d", &skill_number);
+                            }
+                        }
+                        if (skill_number == 5 && !used_time_strike) {
+                            used_time_strike = true; // Set the flag to true indicating Time Strike has been used
+                            time_strike(player_used_skills, character, enemy, overlap_queue);
+                            chosen_skill = NULL;
+                            break; // Break out of the loop if Time Strike is successfully chosen
+                        } else {
+                            chosen_skill = (Skill *)malloc(sizeof(Skill));
+                            init_skill_copy(chosen_skill, character->skills[skill_number - 1]);
+                        }
                     }
-
-                    // Check if the skill is one that has more than one duration turn and still has duration turns left (if so ask the player to choose a different skill)
-                    while (find_in_queue(chosen_skill, overlap_queue) == true) {
-                        free(chosen_skill);
-                        printf("\nThis skill still has duration turns left. Choose a different skill: ");
-                        scanf("%d", &skill_number);
-                        chosen_skill = (Skill *)malloc(sizeof(Skill));
-                        init_skill_copy(chosen_skill, character->skills[skill_number - 1]);
-                    }
-
-                    printf("\nYou have chosen %s\n---------------------------------------------\n", chosen_skill->name);
-                    // Implement the skill (modify ATK, HP, and DEF accordingly):
-                    implement_player_skill(chosen_skill, character, enemy, overlap_queue, player_used_skills);
-
-                    // Add the skill to the overlap queue if its duration turn was more than one:
-                    if (chosen_skill->duration_turn > 0) {
-                        enqueue_overlap_skill(overlap_queue, chosen_skill, 0);
-                    } else { // Otherwise free the copy of the chosen skill
-                        free(chosen_skill);
+                    if (chosen_skill != NULL) { // If a valid skill is chosen and not Time Strike
+                        printf("\nYou have chosen %s\n---------------------------------------------\n", chosen_skill->name);
+                        // Implement the skill (modify ATK, HP, and DEF accordingly):
+                        implement_player_skill(chosen_skill, character, enemy, overlap_queue, player_used_skills);
+                        // Add the skill to the overlap queue if its duration turn was more than one:
+                        if (chosen_skill->duration_turn > 0) {
+                            enqueue_overlap_skill(overlap_queue, chosen_skill, 0);
+                        } else { // Otherwise free the copy of the chosen skill
+                            free(chosen_skill);
+                        }
                     }
                 }
-
                 // Check if the player has won after their turn
                 if (check_win(character, enemy) == 0) { // If the player has won, return true
                     printf("\nCongratulations, you have emerged victorious!\n");
@@ -546,42 +561,36 @@ bool battle(Character *character, Enemy *enemy, FightQueue *fight_queue, Overlap
                 Skill *random_skill = (Skill *)malloc(sizeof(Skill));
                 srand(time(NULL)); // Initialize random number generator with current time
                 int index = generate_random_index(); // Get a random index from 0 to 2
-
                 // Create a copy of the skill corresponding to the randomly generated index
                 init_skill_copy(random_skill, enemy->skills[index]);
-
                 // If it is a skill that still has duration turns left, choose another one:
-                while (find_in_queue(random_skill, overlap_queue) == true) {
-                    index = generate_random_index();
+                while (find_in_queue(random_skill, overlap_queue)) {
+                    index = generate_random_index(); // Get a new random index
                     init_skill_copy(random_skill, enemy->skills[index]);
                 }
-
                 printf("\n%s has chosen %s\n---------------------------------------------\n", enemy->name, random_skill->name);
                 // Implement the skill (modify ATK, HP, and DEF accordingly):
                 implement_enemy_skill(random_skill, character, enemy, overlap_queue);
-
                 // Add the skill to the overlap queue if its duration turn was more than one:
                 if (random_skill->duration_turn > 0) {
                     enqueue_overlap_skill(overlap_queue, random_skill, 1);
                 } else { // Otherwise, free the copy of the chosen skill
                     free(random_skill);
                 }
+                // Check if the player has won or lost after the enemy's turn
+                if (check_win(character, enemy) == 0) { // If the player has won, return true
+                    printf("\nCongratulations, you have emerged victorious!\n");
+                    return true;
+                } else if (check_win(character, enemy) == 1) { // If the player has lost, return false
+                    printf("\nYou have been defeated. Better luck next time!\n");
+                    return false;
+                }
             }
-
-            // Check if the player has won or lost after the enemy's turn
-            if (check_win(character, enemy) == 0) { // If the player has won, return true
-                printf("\nCongratulations, you have emerged victorious!\n");
-                return true;
-            } else if (check_win(character, enemy) == 1) { // If the player has lost, return false
-                printf("\nYou have been defeated. Better luck next time!\n");
-                return false;
-            }
-
-            dequeue(fight_queue); // Next turn
         }
+        dequeue(fight_queue); // Next Turn
     }
-
-    if (check_win(character, enemy) == -1) { // If the player and enemy still have HP left but the queue is empty
+    // If the player and enemy still have HP left but the queue is empty
+    if (check_win(character, enemy) == -1) {
         // The battle is over and the enemy has won, so return false
         printf("\nThe battle is over and %s is still alive. You lose.\n", enemy->name);
         return false;

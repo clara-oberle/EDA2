@@ -147,7 +147,7 @@ int main(){
                     scanf("%d", &choice); // choose between left (1) or right (2)
                 }
                 //while the choice is not correct (must be between 1 and 4)
-                while (choice < 1 && choice > decision->num_options){
+                while (choice < 1 || choice > decision->num_options){
                     printf("Invalid choice. Try again.\n%s", current_scenario->decision->question_text);
                     strcpy(answer, "e"); // since it is not the last scenario make the defualt for the answer the correct one
                     scanf("%d", &choice); // choose between left (1) or right (2)
