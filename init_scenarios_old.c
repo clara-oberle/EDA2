@@ -1,4 +1,4 @@
-#include "init_scenarios.h"
+#include "init_scenarios_old.h"
 #include "init_enemy_skills.h"
 #include <stdlib.h>
 #include <stdio.h>

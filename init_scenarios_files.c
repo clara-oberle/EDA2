@@ -1,4 +1,4 @@
-#include "init_scenarios_test.h"
+#include "init_scenarios_files.h"
 #include "init_enemy_skills.h"
 #include <stdio.h>
 #include <stdbool.h>
