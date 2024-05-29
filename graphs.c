@@ -1,5 +1,5 @@
 #include "graphs.h"
-#include "init_scenarios_test.h"
+#include "init_scenarios_files.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

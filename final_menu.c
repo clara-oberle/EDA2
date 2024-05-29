@@ -5,8 +5,8 @@
 #include "struct_definitions.h"
 #include "init_character_skills.h"
 #include "init_character_skills.c"
-#include "init_scenarios_test.h"
-#include "init_scenarios_test.c"
+#include "init_scenarios_files.h"
+#include "init_scenarios_files.c"
 #include "init_enemy_skills.h"
 #include "init_enemy_skills.c"
 #include "fight_system.h"
@@ -180,6 +180,9 @@ int main(){
                     if(win_battle == false){ // if the player looses a fight with one of the enemies they cannot continue to fight the next enemy
                         won = false;
                         break; // exit the for loop 
+                    }
+                    else{
+                        won = true;
                     }
                 }
                 /*
